@@ -1,0 +1,48 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-center mb-4" style="color: navy;">Manage Testimonials</h2>
+    <hr class="my-4" style="border-color: peru;">
+
+    <form method="POST" enctype="multipart/form-data" class="p-4 shadow rounded" style="background-color: #f8f9fa;">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" name="name" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Role/Title</label>
+            <input type="text" name="role" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Image</label>
+            <input type="file" name="image" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Message</label>
+            <textarea name="message" rows="4" class="form-control" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Stars (1 to 5)</label>
+            <input type="number" name="stars" class="form-control" min="1" max="5" value="5" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Add Testimonial</button>
+    </form>
+
+    <hr class="my-4">
+
+    <h4>Existing Testimonials</h4>
+    {% for testimonial in testimonials %}
+        <div class="border p-3 my-2 rounded">
+            <strong>{{ testimonial.name }}</strong> - {{ testimonial.role }}<br>
+            Stars: {{ testimonial.stars }}<br>
+            <p>{{ testimonial.message }}</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

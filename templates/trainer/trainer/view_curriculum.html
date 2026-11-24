@@ -1,0 +1,74 @@
+{% extends 'trainer/trainer_base.html' %}
+{% load static %}
+
+{% block title %}Tecade | Curriculum{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+<link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}" />
+<link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>Curriculum</h1>
+    <ol class="breadcrumb">
+      <li>
+        <a href="{% url 'staff_dashboard' %}"><i class="fa fa-dashboard"></i> Dashboard</a>
+      </li>
+      <li><a href="{% url 'trainer_my_classes' %}">My Classes</a></li>
+      <li><a href="{% url 'trainer_course_units' assignment.id %}">Course Units</a></li>
+      <li class="active">Curriculum</li>
+    </ol>
+  </section>
+
+  <section class="content">
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">
+          {{ assignment.class_slot.slot }} - {{ assignment.course.name }}
+        </h3>
+        <div class="box-tools">
+          <a class="btn btn-primary btn-sm" href="{% url 'trainer_edit_curriculum' assignment.id unit.id %}">
+            <i class="fa fa-edit"></i> Edit
+          </a>
+        </div>
+      </div>
+      <div class="box-body">
+        <p>
+          <strong>Unit:</strong> {{ unit.unit_competence }}<br />
+          {% if unit.isced_unit_code %}<strong>Unit Code:</strong> {{ unit.isced_unit_code }}<br />{% endif %}
+          {% if unit.tvet_cdacc_unit_code %}<strong>TVET CDACC:</strong> {{ unit.tvet_cdacc_unit_code }}<br />{% endif %}
+          {% if unit.total_time %}<strong>Duration:</strong> {{ unit.total_time }} hours{% endif %}
+        </p>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Learning Outcomes</h3>
+      </div>
+      <div class="box-body">
+        {% if outcomes %}
+          {% for o in outcomes %}
+            <div style="margin-bottom: 16px;">
+              <h4 style="margin: 0 0 6px 0;">{{ o.learning_outcome }}</h4>
+              {% if o.learning_expectations %}
+                <div><strong>Content / Expectations</strong></div>
+                <pre style="white-space: pre-wrap;">{{ o.learning_expectations }}</pre>
+              {% endif %}
+              {% if o.learning_assessments %}
+                <div><strong>Assessment Methods</strong></div>
+                <pre style="white-space: pre-wrap;">{{ o.learning_assessments }}</pre>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>No learning outcomes found for this unit.</p>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

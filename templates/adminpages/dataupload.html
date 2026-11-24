@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ssyoay | Upload Data</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" type="" href="{% static 'homefiles/bower_components/jquery/dist/jquery.min.js' %}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'homefiles/bower_components/font-awesome/css/font-awesome.min.css' %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="{% static 'homefiles/bower_components/Ionicons/css/ionicons.min.css' %}">
+  <!-- Form style -->
+  <link rel="stylesheet" href="{% static 'homefiles/bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'homefiles/dist/css/AdminLTE.min.css' %}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{% static 'homefiles/plugins/iCheck/square/blue.css' %}">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Google Font -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+
+  <style>
+    .alert {
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .alert-error,
+    .alert-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+  <style>
+    .custom-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* Ensures the aspect ratio is preserved */
+    }
+  </style>
+
+
+
+</head>
+
+<body class="hold-transition" style="background-color: #fafafa; color: #1bb2ee;">
+  <div class="wrapper">
+
+    <header class="main-header">
+      <!-- Logo -->
+      <a href="/" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>B</b>oay</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>ssy</b>oay</span>
+      </a>
+      <!-- Header Navbar: style can be found in header.less -->
+      <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <!-- Messages: style can be found in dropdown.less-->
+            <li class="dropdown messages-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-envelope-o"></i>
+                <span class="label label-success">4</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="header">You have 4 messages</li>
+                <li>
+                  <!-- inner menu: contains the actual data -->
+                  <ul class="menu">
+                    <li><!-- start message -->
+                      <a href="#">
+                        <div class="pull-left">
+                          <img src="{% static 'homefiles/dist/img/user2-160x160.jpg' %}" class="img-circle"
+                            alt="User Image">
+                        </div>
+                        <h4>
+                          Support Team
+                          <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                        </h4>
+                        <p>{{supportMailDesc}} This module is still under construction</p>
+                      </a>
+                    </li>
+                    <!-- end message -->
+                    <li>
+                      <a href="#">
+                        <div class="pull-left">
+                          <img src="{% static 'homefiles/dist/img/user3-128x128.jpg' %}" class="img-circle"
+                            alt="User Image">
+                        </div>
+                        <h4>
+                          Design Team
+                          <small><i class="fa fa-clock-o"></i> 2 hours</small>
+                        </h4>
+                        <p>{{designTeamMail}}Design is ongoing. it constantly changes</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <div class="pull-left">
+                          <img src="{% static 'homefiles/dist/img/user4-128x128.jpg' %}" class="img-circle"
+                            alt="User Image">
+                        </div>
+                        <h4>
+                          Developers
+                          <small><i class="fa fa-clock-o"></i> Today</small>
+                        </h4>
+                        <p>{{developersMail}}We are working under the clock to see the application running</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <div class="pull-left">
+                          <img src="{% static 'homefiles/dist/img/user3-128x128.jpg' %}" class="img-circle"
+                            alt="User Image">
+                        </div>
+                        <h4>
+                          Sales Department
+                          <small><i class="fa fa-clock-o"></i> Yesterday</small>
+                        </h4>
+                        <p>{{salesDepartmentMail}} Your invoices are all serviced</p>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <div class="pull-left">
+                          <img src="{% static 'homefiles/dist/img/user4-128x128.jpg' %}" class="img-circle"
+                            alt="User Image">
+                        </div>
+                        <h4>
+                          Reviewers
+                          <small><i class="fa fa-clock-o"></i> 2 days</small>
+                        </h4>
+                        <p>{{reviewersMail}}Your appointments have been successfully reviewed</p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="footer"><a href="#">See All Messages</a></li>
+              </ul>
+            </li>
+            <!-- Notifications: style can be found in dropdown.less -->
+            <li class="dropdown notifications-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bell-o"></i>
+                <span class="label label-warning">{{notification.new}}10</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="header">You have {{notification.new}}10 notifications</li>
+                <li>
+                  <!-- inner menu: contains the actual data -->
+                  <ul class="menu">
+                    <li>
+                      <a href="#">
+                        <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i class="fa fa-warning text-yellow"></i> Very long description here
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i class="fa fa-users text-red"></i> 5 new members joined
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i class="fa fa-shopping-cart text-green"></i> 25 consultations made
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <i class="fa fa-user text-red"></i> You changed your username
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="footer"><a href="#">View all</a></li>
+              </ul>
+            </li>
+            <!-- Tasks: style can be found in dropdown.less -->
+            <li class="dropdown tasks-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-flag-o"></i>
+                <span class="label label-danger">9</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="header">You have 9 tasks</li>
+                <li>
+                  <!-- inner menu: contains the actual data -->
+                  <ul class="menu">
+                    <li><!-- Task item -->
+                      <a href="#">
+                        <h3>
+                          Go for Hike
+                          <small class="pull-right">20%</small>
+                        </h3>
+                        <div class="progress xs">
+                          <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
+                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                            <span class="sr-only">20% Complete</span>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <!-- end task item -->
+                    <li><!-- Task item -->
+                      <a href="#">
+                        <h3>
+                          Talk to Game therapy
+                          <small class="pull-right">40%</small>
+                        </h3>
+                        <div class="progress xs">
+                          <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar"
+                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                            <span class="sr-only">40% Complete</span>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <!-- end task item -->
+                    <li><!-- Task item -->
+                      <a href="#">
+                        <h3>
+                          Have a round table meeting
+                          <small class="pull-right">60%</small>
+                        </h3>
+                        <div class="progress xs">
+                          <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar"
+                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                            <span class="sr-only">60% Complete</span>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <!-- end task item -->
+                    <li><!-- Task item -->
+                      <a href="#">
+                        <h3>
+                          share meal with family
+                          <small class="pull-right">80%</small>
+                        </h3>
+                        <div class="progress xs">
+                          <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar"
+                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                            <span class="sr-only">80% Complete</span>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <!-- end task item -->
+                  </ul>
+                </li>
+                <li class="footer">
+                  <a href="#">View all tasks</a>
+                </li>
+              </ul>
+            </li>
+            <!-- User Account: style can be found in dropdown.less -->
+            <li class="dropdown user user-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img src="{{ user.profile_picture.url}}" class="user-image" alt="User Image">
+                <span class="hidden-xs">{{ user.first_name}}</span>
+              </a>
+              <ul class="dropdown-menu">
+                <!-- User image -->
+                <li class="user-header">
+                  <img src="{{ user.profile_picture.url}}" class="img-circle" alt="User Image">
+
+                  <p>
+                    {{ user.first_name}} - {{ user.designation}}
+                    <small>Member since {{ user.created_at}}</small>
+                  </p>
+                </li>
+                <!-- Menu Body -->
+                <li class="user-body">
+                  <div class="row">
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Video Calls</a>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Chats</a>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Diagnosis</a>
+                    </div>
+                  </div>
+                  <!-- /.row -->
+                </li>
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                  <div class="pull-left">
+                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  </div>
+                  <div class="pull-right">
+                    <a href="/logout/" class="btn btn-default btn-flat">Sign out</a>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <!-- Control Sidebar Toggle Button -->
+            <li>
+              <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+          <div class="pull-left image">
+            <img src="{{ user.profile_picture.url }}" alt="User Image" class="img-circle"
+              style="width: 100px; height: 50px; object-fit: cover; border-radius: 50%;">
+
+          </div>
+          <div class="pull-left info">
+
+            <p>{{user.first_name}}</p>
+
+            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          </div>
+        </div>
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+              <button type="submit" name="search" id="search-btn" class="btn btn-flat"
+                style="background-color: #4CAF50; color: #FAFAFA;">
+                <i class="fa fa-search"></i>
+              </button>
+
+            </span>
+          </div>
+        </form>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+          <li class="header">MAIN NAVIGATION</li>
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-dashboard"></i> <span>Profile</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="/dashboard/"><i class="fa fa-circle-o"></i> Dashboard</a></li>
+
+            </ul>
+          </li>
+          {% comment %} <li class="treeview">
+            <a href="#">
+              <i class="fa fa-files-o"></i>
+              <span>Layout Options</span>
+              <span class="pull-right-container">
+                <span class="label label-primary pull-right">4</span>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="../layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
+              <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
+              <li><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
+              <li><a href="../layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+            </ul> {% endcomment %}
+          </li>
+          <li>
+            <a href="/">
+              <i class="fa fa-th"></i> <span>Home </span>
+              <span class="pull-right-container">
+                <small class="label pull-right bg-green">new</small>
+              </span>
+            </a>
+          </li>
+
+        </ul>
+      </section>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          User Profile
+        </h1>
+        <ol class="breadcrumb">
+          <li><a href="/home1/"><i class="fa fa-dashboard"></i> Home</a></li>
+          <!--<li><a href="#">Profile</a></li>-->
+          <li class="active">User profile</li>
+        </ol>
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+
+        <div class="row">
+          <div class="col-md-3">
+
+            <!-- Profile Image -->
+            <div class="box box-primary">
+              <div class="box-body box-profile">
+                {% if profile_picture %}
+                <img class="profile-user-img img-responsive img-circle" src="{{ profile_picture }}"
+                  alt="User profile picture" style="width: 128px; height: 128px; object-fit: cover;">
+                {% else %}
+                <span>Upload Image</span>
+                {% endif %}
+
+
+                {% if user.is_authenticated %}
+                <h3 class="profile-username text-center">{{user.first_name}}</h3>
+                {% endif %}
+
+                <p class="text-muted text-center">{{ user.designation }}</p>
+
+                <li class="list-group-item">
+                  <b>Sites</b> <a class="pull-right">{{ upload_count }}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Photo Uploads</b> <a class="pull-right">{{ photo_count }}</a>
+                </li>
+
+                <li class="list-group-item">
+                  <b>No. of Logins</b> <a class="pull-right">{{ login_count }}</a>
+                </li>
+                </ul>
+
+                <a href="/edit_profile/" class="btn btn-primary btn-block"
+                  style="background-color: #4CAF50; color: #FAFAFA; border: none;">
+                  <span class="fa fa-user"></span> <b>Edit Biodata</b>
+                </a>
+
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+            <!-- About Me Box -->
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title">About Me</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <!-- Bio -->
+                <strong><i class="fa fa-book margin-r-5"></i> Bio</strong>
+                <p class="text-muted">{{ bio }}</p>
+                <hr>
+
+                <!-- Location -->
+                <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+                <p class="text-muted">{{ location }}</p>
+                <hr>
+
+                <!-- Skills (Dynamic) -->
+                <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
+                <p>
+                  {% for skill in skills %}
+                  <span class="label label-primary">{{ skill }}</span>
+                  {% endfor %}
+                </p>
+                <hr>
+
+                <!-- Theme -->
+                <strong><i class="fa fa-file-text-o margin-r-5"></i> Theme</strong>
+                <p>{{ theme }}</p>
+              </div>
+
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-9">
+            <div class="nav-tabs-custom">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
+                <li><a href="#timeline" data-toggle="tab">Timeline</a></li>
+                <li><a href="#settings" data-toggle="tab">Direct chat</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="active tab-pane" id="activity">
+                  {% if messages %}
+                  <div class="messages">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                      {{ message }}
+                    </div>
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+                  <h2>Upload your project here</h2>
+                  <form method="POST" action="{% url 'save_project' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="live-location">Live Location (Lat, Long)</label>
+                      <input type="text" class="form-control" id="live-location" name="location"
+                        placeholder="Click to pick a location" readonly required>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="map-location">Pick from Map (Lat, Long)</label>
+                      <input type="text" class="form-control" id="map-location" name="location"
+                        placeholder="Click to pick a location" readonly required>
+                    </div>
+                    <div class="form-group">
+                      <label for="projectTitle">Project Title</label>
+                      <input type="text" class="form-control" id="projectTitle" name="projectTitle" maxlength="30"
+                        required>
+                    </div>
+                    <div class="form-group">
+                      <label for="description">Description</label>
+                      <textarea class="form-control" id="description" name="description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="status">Status</label>
+                      <select class="form-control" id="status" name="status" required>
+                        <option value="Legal Dumpsite">Legal Dumpsite</option>
+                        <option value="Illegal Dumpsite">Illegal Dumpsite</option>
+                        <option value="Suggested Dumping Point">Suggested Dumping Point</option>
+                        <option value="Leaking Sewerline">Leaking Sewerline</option>
+                      </select>
+                    </div>
+                    <!-- Photo Upload Field with Multiple Files -->
+                    <div class="form-group">
+                      <label for="photos">Upload Photos</label>
+                      <input type="file" class="form-control-file" id="photos" name="photos" accept="image/*" multiple
+                        required>
+                    </div>
+                    <button type="submit" class="btn btn-primary"
+                      style="background-color: #4CAF50; color: #FAFAFA; border: none;">
+                      Submit
+                    </button>
+                  </form>
+
+
+                  <div class="post" style="padding-top: 20px;">
+                    <div class="user-block">
+                      <img class="img-circle img-bordered-sm" src="{{ uploader_profile_picture }}" alt="User Image">
+                      <span class="username">
+                        <a href="#">{{ uploader_full_name }}</a>
+                        <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
+                      </span>
+                      <span class="description">Posted- {{ project_created_at|date:"F j, Y" }}</span>
+                    </div>
+                    <!-- /.user-block -->
+                    <div class="row margin-bottom">
+                      <div class="col-sm-6">
+                        {% if photos|length > 0 %}
+                        <img class="img-responsive custom-img" src="{{ photos.0.image.url }}" alt="Photo">
+                        {% endif %}
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-sm-6">
+                        <div class="row">
+                          <div class="col-sm-6">
+                            {% if photos|length > 1 %}
+                            <img class="img-responsive custom-img" src="{{ photos.1.image.url }}" alt="Photo">
+                            <br>
+                            {% endif %}
+                            {% if photos|length > 2 %}
+                            <img class="img-responsive custom-img" src="{{ photos.2.image.url }}" alt="Photo">
+                            {% endif %}
+                          </div>
+                          <!-- /.col -->
+                          <div class="col-sm-6">
+                            {% if photos|length > 3 %}
+                            <img class="img-responsive custom-img" src="{{ photos.3.image.url }}" alt="Photo">
+                            <br>
+                            {% endif %}
+                            {% if photos|length > 4 %}
+                            <img class="img-responsive custom-img" src="{{ photos.4.image.url }}" alt="Photo">
+                            {% endif %}
+                          </div>
+                          <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+
+                    <ul class="list-inline">
+                      <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
+                      <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
+                      </li>
+                      <li class="pull-right">
+                        <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
+                          (5)</a>
+                      </li>
+                    </ul>
+
+                    <!-- Form to update project description -->
+                    <form method="POST" action="{% url 'update_project_description' %}">
+                      {% csrf_token %}
+                      <input class="form-control input-sm" type="text" name="description"
+                        placeholder="Type new project description" value="{{ project.description }}">
+                      <button class="btn btn-primary btn-sm" type="submit" style="margin-top: 10px;">Update
+                        Description</button>
+                    </form>
+
+
+                  </div>
+
+                  <!-- /.post -->
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="timeline">
+                  <!-- The timeline -->
+                  <ul class="timeline timeline-inverse">
+                    <!-- timeline time label -->
+                    <li class="time-label">
+                      <span class="bg-red">
+                        10 Feb. 2014
+                      </span>
+                    </li>
+                    <!-- /.timeline-label -->
+                    <!-- timeline item -->
+                    <li>
+                      <i class="fa fa-envelope bg-blue"></i>
+
+                      <div class="timeline-item">
+                        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+
+                        <h3 class="timeline-header"><a href="#">Support</a> sent you an email</h3>
+
+                        <div class="timeline-body">
+                          Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                          weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                          jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+                          quora plaxo ideeli hulu weebly balihoo...
+                        </div>
+                        <div class="timeline-footer">
+                          <a class="btn btn-primary btn-xs">Read more</a>
+                          <a class="btn btn-danger btn-xs">Delete</a>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- END timeline item -->
+                    <!-- timeline item -->
+                    <li>
+                      <i class="fa fa-user bg-aqua"></i>
+
+                      <div class="timeline-item">
+                        <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
+
+                        <h3 class="timeline-header no-border"><a href="#">Sarah N</a> accepted your friend request
+                        </h3>
+                      </div>
+                    </li>
+                    <!-- END timeline item -->
+                    <!-- timeline item -->
+                    <li>
+                      <i class="fa fa-comments bg-yellow"></i>
+
+                      <div class="timeline-item">
+                        <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
+
+                        <h3 class="timeline-header"><a href="#">Dr. Magoha</a> commented on your post</h3>
+
+                        <div class="timeline-body">
+                          Take me to your consultant!
+                          No medical condition is small and neutral!
+                          We are more like family, ambitious and misunderstood!
+                        </div>
+                        <div class="timeline-footer">
+                          <a class="btn btn-warning btn-flat btn-xs">View comment</a>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- END timeline item -->
+                    <!-- timeline time label -->
+                    <li class="time-label">
+                      <span class="bg-green">
+                        3 Jan. 2014
+                      </span>
+                    </li>
+                    <!-- /.timeline-label -->
+                    <!-- timeline item -->
+                    <li>
+                      <i class="fa fa-camera bg-purple"></i>
+
+                      <div class="timeline-item">
+                        <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
+
+                        <h3 class="timeline-header"><a href="#">Mina Lulu</a> uploaded new photos</h3>
+
+                        <div class="timeline-body">
+                          <img src="http://placehold.it/150x100" alt="..." class="margin">
+                          <img src="http://placehold.it/150x100" alt="..." class="margin">
+                          <img src="http://placehold.it/150x100" alt="..." class="margin">
+                          <img src="http://placehold.it/150x100" alt="..." class="margin">
+                        </div>
+                      </div>
+                    </li>
+                    <!-- END timeline item -->
+                    <li>
+                      <i class="fa fa-clock-o bg-gray"></i>
+                    </li>
+                  </ul>
+                </div>
+                <!-- /.tab-pane -->
+
+                <div class="tab-pane" id="settings">
+                  <div class="box-header">
+                    <p>
+
+                    </p>
+                    <p>
+                    <div class="col-md-6">
+                      <!-- DIRECT CHAT SUCCESS -->
+                      <div class="box box-success direct-chat direct-chat-success">
+                        <div class="box-header with-border">
+                          <h3 class="box-title">Direct Chat</h3>
+
+                          <div class="box-tools pull-right">
+                            <span data-toggle="tooltip" title="3 New Messages" class="badge bg-green">3</span>
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contacts"
+                              data-widget="chat-pane-toggle">
+                              <i class="fa fa-comments"></i></button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                class="fa fa-times"></i></button>
+                          </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                          <!-- Conversations are loaded here -->
+                          <div class="direct-chat-messages">
+                            <!-- Message. Default to the left -->
+                            <div class="direct-chat-msg">
+                              <div class="direct-chat-info clearfix">
+                                <span class="direct-chat-name pull-left">Alex The lion</span>
+                                <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+                              </div>
+                              <!-- /.direct-chat-info -->
+                              <img class="direct-chat-img" src="{% static 'homefiles/dist/img/user1-128x128.jpg' %}"
+                                alt="Message User Image"><!-- /.direct-chat-img -->
+                              <div class="direct-chat-text">
+                                Is this template really for free? That's unbelievable!
+                              </div>
+                              <!-- /.direct-chat-text -->
+                            </div>
+                            <!-- /.direct-chat-msg -->
+
+                            <!-- Message to the right -->
+                            <div class="direct-chat-msg right">
+                              <div class="direct-chat-info clearfix">
+                                <span class="direct-chat-name pull-right">Sarah N</span>
+                                <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
+                              </div>
+                              <!-- /.direct-chat-info -->
+                              <img class="direct-chat-img" src="{% static 'homefiles/dist/img/user3-128x128.jpg' %}"
+                                alt="Message User Image"><!-- /.direct-chat-img -->
+                              <div class="direct-chat-text">
+                                You better believe it!
+                              </div>
+                              <!-- /.direct-chat-text -->
+                            </div>
+                            <!-- /.direct-chat-msg -->
+                          </div>
+                          <!--/.direct-chat-messages-->
+
+                          <!-- Contacts are loaded here -->
+                          <div class="direct-chat-contacts">
+                            <ul class="contacts-list">
+                              <li>
+                                <a href="#">
+                                  <img class="contacts-list-img"
+                                    src="{% static 'homefiles/dist/img/user1-128x128.jpg' %}" alt="User Image">
+
+                                  <div class="contacts-list-info">
+                                    <span class="contacts-list-name">
+                                      Count Dracula
+                                      <small class="contacts-list-date pull-right">2/28/2015</small>
+                                    </span>
+                                    <span class="contacts-list-msg">How have you been? I was...</span>
+                                  </div>
+                                  <!-- /.contacts-list-info -->
+                                </a>
+                              </li>
+                              <!-- End Contact Item -->
+                            </ul>
+                            <!-- /.contatcts-list -->
+                          </div>
+                          <!-- /.direct-chat-pane -->
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                          <form action="#" method="post">
+                            {% csrf_token %}
+                            <div class="input-group">
+                              <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                              <span class="input-group-btn">
+                                <button type="submit" class="btn btn-success btn-flat">Send</button>
+                              </span>
+                            </div>
+                          </form>
+                        </div>
+                        <!-- /.box-footer-->
+                      </div>
+                      <!--/.direct-chat -->
+                    </div>
+                    <!-- /.col -->
+
+                  </div>
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div>
+              <!-- /.nav-tabs-custom -->
+            </div>
+            <!-- /.col -->
+            </p>
+
+          </div>
+
+
+
+        </div>
+        <!-- /.row -->
+
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <div class="pull-right hidden-xs">
+        <b>Version</b> 1.0.0
+      </div>
+      <strong>Copyright &copy; 2024 <a href="/">ssy oay</a>.</strong> All rights
+      reserved.
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Create the tabs -->
+      <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+        <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+      </ul>
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <!-- Home tab content -->
+        <div class="tab-pane" id="control-sidebar-home-tab">
+          <h3 class="control-sidebar-heading">Recent Activity</h3>
+          <ul class="control-sidebar-menu">
+            <li>
+              <a href="javascript:void(0)">
+                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                <div class="menu-info">
+                  <h4 class="control-sidebar-subheading">Won Bowling</h4>
+
+                  <p>Will be 23 on April 24th</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <i class="menu-icon fa fa-user bg-yellow"></i>
+
+                <div class="menu-info">
+                  <h4 class="control-sidebar-subheading">SK Updated His Profile</h4>
+
+                  <p>New phone +254(700)000-000</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+                <div class="menu-info">
+                  <h4 class="control-sidebar-subheading">Norah Joined Mailing List</h4>
+
+                  <p>norah@ssyoay.com</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+                <div class="menu-info">
+                  <h4 class="control-sidebar-subheading">Job oay Executed</h4>
+
+                  <p>Execution time 5 seconds</p>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <!-- /.control-sidebar-menu -->
+
+          <h3 class="control-sidebar-heading">Tasks Progress</h3>
+          <ul class="control-sidebar-menu">
+            <li>
+              <a href="javascript:void(0)">
+                <h4 class="control-sidebar-subheading">
+                  Hiking
+                  <span class="label label-danger pull-right">70%</span>
+                </h4>
+
+                <div class="progress progress-xxs">
+                  <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <h4 class="control-sidebar-subheading">
+                  Update Checkup
+                  <span class="label label-success pull-right">95%</span>
+                </h4>
+
+                <div class="progress progress-xxs">
+                  <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <h4 class="control-sidebar-subheading">
+                  New diagnosis
+                  <span class="label label-warning pull-right">50%</span>
+                </h4>
+
+                <div class="progress progress-xxs">
+                  <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <h4 class="control-sidebar-subheading">
+                  Met friends
+                  <span class="label label-primary pull-right">68%</span>
+                </h4>
+
+                <div class="progress progress-xxs">
+                  <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <!-- /.control-sidebar-menu -->
+
+        </div>
+        <!-- /.tab-pane -->
+        <!-- Stats tab content -->
+        <div class="tab-pane" id="control-sidebar-stats-tab">Statistics</div>
+        <!-- /.tab-pane -->
+        <!-- Settings tab content -->
+        <div class="tab-pane" id="control-sidebar-settings-tab">
+          <form method="post">
+            <h3 class="control-sidebar-heading">General Settings</h3>
+
+            <div class="form-group">
+              <label class="control-sidebar-subheading">
+                Report panel usage
+                <input type="checkbox" class="pull-right" checked>
+              </label>
+
+              <p>
+                Some information about this general settings option
+              </p>
+            </div>
+            <!-- /.form-group -->
+
+            <div class="form-group">
+              <label class="control-sidebar-subheading">
+                Allow mail redirect
+                <input type="checkbox" class="pull-right" checked>
+              </label>
+
+              <p>
+                Other sets of options are available
+              </p>
+            </div>
+            <!-- /.form-group -->
+
+            <div class="form-group">
+              <label class="control-sidebar-subheading">
+                Expose avatar's name in posts
+                <input type="checkbox" class="pull-right" checked>
+              </label>
+
+              <p>
+                Allow the user to show his name in chat posts
+              </p>
+            </div>
+            <!-- /.form-group -->
+
+            <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+            <div class="form-group">
+              <label class="control-sidebar-subheading">
+                Show me as online
+                <input type="checkbox" class="pull-right" checked>
+              </label>
+            </div>
+            <!-- /.form-group -->
+
+            <div class="form-group">
+              <label class="control-sidebar-subheading">
+                Turn off notifications
+                <input type="checkbox" class="pull-right">
+              </label>
+            </div>
+            <!-- /.form-group -->
+
+            <div class="form-group">
+              <label class="control-sidebar-subheading">
+                Delete chat history
+                <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+              </label>
+            </div>
+            <!-- /.form-group -->
+          </form>
+        </div>
+        <!-- /.tab-pane -->
+      </div>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+  </div>
+  <!-- ./wrapper -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let liveLocationField = document.getElementById('live-location');
+      let mapLocationField = document.getElementById('map-location');
+      let form = document.querySelector("form");
+
+      // Get user's live location when clicking the live-location field
+      liveLocationField.addEventListener('click', function () {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            let lat = position.coords.latitude.toFixed(6);
+            let lng = position.coords.longitude.toFixed(6);
+            liveLocationField.value = `${lat}, ${lng}`;
+            mapLocationField.value = ""; // Clear map location
+          }, function (error) {
+            alert("Error getting location: " + error.message);
+          });
+        } else {
+          alert("Geolocation is not supported by this browser.");
+        }
+      });
+
+      // Redirect to the map picker when clicking the map-location field
+      mapLocationField.addEventListener('click', function () {
+        window.location.href = "{% url 'map_picker' %}";
+      });
+
+      // Get coordinates from URL after returning from map picker
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('lat') && params.has('lng')) {
+        let lat = params.get('lat');
+        let lng = params.get('lng');
+        mapLocationField.value = `${lat}, ${lng}`;
+        liveLocationField.value = ""; // Clear live location
+      }
+
+      // Before submitting, remove the empty coordinate field
+      form.addEventListener("submit", function () {
+        if (!liveLocationField.value) {
+          liveLocationField.removeAttribute("name");
+        }
+        if (!mapLocationField.value) {
+          mapLocationField.removeAttribute("name");
+        }
+      });
+    });
+  </script>
+
+
+  <script>
+    setTimeout(function () {
+      const alerts = document.querySelectorAll('.alert');
+      alerts.forEach(alert => alert.remove());
+    }, 5000); // 5 seconds
+  </script>
+
+  <!-- jQuery 3 -->
+  <script src="{% static 'homefiles/bower_components/jquery/dist/jquery.min.js' %}"></script>
+  <!-- Bootstrap 3.3.7 -->
+  <script src="{% static 'homefiles/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+  <!-- iCheck -->
+  <script src="{% static 'homefiles/plugins/iCheck/icheck.min.js' %}"></script>
+
+
+  <!-- AdminLTE App -->
+  <script src="{% static 'homefiles/dist/js/adminlte.min.js' %}"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="{% static 'homefiles/dist/js/demo.js' %}"></script>
+</body>
+
+</html>

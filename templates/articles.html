@@ -1,0 +1,143 @@
+<!-- About Section -->
+{% extends 'main.html' %}
+{% load static %}
+{% load random_color %} 
+{% block content %}
+
+<section id="articles" class="about section">
+    <p><br></p>
+
+    <!-- Section Title -->
+    <p class="fst-italic"></p> 
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Articles</h2>
+        <p>CHECK OUR BLOG ARTICLES</p>
+    </div><!-- End Section Title -->
+    
+    <div class="container">  
+        <div class="row gy-4">
+    
+            <!-- LEFT COLUMN: Latest Blog -->
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="p-3 bg-white rounded-4 h-100">
+                    <h3 class="mb-3">{{ latest_blog.title }}</h3>
+                    {% if latest_blog.uploaded_image %}
+                        <img src="{{ latest_blog.uploaded_image.url }}" alt="{{ latest_blog.title }}" class="img-fluid rounded-4 mb-3" style="width: 100%; object-fit: cover;">
+                    {% endif %}
+                    <p class="mb-4">{{ latest_blog.content|striptags|truncatewords:100 }}</p>
+                    
+                    {% if latest_blog.pk %}
+                        <a href="{% url 'article_detail' pk=latest_blog.pk %}" class="btn btn-success btn-sm mt-2">Read more</a>
+                    {% else %}
+                        <p class="text-danger">Article not found</p>
+                    {% endif %}
+    
+                    <!-- Profile Section -->
+                    <div class="d-flex align-items-center mt-3">
+                        <div class="d-flex justify-content-center align-items-center rounded-circle me-3" style="width: 40px; height: 40px; background-color: {{ latest_blog.email|random_color }};">
+                            <strong class="text-white text-uppercase">{{ latest_blog.name|slice:":2" }}</strong>
+                        </div>
+                        <div>
+                            <strong>{{ latest_blog.name }}</strong><br>
+                            <small class="text-muted">{{ latest_blog.created_at|date:"M d, Y - H:i A" }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- RIGHT COLUMN: Recent 5 Blogs Compact -->
+            <div class="col-lg-6 d-flex flex-column gap-5" data-aos="fade-up" data-aos-delay="200">
+                {% for blog in other_blogs|dictsortreversed:"created_at"|slice:":5" %}
+                    <div class="d-flex" style="gap: 30px;">
+                        {% if blog.uploaded_image %}
+                            <img src="{{ blog.uploaded_image.url }}" alt="uploaded_image" style="height: 80px; width: 100px; object-fit: cover; border-radius: 6px;">
+                        {% endif %}
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1">{{ blog.title }}</h5>
+                            <p class="mb-2" style="font-size: 0.9rem;">{{ blog.content|striptags|truncatewords:25 }}</p>
+                            
+                            {% if blog.pk %}
+                                <a href="{% url 'article_detail' pk=blog.pk %}" class="btn btn-success btn-sm mt-2">Read more</a>
+                            {% else %}
+                                <p class="text-danger">Article not found</p>
+                            {% endif %}
+    
+                            <!-- Profile Info -->
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex justify-content-center align-items-center rounded-circle me-2" style="width: 30px; height: 30px; background-color: {{ blog.email|random_color }};">
+                                    <strong class="text-white text-uppercase" style="font-size: 0.75rem;">{{ blog.name|slice:":2" }}</strong>
+                                </div>
+                                <div style="font-size: 0.8rem;">
+                                    <strong>{{ blog.name }}</strong><br>
+                                    <small class="text-muted">{{ blog.created_at|date:"M d, Y - H:i A" }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+    
+        </div>
+    </div>
+</section>
+
+
+
+<!--stats section-->
+<section id="stats" class="stats section light-background">
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+            <div class="col-lg-3 col-md-6">
+                <div class="stats-item d-flex align-items-center w-100 h-100">
+                    <i class="bi bi-emoji-smile color-blue flex-shrink-0"></i>
+                    <div>
+                        <span data-purecounter-start="0" data-purecounter-end="{{ stats.happy_clients }}"
+                            data-purecounter-duration="1" class="purecounter"></span>
+                        <p>Happy Clients</p>
+                    </div>
+                </div>
+            </div><!-- End Stats Item -->
+
+            <div class="col-lg-3 col-md-6">
+                <div class="stats-item d-flex align-items-center w-100 h-100">
+                    <i class="bi bi-journal-richtext color-orange flex-shrink-0"></i>
+                    <div>
+                        <span data-purecounter-start="0" data-purecounter-end="{{ stats.projects }}"
+                            data-purecounter-duration="1" class="purecounter"></span>
+                        <p>Projects</p>
+                    </div>
+                </div>
+            </div><!-- End Stats Item -->
+
+            <div class="col-lg-3 col-md-6">
+                <div class="stats-item d-flex align-items-center w-100 h-100">
+                    <i class="bi bi-headset color-green flex-shrink-0"></i>
+                    <div>
+                        <span data-purecounter-start="0" data-purecounter-end="{{ stats.hours_of_support }}"
+                            data-purecounter-duration="1" class="purecounter"></span>
+                        <p>Hours Of Support</p>
+                    </div>
+                </div>
+            </div><!-- End Stats Item -->
+
+            <div class="col-lg-3 col-md-6">
+                <div class="stats-item d-flex align-items-center w-100 h-100">
+                    <i class="bi bi-people color-pink flex-shrink-0"></i>
+                    <div>
+                        <span data-purecounter-start="0" data-purecounter-end="{{ stats.hard_workers }}"
+                            data-purecounter-duration="1" class="purecounter"></span>
+                        <p>Hard Workers</p>
+                    </div>
+                </div>
+            </div><!-- End Stats Item -->
+
+        </div>
+
+    </div>
+
+</section><!-- /Stats Section -->
+
+{% endblock content %}

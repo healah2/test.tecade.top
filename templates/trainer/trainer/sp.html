@@ -1,0 +1,180 @@
+{% extends 'trainer/trainer_base.html' %}
+{% load static %}
+{% block title %}Tecade | Session Plan Template{% endblock %}
+
+{% block extra_styles %}
+<style>
+    /* 1. Reset margin and padding for the body, ensuring full-page coverage */
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        font-family: 'Inter', Arial, sans-serif;
+        box-sizing: border-box;
+        background-color: #f0f0f0;
+    }
+
+    /* 2. Style the main outer table (page-filling) */
+    .main-table {
+        width: 90%;
+        height: 90vh;
+        margin: 5vh auto;
+        border-collapse: collapse;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    /* 3. Style the main outer cells */
+    .main-table th,
+    .main-table td {
+        padding: 30px;
+        border: 1px solid #ddd;
+        text-align: left;
+        font-size: 20px;
+        vertical-align: top;
+        background-color: white;
+        line-height: 1.5;
+    }
+
+    /* Style the header for distinction */
+    .main-table th {
+        background-color: #4a5568;
+        color: white;
+        text-align: center;
+        font-size: 24px;
+        height: 8%;
+        border-bottom: 3px solid #333;
+    }
+
+    /* 4. Nested Table Styling (for Row 5 - COMPACT) */
+    .nested-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        border: 1px solid #bbb;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    /* Compact cell styling for nested table */
+    .nested-table th,
+    .nested-table td {
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        vertical-align: middle;
+        text-align: left;
+    }
+
+    /* Compact header styling for nested table */
+    .nested-table th {
+        background-color: #e2e8f0;
+        color: #2d3748;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    /* Styling for the filler lines/blanks */
+    .blank-line {
+        border-bottom: 2px solid #333;
+        display: inline-block;
+        width: 50%;
+        margin-left: 10px;
+    }
+
+    /* Styling for bold titles in the outer cells */
+    .section-title {
+        font-weight: bold;
+        color: #2c5282;
+        display: block;
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content">
+        <table class="main-table">
+            <thead>
+                <tr>
+                    <th>Session Plan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Session Plan Title: <span class="blank-line" style="width: 30%;"></span> Duration:__ min
+                        &nbsp;&nbsp;&nbsp;
+                        Date: <span class="blank-line" style="width: 15%;"></span>
+                        &nbsp;&nbsp;&nbsp;
+                        Presenter name: <span class="blank-line" style="width: 20%;"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Bridge-in: <span class="blank-line" style="width: 10%;"></span> minutes
+                        <br><br>
+                        <em style="color: #555;">/*Use any one of Active learning strategies here*/</em>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span class="section-title">Learning Expectation</span>
+                        By the end of the session, the trainee will:
+                        <span class="blank-line" style="width: 100%;"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Pre-assessment (<span class="blank-line" style="width: 10%;"></span> minutes)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span class="section-title">🛠️ Participatory Learning</span>
+                        <table class="nested-table" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th style="width:10%;">Time (min)</th>
+                                    <th style="width:30%;">Trainer Activities</th>
+                                    <th style="width:30%;">Trainee Activities</th>
+                                    <th style="width:30%;">Learning Aids/Materials</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="height: 30px;">&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Post-Assessment: <span class="blank-line" style="width: 15%;"></span> minutes
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Summary/Closure: <span class="blank-line" style="width: 15%;"></span> minutes
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+{% endblock %}

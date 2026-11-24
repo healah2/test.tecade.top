@@ -1,0 +1,247 @@
+{% extends 'trainer/trainer_base.html' %}
+{% load static %}
+
+{% block title %}Portfolio Overview — Trainer{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+<link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Portfolio Overview
+            <small>Trainees in your units</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{% url 'staff_dashboard' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li class="active">Portfolio Overview</li>
+        </ol>
+    </section>
+
+    <section class="content">
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        {% if no_units %}
+        <div class="box box-warning">
+            <div class="box-body">
+                <div class="text-center" style="padding: 40px 0;">
+                    <i class="fa fa-exclamation-triangle fa-3x text-warning"></i>
+                    <h3>No units assigned</h3>
+                    <p class="text-muted">
+                        You have no units assigned yet.
+                        Contact your HOD or DP Academics to be assigned to units.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        {% elif not trainee_summaries %}
+        <div class="box box-info">
+            <div class="box-body">
+                <div class="text-center" style="padding: 40px 0;">
+                    <i class="fa fa-folder-open fa-3x text-muted"></i>
+                    <h3>No evidence uploaded yet</h3>
+                    <p class="text-muted">
+                        No trainees have uploaded evidence for your units yet.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+
+        <!-- Summary stats -->
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <div class="info-box">
+                    <span class="info-box-icon bg-blue">
+                        <i class="fa fa-users"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Trainees with evidence</span>
+                        <span class="info-box-number">{{ trainee_summaries|length }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="info-box">
+                    <span class="info-box-icon bg-green">
+                        <i class="fa fa-check-circle"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Fully assessed</span>
+                        <span class="info-box-number">
+                            {% with fully=0 %}
+                            {% for item in trainee_summaries %}
+                            {% for unit_name, unit_data in item.units.items %}
+                            {% if unit_data.assessed == unit_data.total and unit_data.total > 0 %}
+                            {% with fully=fully|add:1 %}{% endwith %}
+                            {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                            {% endwith %}
+                            —
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="info-box">
+                    <span class="info-box-icon bg-yellow">
+                        <i class="fa fa-clock-o"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Pending assessment</span>
+                        <span class="info-box-number">
+                            {% for item in trainee_summaries %}
+                            {% for unit_name, unit_data in item.units.items %}
+                            {% if unit_data.assessed < unit_data.total %} pending {% endif %} {% endfor %} {% endfor %}
+                                — </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="info-box">
+                    <span class="info-box-icon bg-purple">
+                        <i class="fa fa-history"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Assessment history</span>
+                        <span class="info-box-number">
+                            <a href="{% url 'trainer_assessment_history' %}" class="text-white">View</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trainee list -->
+        {% for item in trainee_summaries %}
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    <i class="fa fa-user-o"></i>
+                    {{ item.trainee.get_full_name|default:item.trainee.username }}
+                </h3>
+                <div class="box-tools pull-right">
+                    <a href="{% url 'trainer_review_trainee' item.trainee.id %}" class="btn btn-primary btn-sm">
+                        <i class="fa fa-eye"></i> Review Portfolio
+                    </a>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Unit</th>
+                                <th class="text-center">FA1</th>
+                                <th class="text-center">FA2</th>
+                                <th class="text-center">FA3</th>
+                                <th class="text-center">Final</th>
+                                <th class="text-center">Total</th>
+                                <th class="text-center">Assessed</th>
+                                <th class="text-center">Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for unit_name, unit_data in item.units.items %}
+                            <tr>
+                                <td><strong>{{ unit_name }}</strong></td>
+                                <td class="text-center">
+                                    {% if unit_data.fa1 > 0 %}
+                                    <span class="label label-info">{{ unit_data.fa1 }}</span>
+                                    {% else %}
+                                    <span class="text-muted">—</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    {% if unit_data.fa2 > 0 %}
+                                    <span class="label label-info">{{ unit_data.fa2 }}</span>
+                                    {% else %}
+                                    <span class="text-muted">—</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    {% if unit_data.fa3 > 0 %}
+                                    <span class="label label-info">{{ unit_data.fa3 }}</span>
+                                    {% else %}
+                                    <span class="text-muted">—</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    {% if unit_data.final > 0 %}
+                                    <span class="label label-warning">{{ unit_data.final }}</span>
+                                    {% else %}
+                                    <span class="text-muted">—</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    <strong>{{ unit_data.total }}</strong>
+                                </td>
+                                <td class="text-center">
+                                    {% if unit_data.assessed == unit_data.total and unit_data.total > 0 %}
+                                    <span class="label label-success">
+                                        {{ unit_data.assessed }} / {{ unit_data.total }}
+                                    </span>
+                                    {% else %}
+                                    <span class="label label-warning">
+                                        {{ unit_data.assessed }} / {{ unit_data.total }}
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if unit_data.total > 0 %}
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar
+                                            {% if unit_data.assessed == unit_data.total %}
+                                                progress-bar-success
+                                            {% else %}
+                                                progress-bar-warning
+                                            {% endif %}"
+                                            style="width: {% widthratio unit_data.assessed unit_data.total 100 %}%">
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="box-footer text-right">
+                <a href="{% url 'trainer_review_trainee' item.trainee.id %}" class="btn btn-primary btn-sm">
+                    <i class="fa fa-pencil"></i> Open & Assess
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% endif %}
+
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'dist/js/app.min.js' %}"></script>
+{% endblock %}

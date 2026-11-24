@@ -1,0 +1,99 @@
+<!-- Portfolio Details Section -->
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  .swiper-slide img {
+    width: 100%;
+    height: 600px;
+    /* or any consistent height you prefer */
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+  }
+</style>
+
+
+<section id="portfolio-details" class="portfolio-details section">
+
+  <p><br></p>
+
+  <!-- Section Title -->
+  <p class="fst-italic"></p>
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Portfolio-details</h2>
+    <p>Portfolio Details</p>
+  </div><!-- End Section Title -->
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+    <div class="row gy-4">
+
+      <!-- Swiper Image Slider (Portfolio Images) -->
+      <div class="col-lg-8">
+        <div class="portfolio-details-slider swiper init-swiper">
+
+          <script type="application/json" class="swiper-config">
+            {
+              "loop": true,
+              "speed": 600,
+              "autoplay": {
+                "delay": 5000
+              },
+              "slidesPerView": "auto",
+              "pagination": {
+                "el": ".swiper-pagination",
+                "type": "bullets",
+                "clickable": true
+              }
+            }
+          </script>
+
+          <div class="swiper-wrapper align-items-center">
+            <!-- Cover Photo -->
+            <div class="swiper-slide">
+              <img src="{{ course.cover_photo.url }}" alt="Cover photo of {{ course.course_name }}">
+            </div>
+
+            <!-- Additional Photos -->
+            {% for image in images %}
+            <div class="swiper-slide">
+              <img src="{{ image.image.url }}" alt="Portfolio image for {{ course.course_name }}">
+            </div>
+            {% endfor %}
+          </div>
+
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+
+      <!-- Portfolio Info and Description -->
+      <div class="col-lg-4">
+        <div class="portfolio-info" data-aos="fade-up" data-aos-delay="200">
+          <h3>Project information</h3>
+          <ul>
+            <li><strong>Name</strong>: {{ course.course_name }}</li>
+            <li><strong>Department</strong>: {{ course.department.department_name }}</li>
+            <li><strong>Levels Offered</strong>:
+              {% for level in course.levels %}
+              {{ level }}{% if not forloop.last %}, {% endif %}
+              {% empty %}
+              N/A
+              {% endfor %}
+          </ul>
+        </div>
+
+        <div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">
+          <h2>Project Description</h2> <!-- Static heading -->
+          <p>{{ course.course_description }}</p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+</section><!-- /Portfolio Details Section -->
+{% endblock content %}

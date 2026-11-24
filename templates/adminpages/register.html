@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ssy.oayouthkenya | Sign Up</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="{% static 'homefiles/bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'homefiles/bower_components/font-awesome/css/font-awesome.min.css' %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="{% static 'homefiles/bower_components/Ionicons/css/ionicons.min.css' %}">
+  <!-- Form style -->
+  <link rel="stylesheet" href="{% static 'homefiles/bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'homefiles/dist/css/AdminLTE.min.css' %}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{% static 'homefiles/plugins/iCheck/square/blue.css' %}">
+  <!-- Google Font -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <style>
+    /* Make the input fields have a green border and background */
+    .form-control {
+      border: 2px solid #228B22 !important;
+      /* Dark green border */
+      background-color: #E6F4EA !important;
+      /* Light green background */
+      color: #155724 !important;
+      /* Dark green text */
+    }
+
+    /* Change input placeholders to green */
+    .form-control::placeholder {
+      color: #155724 !important;
+    }
+
+    /* Change the checkbox color */
+    .icheckbox_square-blue,
+    .iradio_square-blue {
+      background-color: #228B22 !important;
+      /* Green background */
+      border-color: #228B22 !important;
+    }
+
+    /* Change the submit button to green */
+    .btn-primary {
+      background-color: #228B22 !important;
+      border-color: #1E7E34 !important;
+    }
+
+    .btn-primary:hover {
+      background-color: #1E7E34 !important;
+    }
+
+    /* Change the links to green */
+    a {
+      color: #228B22 !important;
+    }
+
+    a:hover {
+      color: #1E7E34 !important;
+    }
+
+    /* Make social buttons more visually consistent */
+    .btn-facebook {
+      background-color: #3b5998 !important;
+      /* Keep Facebook blue */
+      color: white !important;
+    }
+
+    .btn-google {
+      background-color: #db4437 !important;
+      /* Keep Google red */
+      color: white !important;
+    }
+  </style>
+
+
+</head>
+
+<body class="hold-transition register-page">
+  {% if success %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Hello {{ full_name }}</strong> Registration status: {{ success }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endif %}
+  <div class="register-box">
+    <div class="register-logo">
+      <a href="/"><b>Nairo</b>green</a>
+    </div>
+
+    <div class="register-box-body">
+      <p class="login-box-msg">Register a new membership</p>
+
+      <form method="POST" action="/register/">
+        {% csrf_token %}
+        <div class="form-group has-feedback">
+          {{ form.full_name }}
+          <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          {{ form.email }}
+          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          {{ form.phone_no }}
+          <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          {{ form.password1 }}
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          {{ form.password2 }}
+          <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+        </div>
+        <div class="row text-center">
+          <div class="col-xs-8">
+            <div class="checkbox icheck">
+              <label>
+                <input type="checkbox" id="terms-checkbox"> I agree to the <a href="#">terms</a>
+              </label>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+          </div>
+        </div>
+      </form>
+      {{ form.errors }}
+      <div class="social-auth-links text-center">
+        <p>- OR -</p>
+        <a href="/accounts/" class="btn btn-block btn-social btn-facebook btn-flat">
+          <i class="fa fa-facebook"></i> Sign up using Facebook
+        </a>
+        <a href="#" class="btn btn-block btn-social btn-google btn-flat">
+          <i class="fa fa-google-plus"></i> Sign up using Google+
+        </a>
+      </div>
+
+      <a href="/login/" class="text-center">I already have a membership</a>
+    </div>
+  </div>
+
+  <!-- jQuery 3 -->
+  <script src="{% static 'homefiles/bower_components/jquery/dist/jquery.min.js' %}"></script>
+  <!-- Bootstrap 3.3.7 -->
+  <script src="{% static 'homefiles/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+  <!-- iCheck -->
+  <script src="{% static 'homefiles/plugins/iCheck/icheck.min.js' %}"></script>
+  <script>
+    $(function () {
+      $('input').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue',
+        increaseArea: '20%' /* optional */
+      });
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelector("form").addEventListener("submit", function (event) {
+        var termsCheckbox = document.getElementById("terms-checkbox");
+        if (!termsCheckbox.checked) {
+          event.preventDefault(); // Prevent form submission
+          alert("You must agree to the terms and conditions before registering.");
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

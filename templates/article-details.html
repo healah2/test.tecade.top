@@ -1,0 +1,47 @@
+{% extends 'main.html' %}
+{% load random_color %} 
+{% block content %}
+
+<section class="blog-detail section py-5 border-bottom">
+    <div class="container">
+        <div class="row gy-4">
+
+            <!-- Blog Image -->
+            <div class="col-lg-8">
+                {% if blog.uploaded_image %}
+                    <img src="{{ blog.uploaded_image.url }}" alt="{{ blog.title }}" class="img-fluid rounded">
+                {% endif %}
+            </div>
+
+            <!-- Blog Content -->
+            <div class="col-lg-4">
+                <h3>{{ blog.title }}</h3>
+                <p>{{ blog.content|safe }}</p>
+
+                <!-- Author Info -->
+                <div class="d-flex align-items-center">
+                    <div class="d-flex justify-content-center align-items-center rounded-circle me-3" style="width: 40px; height: 40px; background-color: {{ blog.email|random_color }};">
+                        <strong class="text-white text-uppercase">{{ blog.name|slice:":2" }}</strong>
+                    </div>
+                    <div>
+                        <strong>{{ blog.name }}</strong><br>
+                        <small class="text-muted">{{ blog.created_at|date:"M d, Y - H:i A" }}</small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Pagination: View More Button -->
+<div class="text-center my-4">
+    {% if blogs.has_next %}
+        <a href="?page={{ blogs.next_page_number }}" class="btn btn-outline-success"
+           style="font-size: 1.2rem; padding: 10px 20px; display: inline-block; border-radius: 5px; background-color: #649676 !important; color: white !important; transition: background-color 0.3s ease !important;">
+            View More Articles
+        </a>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends 'trainer/trainer_base.html' %}
+{% load static %}
+{% block title %}Tecade | Generate Session Plan{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+<link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>Attendance Records</h1>
+        <p>Review attendance entries linked to session plans.</p>
+    </section>
+
+    <section class="content">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Attendance History</h3>
+                <div class="box-tools pull-right">
+                    <a href="{% url 'create_attendance' %}" class="btn btn-success btn-sm">New Attendance</a>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Class</th>
+                            <th>Unit</th>
+                            <th>Session</th>
+                            <th>Venue</th>
+                            <th>Status</th>
+                            <th>QR Code</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for attendance in attendances %}
+                        <tr>
+                            <td>{{ attendance.date }}</td>
+                            <td>{{ attendance.start_time }} - {{ attendance.end_time }}</td>
+                            <td>{{ attendance.assignment.class_slot.slot }}</td>
+                            <td>{{ attendance.unit.unit_of_competency }}</td>
+                            <td>{{ attendance.session_plan.session_title }}</td>
+                            <td>{{ attendance.venue }}</td>
+                            <td>{{ attendance.get_current_status }}</td>
+                            <td><a href="{% url 'attendance_qrcode' attendance.id %}" class="btn btn-xs btn-info" target="_blank"><i class="fa fa-qrcode"></i> View QR</a></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center">No attendance records yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'dist/js/app.min.js' %}"></script>
+
+<script>
+    const unitSelect = document.getElementById('unit_id');
+    const sessionSelect = document.getElementById('session_title');
+    const expectationContainer = document.getElementById('expectation_container');
+    const participatoryTable = document.querySelector('#participatory_table tbody');
+
+    // Reload page with selected unit
+    unitSelect.addEventListener('change', function () {
+        if (this.value) {
+            window.location.href = `?unit_id=${this.value}`;
+        }
+    });
+
+    // Load session data into form
+    sessionSelect.addEventListener('change', function () {
+        const selected = this.options[this.selectedIndex];
+
+        // ---------------------------
+        // HANDLE MULTIPLE EXPECTATIONS
+        // ---------------------------
+        expectationContainer.innerHTML = "";
+        let expectations = [];
+
+        try {
+            expectations = JSON.parse(selected.dataset.expectations || "[]");
+        } catch {
+            expectations = [];
+        }
+
+        expectations.forEach(exp => {
+            expectationContainer.innerHTML += `
+                <textarea name="expectation[]" class="form-control" rows="2" readonly>${exp}</textarea><br>
+            `;
+        });
+
+        // ---------------------------
+        // PARTICIPATORY LEARNING
+        // ---------------------------
+        participatoryTable.innerHTML = "";
+
+        const trainers = (selected.dataset.trainer || '').split('||').filter(x => x.trim() !== "");
+        const trainees = (selected.dataset.trainee || '').split('||').filter(x => x.trim() !== "");
+        const resources = (selected.dataset.resources || '').split('||').filter(x => x.trim() !== "");
+
+        const maxRows = Math.max(trainers.length, trainees.length, resources.length);
+
+        for (let i = 0; i < maxRows; i++) {
+            const t_trainer = trainers[i] || "";
+            const t_trainee = trainees[i] || "";
+            const t_resource = resources[i] || "";
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><input type="text" name="time[]" class="form-control" style="width:90px;"></td>
+                <td><input type="text" name="trainer_activities[]" class="form-control" value="${t_trainer}"></td>
+                <td><input type="text" name="trainee_activities[]" class="form-control" value="${t_trainee}"></td>
+                <td><input type="text" name="resources[]" class="form-control" value="${t_resource}"></td>
+            `;
+            participatoryTable.appendChild(row);
+        }
+    });
+
+    // Keep selected unit after reload
+    const params = new URLSearchParams(window.location.search);
+    const selectedUnitId = params.get("unit_id");
+    if (selectedUnitId) {
+        unitSelect.value = selectedUnitId;
+    }
+</script>
+{% endblock %}

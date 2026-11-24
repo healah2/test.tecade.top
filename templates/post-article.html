@@ -1,0 +1,148 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<section id="blog" class="blog section-bg">
+  <div class="container" data-aos="fade-up">
+
+    <!-- BLOG FORM -->
+    <div class="row mb-5">
+      <div class="col-lg-12">
+        <h2 class="text-center mb-4">Post a Blog Article</h2>
+        <form method="POST" enctype="multipart/form-data" id="blogForm" class="p-4 bg-white shadow rounded-4">
+          {% csrf_token %}
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="id_name" class="form-label">Your Name</label>
+              <input type="text" name="name" id="id_name" class="form-control" placeholder="Enter your name" required>
+            </div>
+            <div class="col-md-6">
+              <label for="id_email" class="form-label">Your Email</label>
+              <input type="email" name="email" id="id_email" class="form-control" placeholder="Enter your email" required>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="id_title" class="form-label">Blog Title</label>
+            <input type="text" name="title" id="id_title" class="form-control" placeholder="Enter blog title" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="id_content" class="form-label">Content</label>
+            <textarea name="content" id="id_content" class="form-control ckeditor" rows="10" placeholder="Write your blog here..."></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="customImageUpload" class="form-label">Upload Image</label>
+            <input type="file" id="customImageUpload" accept="image/*" class="form-control" name="uploaded_image">
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-success px-4">Post Blog</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+<!-- Optional styling to resize uploaded images inside CKEditor -->
+<style>
+  .ck-content img {
+    max-width: 200px;
+    height: auto;
+    display: block;
+    margin: 10px 0;
+  }
+
+  form-control ckeditor {
+    max-width: 100px;
+    height: auto;
+    display: block; 
+  }
+</style>
+<script src="https://cdn.ckeditor.com/ckeditor5/35.3.0/classic/ckeditor.js"></script>
+<script>
+  let blogEditor;
+  ClassicEditor
+    .create(document.querySelector('#id_content'), {
+      placeholder: 'Write your blog here...'
+    })
+    .then(editor => { blogEditor = editor; })
+    .catch(error => { console.error(error); });
+
+  document.getElementById('blogForm').addEventListener('submit', function () {
+    document.querySelector('#id_content').value = blogEditor.getData();
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById('blogForm');
+    const imageInput = document.getElementById('customImageUpload');
+
+    // Create preview container
+    const previewContainer = document.createElement('div');
+    previewContainer.style.margin = '10px 0';
+    form.insertBefore(previewContainer, form.querySelector('.text-center'));
+
+    // Handle image preview and removal
+    imageInput.addEventListener('change', function () {
+      const file = this.files[0];
+      previewContainer.innerHTML = '';
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const previewImage = document.createElement('img');
+          previewImage.src = e.target.result;
+          previewImage.style.width = '80px';
+          previewImage.style.height = '60px';
+          previewImage.style.objectFit = 'cover';
+          previewImage.style.borderRadius = '5px';
+          previewImage.style.marginRight = '10px';
+
+          const removeBtn = document.createElement('button');
+          removeBtn.textContent = 'Remove';
+          removeBtn.type = 'button';
+          removeBtn.className = 'btn btn-sm btn-danger ms-2';
+          removeBtn.onclick = function () {
+            imageInput.value = '';
+            previewContainer.innerHTML = '';
+          };
+
+          previewContainer.appendChild(previewImage);
+          previewContainer.appendChild(removeBtn);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Form submission logic with success message and delay
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Sync CKEditor content
+      document.querySelector('#id_content').value = blogEditor.getData();
+
+      // Create and show success message
+      const successDiv = document.createElement('div');
+      successDiv.className = 'alert alert-success text-center';
+      successDiv.style.fontSize = '1.2rem';
+      successDiv.style.position = 'fixed';
+      successDiv.style.top = '50%';
+      successDiv.style.left = '50%';
+      successDiv.style.transform = 'translate(-50%, -50%)';
+      successDiv.style.zIndex = '9999';
+      successDiv.textContent = 'Your blog has been submitted successfully...!';
+      document.body.appendChild(successDiv);
+
+      // Wait 10 seconds before submitting
+      setTimeout(() => {
+        successDiv.remove();
+        form.submit(); // Now it will submit with image and content
+      }, 5000); 
+    });
+  });
+</script>
+
+  
+{% endblock content %}

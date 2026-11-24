@@ -1,0 +1,279 @@
+{% extends 'hod/hod_base.html' %}
+{% load static %}
+
+{% block title %}Edit Unit — HOD{% endblock %}
+{% load custom_filters %}
+{% block extra_styles %}
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+<link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<style>
+    .weight-total {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .weight-total.ok {
+        color: #00a65a;
+    }
+
+    .weight-total.error {
+        color: #dd4b39;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Edit Unit
+            <small>{{ unit.code }} — {{ unit.name }}</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="{% url 'hod_dashboard' %}">
+                    <i class="fa fa-dashboard"></i> Dashboard
+                </a>
+            </li>
+            <li class="active">Edit Unit</li>
+        </ol>
+    </section>
+
+    <section class="content">
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">
+                            <i class="fa fa-pencil"></i> Edit Unit Details
+                        </h3>
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="box-body">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label>Course</label>
+                                        <select name="course" class="form-control">
+                                            {% for course in courses %}
+                                            <option value="{{ course.id }}" {{ course.id|is_selected:selected_course_id
+                                                }}>
+                                                {{ course.name }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Term</label>
+                                        <select name="term" class="form-control">
+                                            <option value="1" {{ unit.term|is_selected:"1" }}>Term 1</option>
+                                            <option value="2" {{ unit.term|is_selected:"2" }}>Term 2</option>
+                                            <option value="3" {{ unit.term|is_selected:"3" }}>Term 3</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label>Unit Name</label>
+                                        <input type="text" name="name" class="form-control" value="{{ unit.name }}"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Unit Code</label>
+                                        <input type="text" name="code" class="form-control" value="{{ unit.code }}"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Contact Hours</label>
+                                        <input type="number" name="hours" class="form-control" value="{{ unit.hours }}"
+                                            min="1">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Assigned Trainer</label>
+                                        <select name="trainer" class="form-control">
+                                            <option value="">-- Unassigned --</option>
+                                            {% for trainer in trainers %}
+                                            <option value="{{ trainer.id }}" {{ unit.trainer.id|is_selected:trainer.id
+                                                }}>
+                                                {{ trainer.first_name }} {{ trainer.last_name }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box box-default">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">
+                                        Assessment Weightings
+                                        <small>must add up to 100%</small>
+                                    </h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>FA1 %</label>
+                                                <input type="number" name="fa1_weight" class="form-control weight-input"
+                                                    value="{{ unit.fa1_weight }}" min="0" max="100">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>FA2 %</label>
+                                                <input type="number" name="fa2_weight" class="form-control weight-input"
+                                                    value="{{ unit.fa2_weight }}" min="0" max="100">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>FA3 %</label>
+                                                <input type="number" name="fa3_weight" class="form-control weight-input"
+                                                    value="{{ unit.fa3_weight }}" min="0" max="100">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Final %</label>
+                                                <input type="number" name="final_weight"
+                                                    class="form-control weight-input" value="{{ unit.final_weight }}"
+                                                    min="0" max="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        Total:
+                                        <span id="weightTotal" class="weight-total
+                                              {% if unit.total_weight == 100 %}ok{% else %}error{% endif %}">
+                                            {{ unit.total_weight }}%
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-warning" id="submitBtn">
+                                <i class="fa fa-save"></i> Update Unit
+                            </button>
+                            <a href="{% url 'hod_dashboard' %}" class="btn btn-default">
+                                Cancel
+                            </a>
+                            <form method="post" action="{% url 'hod_delete_unit' unit.id %}" style="display:inline;"
+                                onsubmit="return confirm('Permanently delete {{ unit.name }}?')">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger pull-right">
+                                    <i class="fa fa-trash"></i> Delete Unit
+                                </button>
+                            </form>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">
+                            <i class="fa fa-info-circle"></i> Current Details
+                        </h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-condensed">
+                            <tr>
+                                <td><strong>Code</strong></td>
+                                <td>{{ unit.code }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Course</strong></td>
+                                <td>{{ unit.course.name }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Term</strong></td>
+                                <td>Term {{ unit.term }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Hours</strong></td>
+                                <td>{{ unit.hours }} hrs</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Trainer</strong></td>
+                                <td>
+                                    {% if unit.trainer %}
+                                    {{ unit.trainer.first_name }}
+                                    {{ unit.trainer.last_name }}
+                                    {% else %}
+                                    <span class="text-muted">Not assigned</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Created</strong></td>
+                                <td>{{ unit.date_created|date:"M d, Y" }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'dist/js/app.min.js' %}"></script>
+<script>
+    $(function () {
+        function updateTotal() {
+            var total = 0;
+            $('.weight-input').each(function () {
+                total += parseInt($(this).val()) || 0;
+            });
+            var $span = $('#weightTotal');
+            $span.text(total + '%');
+            if (total === 100) {
+                $span.removeClass('error').addClass('ok');
+                $('#submitBtn').prop('disabled', false);
+            } else {
+                $span.removeClass('ok').addClass('error');
+                $('#submitBtn').prop('disabled', true);
+            }
+        }
+
+        $('.weight-input').on('input', updateTotal);
+        updateTotal();
+    });
+</script>
+{% endblock %}

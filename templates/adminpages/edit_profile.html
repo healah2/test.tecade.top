@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Biodata</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.17.0/tagify.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.17.0/tagify.min.js"></script>
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h2>Edit Biodata</h2>
+
+        <!-- Display messages (success/error) -->
+        {% if messages %}
+            <div class="alert alert-info">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Profile Picture Field -->
+            <div class="mb-3">
+                <label for="profile_picture" class="form-label">Profile Picture</label>
+                {{ form.profile_picture }}  <!-- Rendering profile picture field -->
+                {% if form.profile_picture.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.profile_picture.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Bio Field -->
+            <div class="mb-3">
+                <label for="bio" class="form-label">Bio</label>
+                {{ form.bio }}  <!-- Rendering bio field -->
+                {% if form.bio.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.bio.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Location Field -->
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                {{ form.location }}  <!-- Rendering location field -->
+                {% if form.location.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.location.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Theme Field -->
+            <div class="mb-3">
+                <label for="theme" class="form-label">Theme</label>
+                <input type="text" class="form-control" name="theme" id="theme" value="{{ form.theme.value }}" placeholder="Enter theme">
+                {% if form.theme.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.theme.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Designation Field -->
+            <div class="mb-3">
+                <label for="designation" class="form-label">Designation</label>
+                <input type="text" class="form-control" name="designation" id="designation" value="{{ form.designation.value }}" placeholder="Enter designation">
+                {% if form.designation.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.designation.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Skills Field (using Tagify) -->
+            <div class="mb-3">
+                <label for="skills" class="form-label">Skills</label>
+                <input type="text" id="skills-input" name="skills" value="{{ form.skills.value }}" placeholder="Enter skills" class="form-control"/>
+                {% if form.skills.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.skills.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
+
+    <script>
+        // Initialize Tagify for the skills input
+        const input = document.querySelector('#skills-input');
+        const tagify = new Tagify(input, {
+            whitelist: [], // Optionally provide suggestions
+            dropdown: {
+                enabled: 0 // Disable suggestions dropdown
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,224 @@
+{% extends 'trainer/trainer_base.html' %} {% load static %} {% block title %}Tecade | My Classes{% endblock %} {% block extra_styles %}
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+<!-- Font Awesome -->
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
+/>
+<!-- Ionicons -->
+<link
+  rel="stylesheet"
+  href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+/>
+<!-- Theme style -->
+<link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}" />
+<!-- AdminLTE Skins -->
+<link
+  rel="stylesheet"
+  href="{% static 'dist/css/skins/_all-skins.min.css' %}"
+/>
+
+<style>
+  .class-card {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition:
+      box-shadow 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .class-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .class-card-header {
+    border-bottom: 2px solid #3c8dbc;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+
+  .class-card-header h4 {
+    margin: 0;
+    color: #3c8dbc;
+    font-weight: bold;
+  }
+
+  .class-info {
+    margin-bottom: 10px;
+  }
+
+  .class-info-label {
+    font-weight: bold;
+    color: #555;
+    display: inline-block;
+    width: 150px;
+  }
+
+  .class-info-value {
+    color: #333;
+  }
+
+  .units-badge {
+    display: inline-block;
+    background-color: #3c8dbc;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-weight: bold;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+  }
+
+  .empty-state i {
+    font-size: 48px;
+    margin-bottom: 20px;
+    opacity: 0.5;
+  }
+</style>
+
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+{% endblock %} {% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>My Classes</h1>
+    <ol class="breadcrumb">
+      <li>
+        <a href="{% url 'staff_dashboard' %}"
+          ><i class="fa fa-dashboard"></i> Dashboard</a
+        >
+      </li>
+      <li class="active">My Classes</li>
+    </ol>
+  </section>
+
+  <section class="content">
+    {% if messages %} {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible">
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-hidden="true"
+      >
+        ×
+      </button>
+      <h4><i class="icon fa fa-check"></i> Alert!</h4>
+      {{ message }}
+    </div>
+    {% endfor %} {% endif %}
+
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Assigned Classes</h3>
+      </div>
+
+      <div class="box-body">
+        {% if assignments %}
+        <div class="row">
+          {% for assignment in assignments %}
+          <div class="col-md-6 col-lg-4">
+            <div class="class-card">
+              <div class="class-card-header">
+                <h4>
+                  <i class="fa fa-graduation-cap"></i>
+                  {{ assignment.class_slot.slot }}
+                </h4>
+              </div>
+
+              <div class="class-info">
+                <span class="class-info-label">Course:</span>
+                <span class="class-info-value"
+                  >{{ assignment.course.name }}</span
+                >
+              </div>
+
+              <div class="class-info">
+                <span class="class-info-label">Intake:</span>
+                <span class="class-info-value">
+                  {{ assignment.class_slot.intake|date:"M Y" }}
+                </span>
+              </div>
+
+              <div class="class-info">
+                <span class="class-info-label">Units Assigned:</span>
+                <span class="class-info-value">
+                  <span class="units-badge">
+                    {{ assignment.course_units.count }}
+                  </span>
+                </span>
+              </div>
+
+              <div class="class-info">
+                <span class="class-info-label">Level:</span>
+                <span class="class-info-value"
+                  >{{ assignment.course.level }}</span
+                >
+              </div>
+
+              <hr style="margin: 15px 0" />
+
+              <div>
+                <a
+                  href="{% url 'trainer_course_units' assignment.id %}"
+                  class="btn btn-primary btn-sm"
+                >
+                  <i class="fa fa-book"></i> Units
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+          <i class="fa fa-folder-open"></i>
+          <h3>No Classes Assigned</h3>
+          <p>
+            You don't have any classes assigned yet. Contact your HOD to assign
+            classes to you.
+          </p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+</div>
+
+{% endblock %} {% block extra_scripts %}
+
+<!-- jQuery 2.1.4 -->
+<script src="{% static 'plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<!-- SlimScroll -->
+<script src="{% static 'plugins/slimScroll/jquery.slimscroll.min.js' %}"></script>
+<!-- FastClick -->
+<script src="{% static 'plugins/fastclick/fastclick.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/app.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dist/js/demo.js' %}"></script>
+
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover();
+  });
+</script>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+<!-- Team Section -->
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<form method="POST" enctype="multipart/form-data" class="p-4 shadow rounded" style="background-color: #f8f9fa;">
+    {% csrf_token %}
+    <h4 style="color: navy;">Update Team Member</h4>
+
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-control" name="name" value="{{ member.name }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Designation</label>
+        <input type="text" class="form-control" name="designation" value="{{ member.designation }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Current Image</label><br>
+        <img src="{{ member.image.url }}" alt="{{ member.name }}" width="120" style="border-radius: 8px;"><br><br>
+
+        <label class="form-label">Upload New Image (optional)</label>
+        <input type="file" class="form-control" name="image">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" style="color: #001f3f;">WhatsApp Number</label>
+        <div class="input-group">
+          <select class="form-select rounded-3 border-2" name="country_code" style="max-width: 100px;">
+            <option value="254" selected>+254</option>
+            <option value="255">+255</option>
+            <option value="256">+256</option>
+            <option value="250">+250</option>
+            <!-- Add more country codes as needed -->
+          </select>
+          <input 
+            type="text" 
+            class="form-control rounded-3 border-2" 
+            name="whatsapp_number" 
+            placeholder="712345678" 
+            pattern="[0-9]{9}" 
+            title="Enter 9-digit phone number"
+            required
+          >
+        </div>
+      </div>
+
+    <div class="mb-3">
+        <label class="form-label">Facebook</label>
+        <input type="text" class="form-control" name="facebook" value="{{ member.facebook }}">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Twitter</label>
+        <input type="text" class="form-control" name="twitter" value="{{ member.twitter }}">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Member</button>
+</form>
+
+{% endblock content %}

@@ -1,0 +1,442 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block extra_styles %}
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+<!-- Icon Font Stylesheet -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+<!-- Customized Bootstrap Stylesheet -->
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+<!-- Template Stylesheet -->
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+<!-- TinyMCE Editor -->
+<script src="https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js"></script>
+
+<style>
+    /* Fix navbar visibility on admin pages */
+    #mainNavbar {
+        background: #e7e7ec !important;
+    }
+
+    #mainNavbar .nav-link,
+    #mainNavbar .navbar-brand,
+    #mainNavbar .brand-marquee span {
+        color: #030566 !important;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 3rem 0;
+        margin-bottom: 3rem;
+    }
+
+    .form-header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-header p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    .form-container {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .form-section {
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .form-section:last-child {
+        border-bottom: none;
+    }
+
+    .form-section h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-section h3 i {
+        color: #667eea;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+    }
+
+    .form-group label .required {
+        color: #dc3545;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="url"],
+    .form-group input[type="file"],
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 0.95rem;
+        font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        border-color: #667eea;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .form-group .help-text {
+        display: block;
+        margin-top: 0.5rem;
+        color: #999;
+        font-size: 0.85rem;
+    }
+
+    .form-group.checkbox {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .form-group.checkbox input[type="checkbox"] {
+        width: auto;
+    }
+
+    .form-group.checkbox label {
+        margin-bottom: 0;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .image-preview {
+        margin-top: 1rem;
+    }
+
+    .image-preview img {
+        max-width: 200px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        padding-top: 2rem;
+        border-top: 2px solid #f0f0f0;
+    }
+
+    .btn-submit {
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+    }
+
+    .btn-submit:hover {
+        background: #5568d3;
+        transform: translateY(-2px);
+    }
+
+    .btn-cancel {
+        background: #6c757d;
+        color: white;
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .btn-cancel:hover {
+        background: #5a6268;
+        color: white;
+        text-decoration: none;
+    }
+
+    .alert {
+        padding: 1rem;
+        border-radius: 5px;
+        margin-bottom: 2rem;
+        border-left: 4px solid;
+    }
+
+    .alert-error {
+        background: #f8d7da;
+        border-color: #dc3545;
+        color: #842029;
+    }
+
+    .alert-success {
+        background: #d1e7dd;
+        border-color: #198754;
+        color: #0f5132;
+    }
+
+    .tox-tinymce {
+        border-color: #ddd !important;
+    }
+
+    @media (max-width: 768px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn-submit,
+        .btn-cancel {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Form Header -->
+<div class="container-fluid bg-primary py-5 bg-header" style="margin-bottom: 90px; margin-top: 75px;">
+    <div class="row py-5">
+        <div class="col-12 pt-lg-5 mt-lg-5 text-center">
+            <h1 class="display-4 text-white animated zoomIn"><i class="fas fa-plus-circle"></i> Create New Publication
+            </h1>
+            <p class="text-white animated zoomIn" style="font-size: 1.1rem; opacity: 0.9;">
+                Add a new news, Advertisements, article, announcement, or publication
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Form Container -->
+<div class="container py-5">
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" class="form-container" onsubmit="tinymce.triggerSave();">
+        {% csrf_token %}
+
+        <!-- Basic Information Section -->
+        <div class="form-section">
+            <h3><i class="fas fa-heading"></i> Basic Information</h3>
+
+            <div class="form-group">
+                <label for="title">Publication Title <span class="required">*</span></label>
+                <input type="text" id="title" name="title" required placeholder="Enter publication title">
+                <span class="help-text">This will be the main headline of your publication</span>
+            </div>
+
+            <div class="form-group">
+                <label for="excerpt">Excerpt <span class="required">*</span></label>
+                <textarea id="excerpt" name="excerpt" required
+                    placeholder="Enter a brief 2-3 sentence summary"></textarea>
+                <span class="help-text">Short summary that appears in listings (max 500 characters)</span>
+            </div>
+
+            <div class="form-group">
+                <label for="content">Content <span class="required">*</span></label>
+                <textarea id="content" name="content" required placeholder="Enter full publication content"></textarea>
+                <span class="help-text">Full article content. Supports HTML formatting</span>
+            </div>
+        </div>
+
+        <!-- Media Section -->
+        <div class="form-section">
+            <h3><i class="fas fa-image"></i> Media</h3>
+
+            <div class="form-group">
+                <label for="featured_image">Featured Image <span class="required">*</span></label>
+                <input type="file" id="featured_image" name="featured_image" accept="image/*" required>
+                <span class="help-text">Main image for the publication (recommended: 800x600px or larger)</span>
+            </div>
+
+            <div class="form-group">
+                <label for="video_url">Video URL</label>
+                <input type="url" id="video_url" name="video_url" placeholder="https://youtube.com/watch?v=...">
+                <span class="help-text">Optional YouTube or Vimeo URL</span>
+            </div>
+
+            <div class="form-group">
+                <label for="attachment">Attachment (PDF/Document)</label>
+                <input type="file" id="attachment" name="attachment" accept=".pdf,.doc,.docx">
+                <span class="help-text">Optional PDF or document file for download</span>
+            </div>
+        </div>
+
+        <!-- Metadata Section -->
+        <div class="form-section">
+            <h3><i class="fas fa-tag"></i> Metadata</h3>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="category">Category <span class="required">*</span></label>
+                    <select id="category" name="category" required>
+                        <option value="">-- Select Category --</option>
+                        {% for cat_code, cat_name in categories %}
+                        <option value="{{ cat_code }}">{{ cat_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="author">Author Name</label>
+                    <input type="text" id="author" name="author" placeholder="e.g., John Doe">
+                </div>
+
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <input type="text" id="department" name="department" placeholder="e.g., Marketing, IT">
+                </div>
+            </div>
+        </div>
+
+        <!-- SEO Section -->
+        <div class="form-section">
+            <h3><i class="fas fa-search"></i> SEO Optimization</h3>
+
+            <div class="form-group">
+                <label for="meta_title">Meta Title</label>
+                <input type="text" id="meta_title" name="meta_title" placeholder="SEO title (60 characters)">
+                <span class="help-text">Optimized title for search engines</span>
+            </div>
+
+            <div class="form-group">
+                <label for="meta_description">Meta Description</label>
+                <textarea id="meta_description" name="meta_description" style="min-height: 80px;"
+                    placeholder="Meta description (160 characters)"></textarea>
+                <span class="help-text">Brief description for search results</span>
+            </div>
+
+            <div class="form-group">
+                <label for="meta_keywords">Meta Keywords</label>
+                <input type="text" id="meta_keywords" name="meta_keywords" placeholder="keyword1, keyword2, keyword3">
+                <span class="help-text">Comma-separated keywords</span>
+            </div>
+        </div>
+
+        <!-- Publishing Section -->
+        <div class="form-section">
+            <h3><i class="fas fa-cog"></i> Publishing Settings</h3>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="status">Status <span class="required">*</span></label>
+                    <select id="status" name="status" required>
+                        <option value="draft">Draft</option>
+                        <option value="published" selected>Published</option>
+                        <option value="archived">Archived</option>
+                    </select>
+                    <span class="help-text">Draft won't be visible to users</span>
+                </div>
+            </div>
+
+            <div class="form-group checkbox">
+                <input type="checkbox" id="is_featured" name="is_featured">
+                <label for="is_featured">Featured Publication</label>
+                <span class="help-text">Check to show on homepage featured section</span>
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-save"></i> Create Publication
+            </button>
+            <a href="{% url 'admin_publications' %}" class="btn-cancel">
+                <i class="fas fa-times"></i> Cancel
+            </a>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+<!-- TinyMCE Editor -->
+<script>
+    tinymce.init({
+        selector: '#content',
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+        toolbar: 'undo redo | formatselect | bold italic underline strikethrough | align numlist bullist | image media link | removeformat',
+        height: 400,
+        menubar: 'file edit view insert format tools table help',
+        promotion: false,
+        images_upload_url: '/upload-image/',
+
+        setup: function (editor) {
+            editor.on('change', function () {
+                editor.save(); // syncs TinyMCE content back to textarea before submit
+            });
+        }
+    });
+</script>
+
+{% endblock %}

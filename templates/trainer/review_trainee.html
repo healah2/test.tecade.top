@@ -1,0 +1,370 @@
+{% extends 'trainer/trainer_base.html' %}
+{% load static %}
+
+{% load custom_filters %}
+
+{% block title %}Review Trainee Portfolio{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+<link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<style>
+    .evidence-card {
+        border-left: 3px solid #3c8dbc;
+        margin-bottom: 15px;
+    }
+
+    .evidence-card.assessed {
+        border-left-color: #00a65a;
+    }
+
+    .evidence-card.needs-revision {
+        border-left-color: #f39c12;
+    }
+
+    .self-rating-badge {
+        font-size: 11px;
+        padding: 3px 8px;
+        border-radius: 2px;
+    }
+
+    .stage-header {
+        background: #f4f4f4;
+        padding: 10px 15px;
+        border-left: 4px solid #3c8dbc;
+        margin-bottom: 15px;
+    }
+
+    .stage-header.fa1 {
+        border-left-color: #00c0ef;
+    }
+
+    .stage-header.fa2 {
+        border-left-color: #3c8dbc;
+    }
+
+    .stage-header.fa3 {
+        border-left-color: #f39c12;
+    }
+
+    .stage-header.final {
+        border-left-color: #00a65a;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Review Portfolio
+            <small>
+                {{ trainee_user.get_full_name|default:trainee_user.username }}
+            </small>
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="{% url 'staff_dashboard' %}">
+                    <i class="fa fa-dashboard"></i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'trainer_portfolio_overview' %}">
+                    Portfolio Overview
+                </a>
+            </li>
+            <li class="active">Review Trainee</li>
+        </ol>
+    </section>
+
+    <section class="content">
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <!-- Trainee info bar -->
+        <div class="box box-default">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong><i class="fa fa-user"></i>
+                            {{ trainee_user.get_full_name|default:trainee_user.username }}
+                        </strong><br>
+                        <small class="text-muted">{{ trainee_user.username }}</small>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <a href="{% url 'trainer_portfolio_overview' %}" class="btn btn-default btn-sm">
+                            <i class="fa fa-arrow-left"></i> Back to Overview
+                        </a>
+                        <a href="{% url 'trainer_assessment_history' %}" class="btn btn-default btn-sm">
+                            <i class="fa fa-history"></i> Assessment History
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if not grouped %}
+        <div class="box box-info">
+            <div class="box-body text-center" style="padding: 40px 0;">
+                <i class="fa fa-folder-open fa-3x text-muted"></i>
+                <h3>No evidence found</h3>
+                <p class="text-muted">
+                    This trainee has not uploaded any evidence
+                    for your units yet.
+                </p>
+            </div>
+        </div>
+
+        {% else %}
+
+        <!-- Assessment form — wraps all stages -->
+        <form method="post" action="{% url 'trainee:submit_assessment' %}">
+            {% csrf_token %}
+
+            <!-- hidden fields -->
+            <input type="hidden" name="share_token" value="">
+            {% for stage_key, stage_data in grouped.items %}
+            {% for item in stage_data.items %}
+            <input type="hidden" name="evidence_ids" value="{{ item.evidence.id }}">
+            {% endfor %}
+            {% endfor %}
+
+            {% for stage_key, stage_data in grouped.items %}
+            <div class="stage-header {{ stage_key }}">
+                <h4 style="margin:0;">
+                    <i class="fa fa-bookmark"></i>
+                    {{ stage_data.label }}
+                    <span class="badge">{{ stage_data.items|length }}</span>
+                </h4>
+            </div>
+
+            {% for item in stage_data.items %}
+            {% with ev=item.evidence existing=item.existing_assessment %}
+            <div class="box evidence-card
+                {% if existing %}
+                    {% if existing.status == 'approved' %}assessed
+                    {% elif existing.status == 'needs_revision' %}needs-revision
+                    {% endif %}
+                {% endif %}">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        {{ ev.title }}
+                        {% if ev.unit %}
+                        <small class="text-muted">
+                            — {{ ev.unit.name }}
+                        </small>
+                        {% endif %}
+                    </h3>
+                    <div class="box-tools pull-right">
+                        <!-- self rating badge -->
+                        {% if ev.self_rating %}
+                        <span class="self-rating-badge
+                            {% if ev.self_rating == 'competent' %}
+                                label label-success
+                            {% elif ev.self_rating == 'developing' %}
+                                label label-warning
+                            {% else %}
+                                label label-default
+                            {% endif %}">
+                            Self: {{ ev.get_self_rating_display }}
+                        </span>
+                        {% endif %}
+
+                        {% if existing %}
+                        <span class="label
+                            {% if existing.status == 'approved' %}label-success
+                            {% elif existing.status == 'needs_revision' %}label-warning
+                            {% elif existing.status == 'under_review' %}label-info
+                            {% else %}label-default{% endif %}">
+                            {{ existing.get_status_display }}
+                        </span>
+                        {% endif %}
+
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-7">
+                            {% if ev.description %}
+                            <p>{{ ev.description }}</p>
+                            {% endif %}
+
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td><strong>Evidence type</strong></td>
+                                    <td>{{ ev.get_evidence_type_display }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Assessment type</strong></td>
+                                    <td>
+                                        {{ ev.get_assessment_type_display|default:"—" }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Date of assessment</strong></td>
+                                    <td>
+                                        {{ ev.date_of_assessment|date:"M d, Y"|default:"—" }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Uploaded</strong></td>
+                                    <td>{{ ev.upload_date|date:"M d, Y" }}</td>
+                                </tr>
+                                {% if ev.tags %}
+                                <tr>
+                                    <td><strong>Tags</strong></td>
+                                    <td>
+                                        {% for tag in ev.tags.split|default:'' %}
+                                        <span class="label label-default">{{ tag }}</span>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            </table>
+
+                            {% if ev.file %}
+                            <a href="{{ ev.file.url }}" class="btn btn-default btn-sm" target="_blank">
+                                <i class="fa fa-download"></i>
+                                View / Download File
+                                ({{ ev.get_file_extension }})
+                            </a>
+                            {% endif %}
+
+                            {% if ev.external_url %}
+                            <a href="{{ ev.external_url }}" class="btn btn-default btn-sm" target="_blank">
+                                <i class="fa fa-external-link"></i>
+                                External Link
+                            </a>
+                            {% endif %}
+                        </div>
+
+                        <!-- Trainer assessment input -->
+                        <div class="col-md-5">
+                            <div class="box box-solid box-default">
+                                <div class="box-header">
+                                    <h3 class="box-title">
+                                        <i class="fa fa-pencil"></i>
+                                        Your Assessment
+                                    </h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <label>Verdict</label>
+                                        <select name="evidence_status_{{ ev.id }}" class="form-control">
+                                            <option value="under_review" {{ "under_review" |is_selected:existing.status
+                                                }}>
+                                                Under Review
+                                            </option>
+                                            <option value="approved" {% if existing %}{{ "approved"
+                                                |is_selected:existing.status }}{% endif %}>
+                                                Competent
+                                            </option>
+                                            <option value="needs_revision" {{ "needs_revision"
+                                                |is_selected:existing.status }}>
+                                                Needs Revision
+                                            </option>
+                                        </select>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Feedback</label>
+                                        <textarea name="evidence_feedback_{{ ev.id }}" class="form-control" rows="3"
+                                            placeholder="Specific feedback for this piece of evidence...">{% if existing %}{{ existing.feedback }}{% endif %}</textarea>
+                                    </div>
+
+                                    {% if existing %}
+                                    <small class="text-muted">
+                                        <i class="fa fa-clock-o"></i>
+                                        Last assessed:
+                                        {{ existing.assessment_date|date:"M d, Y g:i a" }}
+                                    </small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endwith %}
+            {% endfor %}
+            {% endfor %}
+
+            <!-- Overall submission -->
+            <div class="box box-warning">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="fa fa-flag"></i>
+                        Overall Unit Assessment
+                    </h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Overall Verdict</label>
+                                <select name="overall_status" class="form-control">
+                                    <option value="under_review">
+                                        Under Review
+                                    </option>
+                                    <option value="approved">
+                                        Competent — All requirements met
+                                    </option>
+                                    <option value="needs_revision">
+                                        Needs Revision — Resubmit required
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Score</label>
+                                <div class="input-group">
+                                    <input type="number" name="score" class="form-control" min="0" max="100"
+                                        placeholder="e.g. 78">
+                                    <span class="input-group-addon">/ </span>
+                                    <input type="number" name="max_score" class="form-control" value="100">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Overall Feedback</label>
+                                <textarea name="overall_feedback" class="form-control" rows="3"
+                                    placeholder="Summary feedback for the trainee...">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer text-right">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="fa fa-paper-plane"></i>
+                        Submit Assessment
+                    </button>
+                </div>
+            </div>
+
+        </form>
+        {% endif %}
+
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'dist/js/app.min.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-center mb-4" style="color: navy;">Manage Stats Section</h2>
+    <hr class="my-4" style="border-color: peru;">
+
+    <form method="POST" class="p-4 shadow rounded" style="background-color: #f8f9fa;">
+        {% csrf_token %}
+        {% if messages %}
+        {% for message in messages %}
+        <div id="success-message" class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <div class="mb-3">
+            <label class="form-label">Trainee Enrolled</label>
+            <input type="number" name="trainees_enrolled" class="form-control" value="{{ stats.trainees_enrolled }}"
+                required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Trainers</label>
+            <input type="number" name="trainers" class="form-control" value="{{ stats.trainers }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Partners</label>
+            <input type="number" name="partners" class="form-control" value="{{ stats.partners }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Courses Offered</label>
+            <input type="number" name="courses_offered" class="form-control" value="{{ stats.courses_offered }}"
+                required>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Save Stats</button>
+    </form>
+</div>
+
+<script>
+    // Auto-hide success message after 3 seconds
+    setTimeout(function () {
+        var successMessage = document.getElementById('success-message');
+        if (successMessage) {
+            successMessage.style.display = 'none';
+        }
+    }, 3000);
+</script>
+{% endblock %}

@@ -1,0 +1,1372 @@
+[
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2026-01-12T13:32:16.337Z",
+    "user": 1,
+    "content_type": 18,
+    "object_id": "1",
+    "object_repr": "Chevaywa Technical and Vocational College",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2026-01-12T13:35:59.318Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "1",
+    "object_repr": "Admin Index Content",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}, {\"added\": {\"name\": \"carousel slide\", \"object\": \"Tech Innovations\"}}, {\"added\": {\"name\": \"carousel slide\", \"object\": \"Tech Innovations2\"}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2026-01-17T01:11:13.040Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "2",
+    "object_repr": "Engineering(EN)",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2026-01-17T01:11:27.233Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "1",
+    "object_repr": "Computing And Informatics(CI)",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2026-01-17T01:12:02.143Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "2",
+    "object_repr": "Clubs And Societies",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2026-01-17T01:12:12.916Z",
+    "user": 1,
+    "content_type": 13,
+    "object_id": "1",
+    "object_repr": "Games And Sports Department",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2026-03-22T12:50:05.463Z",
+    "user": 1,
+    "content_type": 17,
+    "object_id": "1",
+    "object_repr": "CI",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2026-03-22T12:50:52.022Z",
+    "user": 1,
+    "content_type": 27,
+    "object_id": "1",
+    "object_repr": "Joshua hello world (CI)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2026-03-23T11:29:50.334Z",
+    "user": 1,
+    "content_type": 40,
+    "object_id": "1",
+    "object_repr": "Joshua Omondi",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 10,
+  "fields": {
+    "action_time": "2026-03-23T11:57:12.834Z",
+    "user": 1,
+    "content_type": 17,
+    "object_id": "2",
+    "object_repr": "Electrical Engineering",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 11,
+  "fields": {
+    "action_time": "2026-03-23T11:57:23.775Z",
+    "user": 1,
+    "content_type": 27,
+    "object_id": "2",
+    "object_repr": "Hello World (Electrical Engineering)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 12,
+  "fields": {
+    "action_time": "2026-03-23T12:55:42.240Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "Joshua Omondi (Joshua)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 13,
+  "fields": {
+    "action_time": "2026-03-23T12:55:52.906Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "Joshua Omondi (Joshua)",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 14,
+  "fields": {
+    "action_time": "2026-03-23T13:08:50.474Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "2",
+    "object_repr": "Agriculture (Agriculture)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 15,
+  "fields": {
+    "action_time": "2026-03-23T13:18:16.250Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "Joshua Omondi (Joshua)",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Designation\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 16,
+  "fields": {
+    "action_time": "2026-03-23T13:23:35.742Z",
+    "user": 1,
+    "content_type": 15,
+    "object_id": "1",
+    "object_repr": "Electrical Engineering",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 17,
+  "fields": {
+    "action_time": "2026-03-26T08:14:28.012Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "3",
+    "object_repr": "hila (Hillari)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 18,
+  "fields": {
+    "action_time": "2026-03-27T01:06:24.700Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "4",
+    "object_repr": "Electrical Engineering (Elec)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 19,
+  "fields": {
+    "action_time": "2026-03-27T01:09:29.039Z",
+    "user": 1,
+    "content_type": 27,
+    "object_id": "3",
+    "object_repr": "Elec hello (Electrical Engineering)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 20,
+  "fields": {
+    "action_time": "2026-03-27T01:35:11.896Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "4",
+    "object_repr": "Electrical Engineering (Elec)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 21,
+  "fields": {
+    "action_time": "2026-03-27T01:35:11.896Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "3",
+    "object_repr": "hila (Hillari)",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 22,
+  "fields": {
+    "action_time": "2026-03-27T02:10:37.797Z",
+    "user": 1,
+    "content_type": 15,
+    "object_id": "2",
+    "object_repr": "IT",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 23,
+  "fields": {
+    "action_time": "2026-03-27T02:14:15.123Z",
+    "user": 1,
+    "content_type": 40,
+    "object_id": "2",
+    "object_repr": "teacher one",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 24,
+  "fields": {
+    "action_time": "2026-04-08T09:54:55.822Z",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "5",
+    "object_repr": "admin test 1 (sysadmin)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$OWuj4nXp0Pn67CTan2cXXM$/3yG7z0TQud7u8u66FNuB3PsY6NcXVxm8mzvDpgdQWM=",
+    "last_login": "2026-05-05T14:45:12.992Z",
+    "is_superuser": true,
+    "username": "tecadeadmin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-01-12T13:18:31.783Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "L?/EL/0001/26M",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "L?/EL/0001/26M",
+    "first_name": "Hello",
+    "last_name": "HelloWorld",
+    "email": "mail@tecade.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-03-23T13:28:04.987Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "L?/IT/0002/26M",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "L?/IT/0002/26M",
+    "first_name": "trainee ",
+    "last_name": "one",
+    "email": "testone2@mail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-03-27T03:21:02.940Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 4,
+  "fields": {
+    "password": "",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "12345678",
+    "first_name": "Joshua",
+    "last_name": "Omondi",
+    "email": "joshua12548@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-03-27T07:36:49.528Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "7mv41xegdywi1hqwpinamvwlb3y7g1ol",
+  "fields": {
+    "session_data": ".eJw9jrEOwjAMRH8Fea6oEFtXJlhY2C1XcYtR40SOW6lC_DtBFNb3Tnf3hOI0DOhrZujAjUTZoNmwBOgODVCIoqgUP5lLKveZdteYNEhNBi4yKrkkrfb2bwicHanvjZfKT-cvIvPI6j-SLQ0yMUqkkXG2qYo2chBqty-YqZSczEvrXFzq7IrH_SPzCK83qzRC-g:1wAczW:i1GojvQwpRVkNH8amAC2IpEPdDuqBLnZSVCwKDEriAU",
+    "expire_date": "2026-04-23T00:11:26.609Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "8rs4pdypbtjeqkkh0mg0b67v3phd1yk5",
+  "fields": {
+    "session_data": ".eJxVjMEOwiAQRP-FsyHCFrt49N5vIEt3kaqhSWlPxn-XJj3oHOe9mbcKtK05bFWWMLG6KqNOv12k8SllB_ygcp_1OJd1maLeFX3QqoeZ5XU73L-DTDW3de_S2bsoNlIHhBcLlhldZARvOSYPvTNEnQGU5AQBGLABTK5FQH2-3x83sg:1wKH1N:tsalDjQrv2NIDhAKg-zXm03RNDhtpdv5JTGMStuW5bw",
+    "expire_date": "2026-05-19T14:45:13.075Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "8td3vyhlc1m5manp75arno5t19bkw5rm",
+  "fields": {
+    "session_data": ".eJxVjMEOwiAQRP-FsyHCFrt49N5vIEt3kaqhSWlPxn-XJj3oHOe9mbcKtK05bFWWMLG6KqNOv12k8SllB_ygcp_1OJd1maLeFX3QqoeZ5XU73L-DTDW3de_S2bsoNlIHhBcLlhldZARvOSYPvTNEnQGU5AQBGLABTK5FQH2-3x83sg:1vguq0:q6CR07wK_WKr6HmGrjB98vkEHn7F5E97adgTaOogB3k",
+    "expire_date": "2026-01-31T01:10:48.714Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "f47dn4dds3f0c8y2hq2b1vpwmou2pn6i",
+  "fields": {
+    "session_data": ".eJxVjk0PgjAMhv8K2dlAMPHiDT151ntTpECVjWUrJsT43934ih77PG_79q0AB2lh8OSAK3VUe7X7ZSXen2SiEIdsiNLJLdint5kWAZ6W6N9-i74NywF6wboGGS1tx9yGY3W-U1hpNmBQx8w0JEJekjwEK_LcGBTuTZDX0QvppIiZSVoBLEtHryDPlxmhE01GVmJdX3NHwBobgsF1QWSaKsZsLl4CPoulrHszQp4-LDVqfS3-efh8AQbbbAk:1wAdyi:huYgRGRVq_Z-Cxvsy_G-k25jSsAahPmE2eAU3-cZetw",
+    "expire_date": "2026-04-23T01:14:40.404Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "flk0d0s02eqs7csf3ac8czd03mbuuiv5",
+  "fields": {
+    "session_data": ".eJxVjbFuwzAMRP9FcyrHYpTIGYsOXYJ-gkCZlK3UlgJLBgIU_ffKhZcQ4MB7d8cfgTSHaAOJKxz2I-LM4irGMKE4COIchoglpFjFz6-Pqj2W5MPENsw4sF2XqZIml2rqGwq5NGEemjXzot7a8_FZV94fQw1aXMtoN_L_UrSvmsP-m-MG6I5xSLJPsSzByc0id5rlLRFP77v3pWDEPNb0Rftjpx0rhydAc1agiIx2ZKBT5HwHF90inlow7DUbAAJTgfG6DoP4_QM1MlwS:1w5vmW:2xyrF6rlg_zzPIfL8cWdr4BuaFMKJw5Bxn1ffoZn804",
+    "expire_date": "2026-04-10T01:14:36.500Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "hk2onclkt5ag26ljpcfzlm4risqdr96j",
+  "fields": {
+    "session_data": "eyJzdGFmZl90eXBlIjoidHJhaW5lciIsInN0YWZmX2lkIjoxfQ:1wAcHc:zgXeFR_RTAzVNj0gGRvdIb_jH7oj8aKKQwHMk8BYRrw",
+    "expire_date": "2026-04-22T23:26:04.302Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "i1hjyatj866ljckx4jeiyenfysg36qyn",
+  "fields": {
+    "session_data": ".eJxVjtFOwyAUhl-l4XppbBkb9VJ3MU3MHoEcdg4DbaEB6rIY312Y0yiX3_edP3wwBUu2akkUlUN2zzq2-ss0HN_IV4Gv4E-hPQafo9NtTdqbTe1LQBofbu2_AQvJluutMHeD0NRrWHOQm573iFJolHzoUZuBb0UHsO64JCNIco5cFiGNKI94GU0ZjFH5MlPZswF_Uf13t2KAk_PKw1T9c0h2gcbSOIbmHOJYc6TkTh6yC74kewJsDqbZ0QwxT-TzNZmzAq0jvZfk8ekb_fgr-fwCb0FlrA:1w4IIk:jVDsueLxDt6xRXtcLEfcg-MptxnpOPvKZw0ckPHLYCI",
+    "expire_date": "2026-04-05T12:53:06.293Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "mauvvnokbf3g5ek9g2v1ewrbnbqjtr7a",
+  "fields": {
+    "session_data": ".eJxVjMEOwiAQRP-FsyHCFrt49N5vIEt3kaqhSWlPxn-XJj3oHOe9mbcKtK05bFWWMLG6KqNOv12k8SllB_ygcp_1OJd1maLeFX3QqoeZ5XU73L-DTDW3de_S2bsoNlIHhBcLlhldZARvOSYPvTNEnQGU5AQBGLABTK5FQH2-3x83sg:1vfHog:u3TqLUp3zeaWHpETfPXHYkUGLPHEtb6wKD_I-qpx5-w",
+    "expire_date": "2026-01-26T13:18:42.172Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "nmxuyss1x5n3fgr9al2ccgfbvjy1e80x",
+  "fields": {
+    "session_data": ".eJyrVopPLC3JiC8tTi2Kz0xRslIyVNJBFktKTM5OzQNJlBQlZualpuqB5aDCxXohEFFHoKATVCmK_ozE4gygZqVaAP-pJj0:1wAAXs:x2T8oV4ohuF1UPPQRP9QVGuIcjQZy0GJq2KtFwxypvI",
+    "expire_date": "2026-04-21T17:49:00.349Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "rse6jyyj64ql8xdzhhmhtyb5fk0hbeo7",
+  "fields": {
+    "session_data": ".eJyrVopPLC3JiC8tTi2Kz0xRslIyUtJBFktKTM5OzQNJlBQlZualpuqB5aDCxXohEFFHoKATVCmK_ozE4gygZqVaAAAQJj4:1wK8V9:9xpVr-Xz8C0zgDMV50Wgpf-LgP9yigqH_4FbfL8-rR8",
+    "expire_date": "2026-05-19T05:39:23.748Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "xsofoakl4njlwzjlhy7x9iwdrwjrmfzp",
+  "fields": {
+    "session_data": ".eJw9jssKwkAMRX9Fsi4WETfdutKNG_dDyqQ10nmQpIUi_rtTB92ee5N7XoA-cHQRA0EH16SPGXe3kKJnaMCT8hjROMWS3gU5knx5Nod9L7QUfr5UhGKBov1IljTwRI4DjuRmmUrQBvKMrdVPLqNqTmLaGqlxmV3dcf_MNJb7asYeulMDajgMzta8adpfpOKtc3h_AGF8Rw4:1wAcTH:10e_gAmEoetwFxVe38ZRx_c4UfcVQLhXuH8HVWBYCf4",
+    "expire_date": "2026-04-22T23:38:07.276Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "z7xvblu5pduuzx5kb9dxcw9j5kf5ong1",
+  "fields": {
+    "session_data": "eyJzdGFmZl90eXBlIjoidHJhaW5lciIsInN0YWZmX2lkIjoxfQ:1wAcF7:y_nd-4xb_FqkVU1ahqxmz1V-Ri3KBd-r-aj7bqInwvU",
+    "expire_date": "2026-04-22T23:23:29.991Z"
+  }
+},
+{
+  "model": "home.adminindex",
+  "pk": 1,
+  "fields": {
+    "num_institutions": 30,
+    "num_trainees": 5000,
+    "num_trainers": 350,
+    "updated_at": "2026-01-12T13:35:59.308Z"
+  }
+},
+{
+  "model": "home.carouselslide",
+  "pk": 1,
+  "fields": {
+    "admin_index": 1,
+    "image": "carousel/about-2_3K6M5ic.jpg",
+    "heading": "Tech Innovations",
+    "subheading": "Tech Innovations Hub",
+    "order": 0
+  }
+},
+{
+  "model": "home.carouselslide",
+  "pk": 2,
+  "fields": {
+    "admin_index": 1,
+    "image": "carousel/about.jpg",
+    "heading": "Tech Innovations2",
+    "subheading": "Tech Innovations Hub",
+    "order": 0
+  }
+},
+{
+  "model": "home.adminabout",
+  "pk": 1,
+  "fields": {
+    "title": "Empowering Institutions & Learners Across Kenya",
+    "paragraph1": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste quis saepe maiores inventore minima! Laboriosam libero impedit iusto alias quis debitis atque eligendi voluptatem molestias? Dignissimos, quo ex. Repellendus, nobis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste quis saepe maiores inventore minima! Laboriosam libero impedit iusto alias quis debitis atque eligendi voluptatem molestias? Dignissimos, quo ex. Repellendus, nobis.",
+    "paragraph2": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste quis saepe maiores inventore minima! Laboriosam libero impedit iusto alias quis debitis atque eligendi voluptatem molestias? Dignissimos, quo ex. Repellendus, nobis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste quis saepe maiores inventore minima! Laboriosam libero impedit iusto alias quis debitis atque eligendi voluptatem molestias? Dignissimos, quo ex. Repellendus, nobis.",
+    "paragraph3": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste quis saepe maiores inventore minima! Laboriosam libero impedit iusto alias quis debitis atque eligendi voluptatem molestias? Dignissimos, quo ex. Repellendus, nobis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste quis saepe maiores inventore minima! Laboriosam libero impedit iusto alias quis debitis atque eligendi voluptatem molestias? Dignissimos, quo ex. Repellendus, nobis.",
+    "phone": "+254710 257 305",
+    "image": "about_images/about_2.jpg"
+  }
+},
+{
+  "model": "home.admininstitutionalmanagement",
+  "pk": 1,
+  "fields": {
+    "name": "Frank Karani Olyns",
+    "title": "Principal",
+    "image": "team/default.jpg",
+    "twitter": "https://tecade.xulttech.com/institutional/",
+    "facebook": "https://tecade.xulttech.com/institutional/",
+    "linkedin": "https://tecade.xulttech.com/institutional/"
+  }
+},
+{
+  "model": "home.admininstitutionalmanagement",
+  "pk": 2,
+  "fields": {
+    "name": "Hillary Khakame",
+    "title": "Deputy Academics",
+    "image": "team/default_8Xh7uEQ.jpg",
+    "twitter": "https://tecade.xulttech.com/institutional/",
+    "facebook": "https://tecade.xulttech.com/institutional/",
+    "linkedin": "https://tecade.xulttech.com/institutional/"
+  }
+},
+{
+  "model": "home.admininstitutionalmanagement",
+  "pk": 3,
+  "fields": {
+    "name": "Joshua Omondi",
+    "title": "Deputy Admin",
+    "image": "team/default_ymhF28O.jpg",
+    "twitter": "https://tecade.xulttech.com/institutional/",
+    "facebook": "https://tecade.xulttech.com/institutional/",
+    "linkedin": "https://tecade.xulttech.com/institutional/"
+  }
+},
+{
+  "model": "home.adminacdpt",
+  "pk": 1,
+  "fields": {
+    "name": "Computing And Informatics(CI)",
+    "image": "departments/about_2.jpg",
+    "heading": "Empowering Digital Innovation",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste quis saepe maiores inventore minima! Laboriosam libero impedit iusto alias quis debitis atque eligendi voluptatem molestias? Dignissimos, quo ex. Repellendus, nobis.\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Iste quis saepe maiores inventore minima! Laboriosam libero impedit iusto alias quis debitis atque eligendi voluptatem molestias? Dignissimos, quo ex. Repellendus, nobis.",
+    "read_more_link": null
+  }
+},
+{
+  "model": "home.adminacdpt",
+  "pk": 2,
+  "fields": {
+    "name": "Engineering(EN)",
+    "image": "departments/feature.jpg",
+    "heading": "Trusted Experts in Skills Development & Vocational Training",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste quis saepe maiores inventore minima! Laboriosam libero impedit iusto alias quis debitis atque eligendi voluptatem molestias? Dignissimos, quo ex. Repellendus, nobis.\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Iste quis saepe maiores inventore minima! Laboriosam libero impedit iusto alias quis debitis atque eligendi voluptatem molestias? Dignissimos, quo ex. Repellendus, nobis.",
+    "read_more_link": null
+  }
+},
+{
+  "model": "home.adminnonacdpt",
+  "pk": 1,
+  "fields": {
+    "name": "Games And Sports Department",
+    "image": "departments/GS.jpg",
+    "heading": "Trusted Experts in Skills Development & Vocational Training",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste quis saepe maiores inventore minima! Laboriosam libero impedit iusto alias quis debitis atque eligendi voluptatem molestias? Dignissimos, quo ex. Repellendus, nobis.\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Iste quis saepe maiores inventore minima! Laboriosam libero impedit iusto alias quis debitis atque eligendi voluptatem molestias? Dignissimos, quo ex. Repellendus, nobis.",
+    "read_more_link": null
+  }
+},
+{
+  "model": "home.adminnonacdpt",
+  "pk": 2,
+  "fields": {
+    "name": "Clubs And Societies",
+    "image": "departments/feature_zXdTN0r.jpg",
+    "heading": "Trusted Experts in Skills Development & Vocational Training",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste quis saepe maiores inventore minima! Laboriosam libero impedit iusto alias quis debitis atque eligendi voluptatem molestias? Dignissimos, quo ex. Repellendus, nobis.\r\n\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Iste quis saepe maiores inventore minima! Laboriosam libero impedit iusto alias quis debitis atque eligendi voluptatem molestias? Dignissimos, quo ex. Repellendus, nobis.",
+    "read_more_link": null
+  }
+},
+{
+  "model": "home.department",
+  "pk": 1,
+  "fields": {
+    "name": "CI",
+    "date_registered": "2026-03-22",
+    "code": "123456"
+  }
+},
+{
+  "model": "home.department",
+  "pk": 2,
+  "fields": {
+    "name": "Electrical Engineering",
+    "date_registered": "2026-03-23",
+    "code": "12345678"
+  }
+},
+{
+  "model": "home.course",
+  "pk": 1,
+  "fields": {
+    "name": "Electrical Engineering",
+    "code": "348436",
+    "level": "6",
+    "department": 2,
+    "date_registered": "2026-03-23",
+    "term1_fees": "26000.00",
+    "term2_fees": "27000.00",
+    "term3_fees": "12000.00",
+    "total_fees": "65000.00"
+  }
+},
+{
+  "model": "home.course",
+  "pk": 2,
+  "fields": {
+    "name": "IT",
+    "code": "40457485",
+    "level": "6",
+    "department": 1,
+    "date_registered": "2026-03-27",
+    "term1_fees": "20000.00",
+    "term2_fees": "15000.00",
+    "term3_fees": "8000.00",
+    "total_fees": "43000.00"
+  }
+},
+{
+  "model": "home.unit",
+  "pk": 1,
+  "fields": {
+    "course": 1,
+    "name": "Electrical Engineering",
+    "code": "EE123456",
+    "hours": 40,
+    "term": "1",
+    "trainer": null,
+    "fa1_weight": 10,
+    "fa2_weight": 10,
+    "fa3_weight": 10,
+    "final_weight": 70,
+    "date_created": "2026-03-27"
+  }
+},
+{
+  "model": "home.unit",
+  "pk": 2,
+  "fields": {
+    "course": 2,
+    "name": "numerical skills",
+    "code": "000000",
+    "hours": 40,
+    "term": "1",
+    "trainer": 1,
+    "fa1_weight": 10,
+    "fa2_weight": 10,
+    "fa3_weight": 10,
+    "final_weight": 70,
+    "date_created": "2026-03-27"
+  }
+},
+{
+  "model": "home.unit",
+  "pk": 3,
+  "fields": {
+    "course": 2,
+    "name": "numerical skills",
+    "code": "348436",
+    "hours": 40,
+    "term": "2",
+    "trainer": 1,
+    "fa1_weight": 10,
+    "fa2_weight": 10,
+    "fa3_weight": 10,
+    "final_weight": 70,
+    "date_created": "2026-04-08"
+  }
+},
+{
+  "model": "home.unit",
+  "pk": 4,
+  "fields": {
+    "course": 2,
+    "name": "numerical skills",
+    "code": "002",
+    "hours": 40,
+    "term": "2",
+    "trainer": 1,
+    "fa1_weight": 10,
+    "fa2_weight": 10,
+    "fa3_weight": 10,
+    "final_weight": 70,
+    "date_created": "2026-04-09"
+  }
+},
+{
+  "model": "home.trainee",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$X9fyfUSXkQWcAk1SyIlo3Z$lop/z5AANw61XG/pwYQaSfHaLF8ZetzCtdJfyvfF6WM=",
+    "last_login": "2026-04-07T17:48:59.865Z",
+    "passport_image": "trainee_passports/Styo_6.jpeg",
+    "first_name": "Hello",
+    "middle_name": "World",
+    "last_name": "HelloWorld",
+    "gender": "Female",
+    "age": 24,
+    "date_of_admission": "2026-03-23",
+    "department": 2,
+    "course": 1,
+    "trainee_number": "L?/EL/0001/26M",
+    "kcse_index": "12345678901",
+    "kcse_grade": "B",
+    "kcse_year": 2024,
+    "kcpe_index": "10987654321",
+    "kcpe_grade": "A",
+    "kcpe_year": 2020,
+    "county": "dfgfhjk",
+    "sub_county": "fghjk",
+    "division": "vbnm",
+    "location": "drfjghj",
+    "phone": "0987654321",
+    "id_number": "12345678",
+    "email": "mail@tecade.com",
+    "guardian_name": "sdfghjk",
+    "guardian_phone": "jhgfd",
+    "guardian_id": "09876543"
+  }
+},
+{
+  "model": "home.trainee",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$YD4W88EC79NAPDNgBwsgJg$BkExaISgAgdF82Of+SG7IJuJD/eNWALdCaJ7yZRGQ+Y=",
+    "last_login": "2026-05-05T05:39:23.613Z",
+    "passport_image": "trainee_passports/Styo_4.jpeg",
+    "first_name": "trainee ",
+    "middle_name": "test",
+    "last_name": "one",
+    "gender": "Female",
+    "age": 20,
+    "date_of_admission": "2026-03-27",
+    "department": 1,
+    "course": 2,
+    "trainee_number": "L?/IT/0002/26M",
+    "kcse_index": "00000000000",
+    "kcse_grade": "B",
+    "kcse_year": 2024,
+    "kcpe_index": "00000000000",
+    "kcpe_grade": "A",
+    "kcpe_year": 2020,
+    "county": "dfgfhjk",
+    "sub_county": "ghjv",
+    "division": " v gvd ",
+    "location": "vgvccgfvcf",
+    "phone": "0000000000",
+    "id_number": "00000000",
+    "email": "testone2@mail.com",
+    "guardian_name": "sdfghjk",
+    "guardian_phone": "0000000000",
+    "guardian_id": "00000000"
+  }
+},
+{
+  "model": "home.admincredentials",
+  "pk": 1,
+  "fields": {
+    "username": "Joshua",
+    "name": "Joshua Omondi",
+    "designation": "Registrar Academics",
+    "staff_number": "12345678",
+    "profile_image": "admin_profiles/Styo_7.jpeg"
+  }
+},
+{
+  "model": "home.admincredentials",
+  "pk": 2,
+  "fields": {
+    "username": "Agriculture",
+    "name": "Agriculture",
+    "designation": "DP Academics",
+    "staff_number": "000000",
+    "profile_image": "admin_profiles/Styo_7_Qk49KN0.jpeg"
+  }
+},
+{
+  "model": "home.admincredentials",
+  "pk": 5,
+  "fields": {
+    "username": "sysadmin",
+    "name": "admin test 1",
+    "designation": "System Admin",
+    "staff_number": "SYS001",
+    "profile_image": "admin_profiles/testimony_1.jpeg"
+  }
+},
+{
+  "model": "home.conversation",
+  "pk": 1,
+  "fields": {
+    "updated_at": "2026-03-23T13:27:34.397Z",
+    "participants": []
+  }
+},
+{
+  "model": "home.assignment",
+  "pk": 1,
+  "fields": {
+    "title": "hello world test 1 assignment",
+    "course": 2,
+    "instructor_name": "Hello",
+    "instructor_email": "joshua12548@gmail.com",
+    "description": "nbjsdbgferjgbejr",
+    "instructions": "webnjfwebnj4engfej4r",
+    "learning_objectives": "wejfn4j43nger",
+    "rubric": "jweb njewnbg4jneer",
+    "due_date": "2026-04-08T17:01:00Z",
+    "max_points": 50,
+    "created_at": "2026-04-08T14:01:46.482Z"
+  }
+},
+{
+  "model": "home.assignment",
+  "pk": 2,
+  "fields": {
+    "title": "qweruio0p",
+    "course": 2,
+    "instructor_name": "Hello",
+    "instructor_email": "joshua12548@gmail.com",
+    "description": "lkjhgfdsa",
+    "instructions": "lkjhgfd",
+    "learning_objectives": "ikujhgrfdgh",
+    "rubric": "iughreujhgrf",
+    "due_date": "2026-04-16T17:06:00Z",
+    "max_points": 80,
+    "created_at": "2026-04-08T14:06:56.901Z"
+  }
+},
+{
+  "model": "home.submission",
+  "pk": 1,
+  "fields": {
+    "assignment": 2,
+    "trainee": 2,
+    "file_upload": "",
+    "short_text": "cfgvbujgvc njnhjinh",
+    "submitted_at": "2026-04-08T14:07:53.429Z",
+    "status": "Submitted",
+    "grade": null,
+    "admin_feedback": null
+  }
+},
+{
+  "model": "home.evidenceartifact",
+  "pk": 1,
+  "fields": {
+    "trainee": 3,
+    "title": "bfhfierfbhr ebjer",
+    "description": "bfhrewbfuewhfewf ewfbehf er",
+    "evidence_type": "document",
+    "file": "portfolio_evidence/b9550b9e-b914-4997-bf5a-f5a1cf044228.jpeg",
+    "external_url": null,
+    "upload_date": "2026-03-27T05:26:13.987Z",
+    "tags": "",
+    "unit": 2,
+    "assessment_stage": "fa1",
+    "assessment_type": "practical",
+    "date_of_assessment": "2026-03-27",
+    "self_rating": "competent",
+    "date_created": null,
+    "location": "",
+    "competencies": []
+  }
+},
+{
+  "model": "home.assessment",
+  "pk": 1,
+  "fields": {
+    "evidence": 1,
+    "assessor": 4,
+    "status": "under_review",
+    "comments": "                                ",
+    "score": null,
+    "max_score": "100.00",
+    "assessment_date": "2026-03-27T07:44:00.048Z",
+    "feedback": ""
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 1,
+  "fields": {
+    "trainee": 2,
+    "token": "1971abc5-6568-43fa-a600-e3a9c32275c2",
+    "created_at": "2026-03-23T13:28:59.739Z",
+    "expires_at": "2026-04-22T13:28:59.737Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 2,
+  "fields": {
+    "trainee": 2,
+    "token": "a2f69467-972c-4776-9a7f-1cc93f9af80d",
+    "created_at": "2026-03-24T14:58:51.832Z",
+    "expires_at": "2026-04-23T14:58:51.520Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 3,
+  "fields": {
+    "trainee": 2,
+    "token": "30aaaf36-8d4c-4473-9705-a3cacfb23650",
+    "created_at": "2026-03-24T14:58:55.751Z",
+    "expires_at": "2026-04-23T14:58:55.539Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 4,
+  "fields": {
+    "trainee": 2,
+    "token": "3101c8ec-b7e7-4579-97d9-4ec7a7b16fd0",
+    "created_at": "2026-03-24T15:00:36.221Z",
+    "expires_at": "2026-04-23T15:00:36.068Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 5,
+  "fields": {
+    "trainee": 2,
+    "token": "6e1426fb-c807-4683-a639-38dbffef7df1",
+    "created_at": "2026-03-24T15:01:00.065Z",
+    "expires_at": "2026-04-23T15:00:59.899Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 6,
+  "fields": {
+    "trainee": 2,
+    "token": "ff042abf-fa1d-4ec1-813b-79154a7fcea2",
+    "created_at": "2026-03-26T00:09:57.213Z",
+    "expires_at": "2026-04-25T00:09:57.026Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 7,
+  "fields": {
+    "trainee": 2,
+    "token": "7081a90c-6cc8-41b7-908b-0a41b0ddf498",
+    "created_at": "2026-03-26T00:11:08.226Z",
+    "expires_at": "2026-04-25T00:11:08.128Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 8,
+  "fields": {
+    "trainee": 2,
+    "token": "8f30f369-3100-4785-b779-efc44cf4e26c",
+    "created_at": "2026-03-26T00:11:46.033Z",
+    "expires_at": "2026-04-25T00:11:45.889Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 9,
+  "fields": {
+    "trainee": 2,
+    "token": "b6ab46a2-309c-4ac2-9f9e-24e0fcef0bb6",
+    "created_at": "2026-03-26T00:12:49.814Z",
+    "expires_at": "2026-04-25T00:12:49.665Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 10,
+  "fields": {
+    "trainee": 2,
+    "token": "d28a1c01-a504-438a-b16a-1b18d1cab3c8",
+    "created_at": "2026-03-26T00:20:48.802Z",
+    "expires_at": "2026-04-25T00:20:48.801Z",
+    "is_active": true,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 11,
+  "fields": {
+    "trainee": 3,
+    "token": "b594e355-8cb6-4f94-9b24-558bc98e4801",
+    "created_at": "2026-03-27T03:28:36.005Z",
+    "expires_at": "2026-04-26T03:28:35.971Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 12,
+  "fields": {
+    "trainee": 3,
+    "token": "de565ada-45e6-4a76-b529-b88754c58f7b",
+    "created_at": "2026-03-27T03:52:34.340Z",
+    "expires_at": "2026-04-26T03:52:34.165Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 13,
+  "fields": {
+    "trainee": 3,
+    "token": "0555770c-e4b8-4070-90b4-5bc0fe4ac532",
+    "created_at": "2026-03-27T03:53:06.949Z",
+    "expires_at": "2026-04-26T03:53:06.791Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 14,
+  "fields": {
+    "trainee": 3,
+    "token": "2e17ecd5-f082-4983-9805-22bf05f44f69",
+    "created_at": "2026-03-27T03:53:53.616Z",
+    "expires_at": "2026-04-26T03:53:53.192Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 15,
+  "fields": {
+    "trainee": 3,
+    "token": "13873486-9171-41ae-81d6-d4feb4da1faf",
+    "created_at": "2026-03-27T03:57:36.180Z",
+    "expires_at": "2026-04-26T03:57:33.827Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 16,
+  "fields": {
+    "trainee": 3,
+    "token": "986d5608-054f-4edf-946e-bc1ca6a02338",
+    "created_at": "2026-03-27T04:13:00.020Z",
+    "expires_at": "2026-04-26T04:12:59.912Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 17,
+  "fields": {
+    "trainee": 3,
+    "token": "7f5ba3c7-5d40-4713-af1e-9b85a0e7f6aa",
+    "created_at": "2026-03-27T04:13:33.902Z",
+    "expires_at": "2026-04-26T04:13:33.774Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 18,
+  "fields": {
+    "trainee": 3,
+    "token": "9c9e2056-6f92-43c8-96b0-a9473f9fb395",
+    "created_at": "2026-03-27T04:52:31.544Z",
+    "expires_at": "2026-04-26T04:52:31.542Z",
+    "is_active": false,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioshare",
+  "pk": 19,
+  "fields": {
+    "trainee": 3,
+    "token": "9b9d6032-9161-4001-8069-b95e463c4a28",
+    "created_at": "2026-03-27T04:53:16.952Z",
+    "expires_at": "2026-04-26T04:53:16.787Z",
+    "is_active": true,
+    "scope": "full",
+    "unit": null
+  }
+},
+{
+  "model": "home.portfolioview",
+  "pk": 1,
+  "fields": {
+    "share": 19,
+    "viewed_by": "trainee  one",
+    "unit_seen": null,
+    "viewed_at": "2026-03-27T05:14:00.110Z"
+  }
+},
+{
+  "model": "home.portfolioview",
+  "pk": 2,
+  "fields": {
+    "share": 19,
+    "viewed_by": "trainee  one",
+    "unit_seen": null,
+    "viewed_at": "2026-03-27T05:27:14.180Z"
+  }
+},
+{
+  "model": "home.portfolioview",
+  "pk": 3,
+  "fields": {
+    "share": 19,
+    "viewed_by": "trainee  one",
+    "unit_seen": null,
+    "viewed_at": "2026-03-27T07:45:36.287Z"
+  }
+},
+{
+  "model": "home.trainerdata",
+  "pk": 1,
+  "fields": {
+    "passport_image": "trainer_passports/testimony_3.jpeg",
+    "first_name": "Joshua",
+    "middle_name": null,
+    "last_name": "Omondi",
+    "gender": "male",
+    "dob": "2026-03-23",
+    "employer": "TSC",
+    "staff_number": "12345678",
+    "id_number": "12345678",
+    "phone": "0114424568",
+    "email": "joshua12548@gmail.com",
+    "first_appointment": "2026-03-23",
+    "current_appointment": "2026-03-23",
+    "department": 1,
+    "current_jg": null,
+    "courses": null,
+    "special_responsibilities": null,
+    "kin_name": null,
+    "kin_phone": null,
+    "kin_address": "Kasarani",
+    "kin_email": null,
+    "tertiary_certificate": "",
+    "o_level_certificate": "",
+    "secondary_certificate": "",
+    "date_registered": "2026-03-23T11:29:50.295Z"
+  }
+},
+{
+  "model": "home.trainerdata",
+  "pk": 2,
+  "fields": {
+    "passport_image": "trainer_passports/Styo_13.jpeg",
+    "first_name": "teacher",
+    "middle_name": "test",
+    "last_name": "one",
+    "gender": "male",
+    "dob": "2026-03-27",
+    "employer": "TSC",
+    "staff_number": "000000",
+    "id_number": "00000001",
+    "phone": "0000000000",
+    "email": "testone@mail.com",
+    "first_appointment": "2026-03-27",
+    "current_appointment": "2026-03-27",
+    "department": 1,
+    "current_jg": null,
+    "courses": null,
+    "special_responsibilities": null,
+    "kin_name": null,
+    "kin_phone": null,
+    "kin_address": null,
+    "kin_email": null,
+    "tertiary_certificate": "",
+    "o_level_certificate": "",
+    "secondary_certificate": "",
+    "date_registered": "2026-03-27T02:14:15.107Z"
+  }
+},
+{
+  "model": "home.hod",
+  "pk": 1,
+  "fields": {
+    "first_name": "Joshua",
+    "middle_name": null,
+    "last_name": "hello world",
+    "phone": "0114424568",
+    "id_number": "12345678",
+    "email": "omondjoshua22@gmail.com",
+    "staff_number": "123456",
+    "department": 1
+  }
+},
+{
+  "model": "home.hod",
+  "pk": 2,
+  "fields": {
+    "first_name": "Hello",
+    "middle_name": null,
+    "last_name": "World",
+    "phone": "123456781",
+    "id_number": "87456123",
+    "email": "tecade@gmail.com",
+    "staff_number": "12345678",
+    "department": 2
+  }
+},
+{
+  "model": "home.hod",
+  "pk": 3,
+  "fields": {
+    "first_name": "Elec",
+    "middle_name": "World",
+    "last_name": "hello",
+    "phone": "0000000000",
+    "id_number": "0000000000",
+    "email": "elec@mail.com",
+    "staff_number": "00000000",
+    "department": 2
+  }
+},
+{
+  "model": "home.mainpage",
+  "pk": 1,
+  "fields": {
+    "site_title": "Technical and Vocational College",
+    "favicon": "site/chevaywalogo1.png",
+    "topbar_location": "P.O BOX 811-50205 WEBUYE - KENYA",
+    "topbar_phone": "+254 116 935 504",
+    "topbar_email": "tecade@gmail.com",
+    "topbar_twitter": "",
+    "topbar_facebook": "",
+    "topbar_linkedin": "",
+    "topbar_instagram": "",
+    "topbar_youtube": "",
+    "nav_logo": "site/chevaywalogo1_acedDbB.png",
+    "institution_name": "Technical And Vocational College",
+    "footer_location": "Kenya",
+    "footer_phone": "07102573",
+    "footer_email": "info@xulttech.com",
+    "footer_twitter": "",
+    "footer_facebook": "",
+    "footer_linkedin": "",
+    "footer_instagram": "",
+    "footer_youtube": "",
+    "footer_about_title": "Tecade TVC",
+    "footer_about_desc": "Technical And Vocational College",
+    "footer_about_logo": "site/chevaywalogo1_eiPNUwD.png"
+  }
+},
+{
+  "model": "home.courseapplication",
+  "pk": 1,
+  "fields": {
+    "department_id": 1,
+    "department_name": "Computing And Informatics(CI)",
+    "full_name": "Franc Karani",
+    "id_type": "national_id",
+    "id_number": "12345578",
+    "date_of_birth": "2023-08-01",
+    "gender": "male",
+    "marital_status": "single",
+    "address": "1316",
+    "phone": "0710257305",
+    "email": "franckarani@gmail.com",
+    "county": "mombasa",
+    "kcpe_index": "100001223",
+    "kcpe_marks": 350,
+    "kcpe_mean_grade": "B+",
+    "kcpe_year": 2020,
+    "kcpe_school": "Maseno school",
+    "kcse_index": "5425555667",
+    "kcse_mean_grade": "B+",
+    "kcse_year": 2023,
+    "kcse_school": "Ramogi",
+    "qualifications": "knec_diploma,bachelor",
+    "work_experience": "",
+    "intake_period": "jan_2025",
+    "course_type": "diploma",
+    "course": "diploma_ict",
+    "sponsorship": "helb",
+    "reason_application": "Tech enthusiast. Passionate in creating custom solutions to organisations ",
+    "employment_status": "self-employed",
+    "disability": "yes",
+    "disability_description": "Memory lapse",
+    "referral_source": "friends",
+    "next_of_kin_name": "Rashid mahmood",
+    "next_of_kin_phone": "0710257305",
+    "next_of_kin_relation": "other",
+    "id_document": "applications/id_docs/Screenshot_20260129_125256_Chrome.jpg",
+    "kcse_certificate": "applications/kcse_certs/FB_IMG_1769654931090.jpg",
+    "application_reference": "APP-20260129-9A92AA32",
+    "status": "submitted",
+    "submitted_date": "2026-01-29T09:57:59.399Z",
+    "updated_date": "2026-01-29T09:57:59.399Z"
+  }
+}
+]

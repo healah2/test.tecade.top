@@ -1,0 +1,227 @@
+{% extends 'trainer/trainer_base.html' %} {% load static %} {% block title
+%}Upload Occupational Standards{% endblock %} {% block extra_styles %}
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
+/>
+<link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}" />
+
+<style>
+  .upload-box {
+    border: 2px dashed #3c8dbc;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
+  }
+
+  .upload-box:hover {
+    background-color: #f0f7ff;
+  }
+
+  .upload-box i {
+    font-size: 48px;
+    color: #3c8dbc;
+    margin-bottom: 15px;
+  }
+
+  .upload-box h3 {
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .upload-box p {
+    color: #666;
+    font-size: 14px;
+  }
+
+  .file-input-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+
+  .file-input-wrapper input[type="file"] {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .unit-info {
+    background-color: #ecf0f1;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+
+  .unit-info h5 {
+    color: #3c8dbc;
+    margin-bottom: 10px;
+  }
+</style>
+{% endblock %} {% block content %}
+
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>Upload Occupational Standards</h1>
+    <ol class="breadcrumb">
+      <li>
+        <a href="{% url 'staff_dashboard' %}"
+          ><i class="fa fa-dashboard"></i> Dashboard</a
+        >
+      </li>
+      <li><a href="{% url 'trainer_my_classes' %}">My Classes</a></li>
+      <li>
+        <a href="{% url 'trainer_course_units' assignment.id %}"
+          >Course Units</a
+        >
+      </li>
+      <li class="active">Upload OS</li>
+    </ol>
+  </section>
+
+  <section class="content">
+    {% if messages %} {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible">
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-hidden="true"
+      >
+        ×
+      </button>
+      <h4>
+        <i class="icon fa fa-check"></i> {% if message.tags == 'error' %}Error{%
+        else %}Success{% endif %}
+      </h4>
+      {{ message }}
+    </div>
+    {% endfor %} {% endif %}
+
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">
+              <i class="fa fa-book"></i> Upload OS for Unit
+            </h3>
+          </div>
+
+          <div class="box-body">
+            <!-- Unit Information -->
+            <div class="unit-info">
+              <h5>Unit Details</h5>
+              <p><strong>Unit:</strong> {{ unit.unit_competence }}</p>
+              <p>
+                <strong>Class:</strong> {{ assignment.class_slot.slot }} - {{
+                assignment.course.name }}
+              </p>
+            </div>
+
+            <!-- Upload Form -->
+            <form method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+
+              <div class="form-group">
+                <div
+                  class="upload-box"
+                  onclick="document.getElementById('id_pdf_file').click()"
+                >
+                  <i class="fa fa-cloud-upload"></i>
+                  <h3>Click to Upload PDF</h3>
+                  <p>or drag and drop your Occupational Standards PDF here</p>
+                  <small>Maximum file size: 10MB</small>
+                  <br /><br />
+                  <input
+                    type="file"
+                    id="id_pdf_file"
+                    name="pdf_file"
+                    accept=".pdf"
+                    required
+                  />
+                </div>
+              </div>
+
+              <!-- File Preview -->
+              <div id="file-preview" class="form-group" style="display: none">
+                <label>Selected File:</label>
+                <div class="alert alert-info">
+                  <i class="fa fa-file-pdf-o"></i> <span id="file-name"></span>
+                </div>
+              </div>
+
+              {% if form.pdf_file.errors %}
+              <div class="alert alert-danger">
+                <strong>Error:</strong>
+                {% for error in form.pdf_file.errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+              </div>
+              {% endif %}
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fa fa-upload"></i> Upload OS
+                </button>
+                <a
+                  href="{% url 'trainer_course_units' assignment.id %}"
+                  class="btn btn-default"
+                >
+                  <i class="fa fa-arrow-left"></i> Back
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% endblock %} {% block extra_scripts %}
+<script src="{% static 'plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'dist/js/app.min.js' %}"></script>
+
+<script>
+  $(function () {
+    // File input change handler
+    $("#id_pdf_file").on("change", function () {
+      var fileName = $(this).val().split("\\").pop();
+      if (fileName) {
+        $("#file-name").text(fileName);
+        $("#file-preview").show();
+      }
+    });
+
+    // Drag and drop support
+    var uploadBox = $(".upload-box");
+
+    uploadBox.on("dragover", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      $(this).css("background-color", "#e8f4f8");
+    });
+
+    uploadBox.on("dragleave", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      $(this).css("background-color", "#f9f9f9");
+    });
+
+    uploadBox.on("drop", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      $(this).css("background-color", "#f9f9f9");
+
+      var files = e.originalEvent.dataTransfer.files;
+      if (files.length > 0) {
+        $("#id_pdf_file")[0].files = files;
+        $("#id_pdf_file").trigger("change");
+      }
+    });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,387 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block extra_styles %}
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap"
+  rel="stylesheet">
+
+<!-- Icon Font Stylesheet -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+<!-- Libraries Stylesheet -->
+<link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+<link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+
+<!-- Customized Bootstrap Stylesheet -->
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+<!-- Template Stylesheet -->
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+<style>
+  .team-img {
+    height: 300px;
+    overflow: hidden;
+  }
+
+  .team-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ensure the slide always has enough height to contain the caption */
+  #header-carousel .carousel-item {
+    position: relative;
+    min-height: 320px;
+    /* floor on very small phones */
+  }
+
+  /* image fills the slide area and never collapses */
+  #header-carousel .carousel-item img {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* caption is always absolutely positioned over the image */
+  #header-carousel .carousel-caption {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex !important;
+    /* override any d-none from style.css */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    /* semi-transparent dark overlay so text is always readable */
+    background: rgba(64, 62, 62, 0.35);
+  }
+
+  /* desktop sizes stay as-is, only mobile gets scaled down */
+  @media (max-width: 767px) {
+    #header-carousel .carousel-item {
+      min-height: 260px;
+    }
+
+    #header-carousel .carousel-item img {
+      min-height: 260px;
+    }
+
+    #header-carousel .carousel-caption h1 {
+      font-size: 1.3rem;
+      /* display-3 is too big on phones */
+      margin-bottom: 0.4rem;
+    }
+
+    #header-carousel .carousel-caption p {
+      font-size: 1.4rem;
+      /* display-6 is too big on phones */
+      margin-bottom: 0.75rem;
+    }
+
+    #header-carousel .carousel-caption .btn {
+      padding: 0.4rem 1rem;
+      font-size: 0.85rem;
+    }
+  }
+
+  @media (max-width: 400px) {
+    #header-carousel .carousel-item {
+      min-height: 220px;
+    }
+
+    #header-carousel .carousel-item img {
+      min-height: 220px;
+    }
+
+    #header-carousel .carousel-caption h1 {
+      font-size: 1.05rem;
+    }
+
+    #header-carousel .carousel-caption p {
+      font-size: 0.85rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Carousel Start -->
+
+<div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    {% for slide in slides %}
+    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+      <img class="w-100" src="{{ slide.image.url }}" alt="Slide Image">
+      <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+        <div class="p-3" style="max-width: 900px;">
+          <h1 class="display-3 text-white text-uppercase mb-3 animated slideInDown">{{ slide.subheading }}</h1>
+          <p class="display-6 text-white mb-md-4 animated zoomIn">{{ slide.heading }}</p>
+          <a href="{% url 'apply_departments' %}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">
+            Apply Online
+          </a>
+          <a href="{% url 'courses' %}" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">View
+            Courses</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#header-carousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<!-- Carousel End -->
+
+<!-- Full Screen Search Start -->
+<div class="modal fade" id="searchModal" tabindex="-1">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
+      <div class="modal-header border-0">
+        <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex align-items-center justify-content-center">
+        <div class="input-group" style="max-width: 600px;">
+          <input type="text" class="form-control bg-transparent border-primary p-3" placeholder="Type search keyword">
+          <button class="btn btn-primary px-4"><i class="bi bi-search"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Full Screen Search End -->
+
+<!-- Facts Start -->
+<div class="container-fluid facts py-5 pt-lg-0">
+  <div class="container py-5 pt-lg-0">
+    <div class="row gx-0">
+      {% for fact in fact_items %}
+      <div class="col-lg-4 wow zoomIn" data-wow-delay="{{ forloop.counter0|add:" 0.2"|floatformat:1 }}s">
+        <div class="{{ fact.bg_color }} shadow d-flex align-items-center justify-content-center p-4"
+          style="height: 150px;">
+          <div
+            class="{% if fact.bg_color == 'bg-light' %}bg-primary{% else %}bg-white{% endif %} d-flex align-items-center justify-content-center rounded mb-2"
+            style="width: 60px; height: 60px;">
+            <i
+              class="{{ fact.icon_class }} {% if fact.bg_color == 'bg-light' %}text-white{% else %}text-primary{% endif %}"></i>
+          </div>
+          <div class="ps-4">
+            <h5 class="{% if fact.bg_color == 'bg-light' %}text-primary{% else %}text-white{% endif %} mb-0">
+              {{ fact.title }}</h5>
+            <h1 class="{% if fact.bg_color == 'bg-light' %}{% else %}text-white{% endif %} mb-0"
+              data-toggle="counter-up">{{ fact.count }}</h1>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<!-- Facts End -->
+
+
+<!-- Features Start -->
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+  <div class="container py-5">
+    <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+      <h5 class="fw-bold text-primary text-uppercase">Why Choose Tecade</h5>
+      <h1 class="mb-0">Empowering Institutions With Smart Education Tools</h1>
+    </div>
+    <div class="row g-5">
+      <div class="col-lg-4">
+        <div class="row g-5">
+          <div class="col-12 wow zoomIn" data-wow-delay="0.2s">
+            <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3"
+              style="width: 60px; height: 60px;">
+              <i class="fa fa-cubes text-white"></i>
+            </div>
+            <h4>Centralized Management</h4>
+            <p class="mb-0">Seamlessly manage institutional operations including trainees, trainers, and
+              departmental structures.</p>
+          </div>
+          <div class="col-12 wow zoomIn" data-wow-delay="0.6s">
+            <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3"
+              style="width: 60px; height: 60px;">
+              <i class="fa fa-award text-white"></i>
+            </div>
+            <h4>Proven Impact</h4>
+            <p class="mb-0">Helping institutions scale their visibility and service delivery through
+              data-driven technology.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4  wow zoomIn" data-wow-delay="0.9s" style="min-height: 350px;">
+        <div class="position-relative h-100">
+          <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.1s"
+            src="{% static 'img/Carousel 1.jpg' %}" style="object-fit: cover;">
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="row g-5">
+          <div class="col-12 wow zoomIn" data-wow-delay="0.4s">
+            <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3"
+              style="width: 60px; height: 60px;">
+              <i class="fa fa-users-cog text-white"></i>
+            </div>
+            <h4>Supportive Team</h4>
+            <p class="mb-0">Our dedicated support staff ensures institutions get timely help and custom
+              integrations.</p>
+          </div>
+          <div class="col-12 wow zoomIn" data-wow-delay="0.8s">
+            <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3"
+              style="width: 60px; height: 60px;">
+              <i class="fa fa-phone-alt text-white"></i>
+            </div>
+            <h4>24/7 Assistance</h4>
+            <p class="mb-0">Round-the-clock support to keep your systems running without interruption.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Features End -->
+
+
+<!-- Team Start -->
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+  <div class="container py-5">
+    <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+      <h5 class="fw-bold text-primary text-uppercase">Meet Our Team</h5>
+      <h1 class="mb-0">Dedicated Trainers & Staff Supporting You</h1>
+    </div>
+    <div class="row g-5">
+      <div class="row g-5">
+        {% for member in team_members %}
+        <div class="col-lg-4 wow slideInUp" data-wow-delay="0.{{ forloop.counter }}s">
+          <div class="team-item bg-light rounded overflow-hidden">
+            <div class="team-img position-relative overflow-hidden">
+              <img class="img-fluid w-100 team-img-fixed" src="{{ member.image.url }}" alt="{{ member.name }}">
+              <div class="team-social">
+                {% if member.twitter %}
+                <a class="btn btn-lg btn-primary btn-lg-square rounded" href="{{ member.twitter }}"><i
+                    class="fab fa-twitter fw-normal"></i></a>
+                {% endif %}
+                {% if member.facebook %}
+                <a class="btn btn-lg btn-primary btn-lg-square rounded" href="{{ member.facebook }}"><i
+                    class="fab fa-facebook-f fw-normal"></i></a>
+                {% endif %}
+                {% if member.linkedin %}
+                <a class="btn btn-lg btn-primary btn-lg-square rounded" href="{{ member.linkedin }}"><i
+                    class="fab fa-linkedin-in fw-normal"></i></a>
+                {% endif %}
+              </div>
+            </div>
+            <div class="text-center py-4">
+              <h4 class="text-primary">{{ member.name }}</h4>
+              <p class="text-uppercase m-0">{{ member.title }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Team End -->
+
+
+<!-- Blog Start -->
+<div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+  <div class="container py-5">
+    <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+      <h5 class="fw-bold text-primary text-uppercase">Our Blog</h5>
+      <h1 class="mb-0">Insights, Tips & Stories from the Learning Space</h1>
+    </div>
+    <div class="row g-5">
+      <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+        <div class="blog-item bg-light rounded overflow-hidden">
+          <div class="blog-img position-relative overflow-hidden">
+            <img class="img-fluid" src="{% static 'img/blog-1.jpg' %}" alt="">
+            <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4"
+              href="#">Education</a>
+          </div>
+          <div class="p-4">
+            <div class="d-flex mb-3">
+              <small class="me-3"><i class="far fa-user text-primary me-2"></i>Admin</small>
+              <small><i class="far fa-calendar-alt text-primary me-2"></i>09 July, 2025</small>
+            </div>
+            <h4 class="mb-3">Top 5 Skills to Learn in 2025</h4>
+            <p>Discover the most in-demand skills and how Tecade's curriculum helps you master them.</p>
+            <a class="text-uppercase" href="#">Read More <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
+        <div class="blog-item bg-light rounded overflow-hidden">
+          <div class="blog-img position-relative overflow-hidden">
+            <img class="img-fluid" src="{% static 'img/blog-2.jpg' %}" alt="">
+            <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4"
+              href="#">Careers</a>
+          </div>
+          <div class="p-4">
+            <div class="d-flex mb-3">
+              <small class="me-3"><i class="far fa-user text-primary me-2"></i>Admin</small>
+              <small><i class="far fa-calendar-alt text-primary me-2"></i>07 July, 2025</small>
+            </div>
+            <h4 class="mb-3">How to Build Your Career with Tecade</h4>
+            <p>We guide learners from first enrollment to job market readiness with real impact.</p>
+            <a class="text-uppercase" href="#">Read More <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">
+        <div class="blog-item bg-light rounded overflow-hidden">
+          <div class="blog-img position-relative overflow-hidden">
+            <img class="img-fluid" src="{% static 'img/blog-3.jpg' %}" alt="">
+            <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="#">Tech &
+              Learning</a>
+          </div>
+          <div class="p-4">
+            <div class="d-flex mb-3">
+              <small class="me-3"><i class="far fa-user text-primary me-2"></i>Admin</small>
+              <small><i class="far fa-calendar-alt text-primary me-2"></i>01 July, 2025</small>
+            </div>
+            <h4 class="mb-3">Digital Tools Every Institution Should Use</h4>
+            <p>From LMS to analytics — learn what tools power modern learning environments.</p>
+            <a class="text-uppercase" href="#">Read More <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Blog End -->
+{% endblock content %}
+
+{% block extra_scripts %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'lib/wow/wow.min.js' %}"></script>
+<script src="{% static 'lib/easing/easing.min.js' %}"></script>
+<script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+<script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+<!-- Template Javascript -->
+<script src="{% static 'js/main.js' %}"></script>
+
+{% endblock %}

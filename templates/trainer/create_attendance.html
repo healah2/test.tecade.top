@@ -1,0 +1,198 @@
+{% extends 'trainer/trainer_base.html' %}
+{% load static %}
+{% block title %}Tecade | Generate Session Plan{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+<link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>Trainer Attendance</h1>
+        <p>Record attendance for a session created from session plans.</p>
+    </section>
+
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">Create Attendance Record</h3>
+            </div>
+            <div class="box-body">
+                <form method="post" action="{% url 'create_attendance' %}">
+                    {% csrf_token %}
+
+                    {% if errors %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for error in errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="assignment">Class</label>
+                                <select id="assignment" name="assignment" class="form-control" required>
+                                    <option value="">Select class</option>
+                                    {% for assignment in assignments %}
+                                    <option value="{{ assignment.id }}" {% if form_data.assignment == assignment.id|stringformat:'s' %}selected{% endif %}>
+                                        {{ assignment.class_slot.slot }} - {{ assignment.course.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="unit">Unit</label>
+                                <select id="unit" name="unit" class="form-control" required>
+                                    <option value="">Select unit</option>
+                                    {% for unit in units %}
+                                    <option value="{{ unit.id }}" data-competence="{{ unit.unit_of_competency|escapejs }}" {% if form_data.unit == unit.id|stringformat:'s' %}selected{% endif %}>
+                                        {{ unit.unit_of_competency }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="session_plan">Session</label>
+                                <select id="session_plan" name="session_plan" class="form-control" required>
+                                    <option value="">Select session</option>
+                                    {% for session in sessions %}
+                                    <option value="{{ session.id }}" data-unit="{{ session.unit.unit_competence|escapejs }}" {% if form_data.session_plan == session.id|stringformat:'s' %}selected{% endif %}>
+                                        {{ session.session_title }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="date" id="date" name="date" class="form-control" value="{{ form_data.date }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="start_time">Start Time</label>
+                                <input type="time" id="start_time" name="start_time" class="form-control" value="{{ form_data.start_time }}" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="end_time">End Time</label>
+                                <input type="time" id="end_time" name="end_time" class="form-control" value="{{ form_data.end_time }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label for="venue">Venue</label>
+                                <input id="venue" name="venue" class="form-control" type="text" value="{{ form_data.venue }}" placeholder="Enter venue or room">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Save Attendance</button>
+                        <a href="{% url 'attendance_list' %}" class="btn btn-default">View Attendance</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'dist/js/app.min.js' %}"></script>
+
+<script>
+    const unitSelect = document.getElementById('unit_id');
+    const sessionSelect = document.getElementById('session_title');
+    const expectationContainer = document.getElementById('expectation_container');
+    const participatoryTable = document.querySelector('#participatory_table tbody');
+
+    // Reload page with selected unit
+    unitSelect.addEventListener('change', function () {
+        if (this.value) {
+            window.location.href = `?unit_id=${this.value}`;
+        }
+    });
+
+    // Load session data into form
+    sessionSelect.addEventListener('change', function () {
+        const selected = this.options[this.selectedIndex];
+
+        // ---------------------------
+        // HANDLE MULTIPLE EXPECTATIONS
+        // ---------------------------
+        expectationContainer.innerHTML = "";
+        let expectations = [];
+
+        try {
+            expectations = JSON.parse(selected.dataset.expectations || "[]");
+        } catch {
+            expectations = [];
+        }
+
+        expectations.forEach(exp => {
+            expectationContainer.innerHTML += `
+                <textarea name="expectation[]" class="form-control" rows="2" readonly>${exp}</textarea><br>
+            `;
+        });
+
+        // ---------------------------
+        // PARTICIPATORY LEARNING
+        // ---------------------------
+        participatoryTable.innerHTML = "";
+
+        const trainers = (selected.dataset.trainer || '').split('||').filter(x => x.trim() !== "");
+        const trainees = (selected.dataset.trainee || '').split('||').filter(x => x.trim() !== "");
+        const resources = (selected.dataset.resources || '').split('||').filter(x => x.trim() !== "");
+
+        const maxRows = Math.max(trainers.length, trainees.length, resources.length);
+
+        for (let i = 0; i < maxRows; i++) {
+            const t_trainer = trainers[i] || "";
+            const t_trainee = trainees[i] || "";
+            const t_resource = resources[i] || "";
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><input type="text" name="time[]" class="form-control" style="width:90px;"></td>
+                <td><input type="text" name="trainer_activities[]" class="form-control" value="${t_trainer}"></td>
+                <td><input type="text" name="trainee_activities[]" class="form-control" value="${t_trainee}"></td>
+                <td><input type="text" name="resources[]" class="form-control" value="${t_resource}"></td>
+            `;
+            participatoryTable.appendChild(row);
+        }
+    });
+
+    // Keep selected unit after reload
+    const params = new URLSearchParams(window.location.search);
+    const selectedUnitId = params.get("unit_id");
+    if (selectedUnitId) {
+        unitSelect.value = selectedUnitId;
+    }
+</script>
+{% endblock %}

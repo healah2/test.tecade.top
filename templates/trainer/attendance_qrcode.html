@@ -1,0 +1,151 @@
+{% extends 'trainer/trainer_base.html' %}
+{% load static %}
+
+{% block title %}Attendance QR Code{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+<link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
+<link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}" />
+<link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      Attendance QR Code
+      <small>Trainer attendance session</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="{% url 'trainer_my_classes' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="{% url 'attendance_list' %}"><i class="fa fa-calendar"></i> Attendance</a></li>
+      <li class="active">QR Code</li>
+    </ol>
+  </section>
+
+  <section class="content">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="box box-info">
+          <div class="box-header with-border">
+            <h3 class="box-title">Attendance QR Code</h3>
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <dl class="dl-horizontal">
+                  <dt>Date</dt>
+                  <dd>{{ attendance.date|date:"d-M-Y" }}</dd>
+                  <dt>Time</dt>
+                  <dd>{{ attendance.start_time|time:"H:i" }} - {{ attendance.end_time|time:"H:i" }}</dd>
+                </dl>
+              </div>
+              <div class="col-sm-6">
+                <dl class="dl-horizontal">
+                  <dt>Class</dt>
+                  <dd>{{ attendance.assignment.class_slot }}</dd>
+                  <dt>Unit</dt>
+                  <dd>{{ attendance.unit.unit_of_competency }}</dd>
+                </dl>
+              </div>
+            </div>
+
+            {% if attendance.session_plan %}
+            <div class="callout callout-info">
+              <h4>Session Plan</h4>
+              <p>{{ attendance.session_plan.session_title }}</p>
+            </div>
+            {% endif %}
+
+            <div class="text-center">
+              <h4>QR Code</h4>
+              {% if attendance.qr_code %}
+              <img src="{{ attendance.qr_code.url }}" alt="Attendance QR Code" class="img-responsive center-block" style="max-width:320px; border:1px solid #ddd; padding:12px; background:#fff;" />
+              <div class="margin-top">
+                <a href="{{ attendance.qr_code.url }}" download="attendance_qrcode.png" class="btn btn-primary">
+                  <i class="fa fa-download"></i> Download QR Code
+                </a>
+              </div>
+              {% if attendance_link %}
+              <div class="alert alert-info" style="margin-top:15px; word-break:break-all;">
+                <strong>QR URL:</strong><br>
+                <a href="{{ attendance_link }}" target="_blank">{{ attendance_link }}</a>
+              </div>
+              {% endif %}
+              {% else %}
+              <div class="alert alert-warning">
+                <i class="fa fa-exclamation-triangle"></i> QR Code not generated yet.
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="box box-solid box-default">
+              <div class="box-header with-border">
+                <h3 class="box-title">Attendance Code</h3>
+              </div>
+              <div class="box-body">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="attendance_code" value="{{ attendance_code }}" readonly />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="copy_link_btn" title="Copy code to clipboard">
+                      <i class="fa fa-copy"></i>
+                    </button>
+                  </span>
+                </div>
+                <p class="help-block">This is the attendance code for the session. Trainee attendance marking will be implemented later.</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="callout callout-success">
+                  <h4>Status</h4>
+                  <p>
+                    <span class="label label-{% if attendance.get_current_status == 'Pending' %}warning{% elif attendance.get_current_status == 'Active' %}info{% else %}success{% endif %}">
+                      {{ attendance.get_current_status }}
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 text-right">
+                <a href="{% url 'attendance_list' %}" class="btn btn-default">
+                  <i class="fa fa-arrow-left"></i> Back to Attendance List
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'dist/js/app.min.js' %}"></script>
+<script>
+  document.getElementById('copy_link_btn').addEventListener('click', function () {
+    var input = document.getElementById('attendance_code');
+    input.select();
+    document.execCommand('copy');
+
+    var btn = this;
+    btn.innerHTML = '<i class="fa fa-check"></i> Copied';
+    btn.classList.remove('btn-default');
+    btn.classList.add('btn-success');
+
+    setTimeout(function () {
+      btn.innerHTML = '<i class="fa fa-copy"></i> Copy';
+      btn.classList.remove('btn-success');
+      btn.classList.add('btn-default');
+    }, 1500);
+  });
+</script>
+{% endblock %}
+

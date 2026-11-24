@@ -1,0 +1,287 @@
+{% extends 'trainer/trainer_base.html' %} {% load static %} {% block title %}Tecade | Course Units{% endblock %} {% block extra_styles %}
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+<!-- Font Awesome -->
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
+/>
+<!-- Ionicons -->
+<link
+  rel="stylesheet"
+  href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+/>
+<!-- Theme style -->
+<link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}" />
+<!-- AdminLTE Skins -->
+<link
+  rel="stylesheet"
+  href="{% static 'dist/css/skins/_all-skins.min.css' %}"
+/>
+
+<style>
+  .unit-card {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition:
+      box-shadow 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .unit-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .unit-card-header {
+    border-bottom: 2px solid #3c8dbc;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+
+  .unit-card-header h4 {
+    margin: 0;
+    color: #3c8dbc;
+    font-weight: bold;
+  }
+
+  .unit-card-header .unit-code {
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+  }
+
+  .progress-item {
+    margin-bottom: 20px;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+  }
+
+  .progress {
+    height: 20px;
+    border-radius: 3px;
+    background-color: #f0f0f0;
+  }
+
+  .progress-bar {
+    border-radius: 3px;
+    background-color: #3c8dbc;
+    transition: width 0.3s ease;
+  }
+
+  .unit-card-footer {
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+    margin-top: 15px;
+  }
+
+  .unit-card-footer .btn {
+    margin-right: 5px;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+  }
+
+  .empty-state i {
+    font-size: 48px;
+    margin-bottom: 20px;
+    opacity: 0.5;
+  }
+</style>
+
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+{% endblock %} {% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>Course Units</h1>
+    <ol class="breadcrumb">
+      <li>
+        <a href="{% url 'staff_dashboard' %}"
+          ><i class="fa fa-dashboard"></i> Dashboard</a
+        >
+      </li>
+      <li><a href="{% url 'trainer_my_classes' %}">My Classes</a></li>
+      <li class="active">Course Units</li>
+    </ol>
+  </section>
+
+  <section class="content">
+    {% if messages %} {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible">
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-hidden="true"
+      >
+        ×
+      </button>
+      <h4><i class="icon fa fa-check"></i> Alert!</h4>
+      {{ message }}
+    </div>
+    {% endfor %} {% endif %}
+
+    <!-- Class and Course Info -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">
+              <i class="fa fa-graduation-cap"></i>
+              {{ assignment.class_slot.slot }} - {{ assignment.course.name }}
+            </h3>
+          </div>
+          <div class="box-body">
+            <p>
+              <strong>Level:</strong> {{ assignment.course.level }} |
+              <strong>Intake:</strong> {{ assignment.class_slot.intake|date:"M
+              Y" }} | <strong>Total Units:</strong> {{ units|length }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Units Cards -->
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Unit Progress Tracking</h3>
+      </div>
+
+      <div class="box-body">
+        {% if units %}
+        <div class="row">
+          {% for unit in units %}
+          <div class="col-md-6 col-lg-4">
+            <div class="unit-card">
+              <div class="unit-card-header">
+                <h4>
+                  <i class="fa fa-book"></i>
+                  {{ unit.unit_competence }}
+                </h4>
+              </div>
+
+              <!-- Unit Completion Progress -->
+              <div class="progress-item">
+                <div class="progress-label">
+                  <span>Unit Completion</span>
+                  <span>50%</span>
+                </div>
+                <div class="progress">
+                  <div
+                    class="progress-bar"
+                    role="progressbar"
+                    style="width: 50%"
+                    aria-valuenow="50"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- Assessment Completion Progress -->
+              <div class="progress-item">
+                <div class="progress-label">
+                  <span>Assessment Completion</span>
+                  <span>1/4</span>
+                </div>
+                <div class="progress">
+                  <div
+                    class="progress-bar"
+                    role="progressbar"
+                    style="width: 25%"
+                    aria-valuenow="25"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- POE Submissions Progress -->
+              <div class="progress-item">
+                <div class="progress-label">
+                  <span>POE Submissions</span>
+                  <span>1/40</span>
+                </div>
+                <div class="progress">
+                  <div
+                    class="progress-bar"
+                    role="progressbar"
+                    style="width: 2.5%"
+                    aria-valuenow="2.5"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- Footer with Actions -->
+              <div class="unit-card-footer">
+                <a
+                  class="btn btn-primary btn-sm"
+                  href="{% url 'trainer_view_curriculum' assignment.id unit.id %}"
+                  title="View curriculum outcomes"
+                >
+                  <i class="fa fa-book"></i> View Curriculum
+                </a>
+                <a href="#" class="btn btn-info btn-sm">
+                  <i class="fa fa-eye"></i> View Details
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+          <i class="fa fa-book"></i>
+          <h3>No Units Assigned</h3>
+          <p>No units have been assigned to you for this class yet.</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+</div>
+
+{% endblock %} {% block extra_scripts %}
+
+<!-- jQuery 2.1.4 -->
+<script src="{% static 'plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<!-- SlimScroll -->
+<script src="{% static 'plugins/slimScroll/jquery.slimscroll.min.js' %}"></script>
+<!-- FastClick -->
+<script src="{% static 'plugins/fastclick/fastclick.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/app.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dist/js/demo.js' %}"></script>
+
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover();
+  });
+</script>
+
+{% endblock %}

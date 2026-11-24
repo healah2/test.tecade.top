@@ -1,0 +1,538 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% load custom_filters %}
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% if mainpage %}{{ mainpage.institution_name }}{% else %}TeCade{% endif %} — Login Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f0f2f5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    /* ── card stack wrapper ── */
+    .card-stack {
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+    }
+
+    .login-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+      padding: 36px 32px 28px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-align: center;
+      margin-bottom: 4px;
+      color: #1a1a2e;
+    }
+
+    .brand-sub {
+      text-align: center;
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 24px;
+    }
+
+    /* outer tabs */
+    .outer-tabs .nav-link {
+      color: #555;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 8px;
+      padding: 7px 22px;
+      border: none;
+    }
+
+    .outer-tabs .nav-link.active {
+      background: #0D6EFD;
+      color: #fff;
+    }
+
+    /* staff header */
+    .staff-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+
+    .section-title.trainee {
+      color: #0D6EFD;
+    }
+
+    .section-title.staff {
+      color: #1a6e3c;
+    }
+
+    .section-title.admin {
+      color: #7b2d00;
+    }
+
+    .section-title.sysadmin {
+      color: #1a1a2e;
+    }
+
+    /* portal icon buttons */
+    .portal-icons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .portal-icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1.5px solid #dee2e6;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 15px;
+      color: #666;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .portal-icon-btn:hover {
+      border-color: #adb5bd;
+      background: #f1f3f5;
+      color: #333;
+    }
+
+    .portal-icon-btn.active-management {
+      border-color: #7b2d00;
+      background: #f9ede8;
+      color: #7b2d00;
+    }
+
+    .portal-icon-btn.active-sysadmin {
+      border-color: #1a1a2e;
+      background: #e8e8f0;
+      color: #1a1a2e;
+    }
+
+    /* tooltip */
+    .portal-icon-btn[data-tooltip]::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      right: 0;
+      background: #333;
+      color: #fff;
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s;
+    }
+
+    .portal-icon-btn[data-tooltip]:hover::after {
+      opacity: 1;
+    }
+
+    /* ── slide-over overlay panel ── */
+    .portal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      min-height: 100%;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+      padding: 0 32px 28px;
+      z-index: 10;
+      box-sizing: border-box;
+      overflow-y: auto;
+
+      /* hidden off-screen to the right */
+      transform: translateX(110%);
+      opacity: 0;
+      transition: transform 0.40s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.30s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+
+    .portal-overlay.slide-in {
+      transform: translateX(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* coloured accent strip at top of each overlay */
+    .portal-accent {
+      height: 6px;
+      border-radius: 12px 12px 0 0;
+      margin: 0 -32px 28px;
+    }
+
+    .accent-management {
+      background: linear-gradient(90deg, #7b2d00, #c0572a);
+    }
+
+    .accent-sysadmin {
+      background: linear-gradient(90deg, #1a1a2e, #3a3a6e);
+    }
+
+    /* back button */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 13px;
+      cursor: pointer;
+      padding: 0;
+      margin-bottom: 20px;
+      transition: color 0.15s;
+    }
+
+    .back-btn:hover {
+      color: #333;
+    }
+
+    .back-btn i {
+      font-size: 11px;
+    }
+
+    /* form */
+    .form-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 4px;
+    }
+
+    .form-control,
+    .form-select {
+      border-radius: 8px;
+      border: 1.5px solid #dee2e6;
+      font-size: 14px;
+      padding: 9px 13px;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: #0D6EFD;
+      box-shadow: 0 0 0 3px rgba(13, 59, 110, 0.10);
+    }
+
+    .btn-login {
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 10px;
+      width: 100%;
+      transition: opacity 0.2s;
+    }
+
+    .btn-login:hover {
+      opacity: 0.88;
+    }
+
+    .btn-trainee {
+      background: #0D6EFD;
+    }
+
+    .btn-staff {
+      background: #1a6e3c;
+    }
+
+    .btn-admin {
+      background: #7b2d00;
+    }
+
+    .btn-sysadmin {
+      background: #1a1a2e;
+    }
+
+    .help-text {
+      font-size: 14px;
+      color: #999;
+      text-align: center;
+      margin-top: 14px;
+    }
+
+    .alert {
+      border-radius: 8px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card-stack">
+
+    <!-- ══ MAIN LOGIN CARD ══ -->
+    <div class="login-card">
+
+      <div class="brand-title">
+        {% if mainpage %}{{ mainpage.institution_name }}{% else %}{% endif %}
+      </div>
+      <div class="brand-sub">
+        {% if mainpage %}{{ mainpage.site_title }}{% else %}{% endif %}
+      </div>
+
+      <ul class="nav nav-pills outer-tabs mb-4 justify-content-center" id="outerTab">
+        <li class="nav-item">
+          <button class="nav-link {% if active_outer_tab != 'staff' %}active{% endif %}" id="outer-trainee-tab"
+            data-bs-toggle="pill" data-bs-target="#outer-trainee" type="button">
+            Trainee Login
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link {% if active_outer_tab == 'staff' %}active{% endif %}" id="outer-staff-tab"
+            data-bs-toggle="pill" data-bs-target="#outer-staff" type="button">
+            Staff Login
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+
+        <!-- ── TRAINEE TAB ── -->
+        <div class="tab-pane fade {% if active_outer_tab != 'staff' %}show active{% endif %}" id="outer-trainee"
+          role="tabpanel">
+
+          <div class="section-title trainee mb-3">Trainee Portal</div>
+
+          {% if messages and active_outer_tab != 'staff' %}
+          {% for message in messages %}
+          <div class="alert alert-danger">{{ message }}</div>
+          {% endfor %}
+          {% endif %}
+
+          <form method="POST" action="{% url 'trainee:trainee_login' %}">
+            {% csrf_token %}
+            <input type="hidden" name="user_type" value="trainee">
+            <div class="mb-3">
+              <label class="form-label">Trainee Number</label>
+              <input type="text" class="form-control" name="trainee_number" value="{{ request.POST.trainee_number }}"
+                placeholder="e.g. L4/CS/0001/25J" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-control" name="password" placeholder="Enter password" required>
+              <small class="text-muted" style="font-size:11px;">Initial password is your trainee number</small>
+            </div>
+            <button type="submit" class="btn-login btn-trainee mt-1">Login as Trainee</button>
+          </form>
+
+          <div class="help-text">
+            <a href="{% url 'trainee:trainee_change_password' %}" class="text-decoration-none" style="color:#0d3b6e;">
+              Change Password
+            </a>
+            &nbsp;·&nbsp; Having trouble? Contact the admin office
+          </div>
+        </div>
+
+        <!-- ── STAFF TAB ── -->
+        <div class="tab-pane fade {% if active_outer_tab == 'staff' %}show active{% endif %}" id="outer-staff"
+          role="tabpanel">
+
+          <div class="staff-header">
+            <div class="section-title staff">Staff Portal</div>
+            <div class="portal-icons">
+              <button class="portal-icon-btn" id="btn-management-icon" data-tooltip="Management Login"
+                onclick="openPortal('management-overlay', this, 'management')" type="button">
+                <i class="fa fa-user"></i>
+              </button>
+              <button class="portal-icon-btn" id="btn-sysadmin-icon" data-tooltip="System Admin Login"
+                onclick="openPortal('sysadmin-overlay', this, 'sysadmin')" type="button">
+                <i class="fa fa-cog"></i>
+              </button>
+            </div>
+          </div>
+
+          {% if messages and active_outer_tab == 'staff' and not active_inner_tab %}
+          {% for message in messages %}
+          <div class="alert alert-danger">{{ message }}</div>
+          {% endfor %}
+          {% endif %}
+
+          <form method="POST" action="{% url 'staff_login' %}">
+            {% csrf_token %}
+            <input type="hidden" name="user_type" value="staff">
+            <div class="mb-3">
+              <label class="form-label">Staff ID or Email</label>
+              <input type="text" class="form-control" name="staff_id_or_email" placeholder="Enter Staff ID or Email"
+                required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-control" name="password" placeholder="Enter password" required>
+            </div>
+            <button type="submit" class="btn-login btn-staff">Login as Staff</button>
+          </form>
+
+          <div class="help-text">Trainers &amp; HODs only &nbsp;·&nbsp; Contact admin if locked out</div>
+        </div>
+
+      </div><!-- /tab-content -->
+    </div><!-- /login-card -->
+
+    <!-- ══ MANAGEMENT OVERLAY ══ -->
+    <div class="portal-overlay {% if active_inner_tab == 'management' %}slide-in{% endif %}" id="management-overlay">
+
+      <div class="portal-accent accent-management"></div>
+
+      <button class="back-btn" onclick="closePortal('management-overlay', 'btn-management-icon', 'management')"
+        type="button">
+        <i class="fa fa-arrow-left"></i> Back to Staff Login
+      </button>
+
+      <div class="section-title admin mb-3">Management Portal</div>
+
+      {% if messages and active_inner_tab == 'management' %}
+      {% for message in messages %}
+      <div class="alert alert-danger">{{ message }}</div>
+      {% endfor %}
+      {% endif %}
+
+      <form method="POST" action="{% url 'admin_login' %}">
+        {% csrf_token %}
+        <input type="hidden" name="user_type" value="admin">
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-control" name="username" placeholder="Enter username" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Staff Number</label>
+          <input type="password" class="form-control" name="staff_number" placeholder="Enter staff number" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Designation</label>
+          <select class="form-select" name="designation" required>
+            <option value="">— Select Designation —</option>
+            <option value="Registrar Academics" {{ request.POST|dict_get:"designation"|is_selected:"Registrar Academics"
+              }}>Registrar Academics</option>
+            <option value="DP Academics" {{ request.POST|dict_get:"designation"|is_selected:"DP Academics" }}>DP
+              Academics</option>
+            <option value="DP Admin" {{ request.POST|dict_get:"designation"|is_selected:"DP Admin" }}>DP Admin</option>
+            <option value="Finance" {{ request.POST|dict_get:"designation"|is_selected:"Finance" }}>Finance</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-login btn-admin">Login as Management</button>
+      </form>
+
+      <div class="help-text">Authorised management staff only</div>
+    </div>
+
+    <!-- ══ SYSTEM ADMIN OVERLAY ══ -->
+    <div class="portal-overlay {% if active_inner_tab == 'sysadmin' %}slide-in{% endif %}" id="sysadmin-overlay">
+
+      <div class="portal-accent accent-sysadmin"></div>
+
+      <button class="back-btn" onclick="closePortal('sysadmin-overlay', 'btn-sysadmin-icon', 'sysadmin')" type="button">
+        <i class="fa fa-arrow-left"></i> Back to Staff Login
+      </button>
+
+      <div class="section-title sysadmin mb-3">System Admin Portal</div>
+
+      {% if messages and active_inner_tab == 'sysadmin' %}
+      {% for message in messages %}
+      <div class="alert alert-danger">{{ message }}</div>
+      {% endfor %}
+      {% endif %}
+
+      <form method="POST" action="{% url 'admin_login' %}">
+        {% csrf_token %}
+        <input type="hidden" name="user_type" value="sysadmin">
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-control" name="username" placeholder="Enter username" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Staff Number</label>
+          <input type="password" class="form-control" name="staff_number" placeholder="Enter staff number" required>
+        </div>
+        <button type="submit" class="btn-login btn-sysadmin">Login as System Admin</button>
+      </form>
+
+      <div class="help-text">System Administrators only</div>
+    </div>
+
+  </div><!-- /card-stack -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function openPortal(overlayId, btn, type) {
+      // Close any currently open overlay
+      document.querySelectorAll('.portal-overlay').forEach(o => o.classList.remove('slide-in'));
+      document.querySelectorAll('.portal-icon-btn').forEach(b => b.classList.remove('active-management', 'active-sysadmin'));
+
+      // Trigger slide-in on next paint so CSS transition fires
+      const overlay = document.getElementById(overlayId);
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        overlay.classList.add('slide-in');
+      }));
+
+      btn.classList.add(type === 'management' ? 'active-management' : 'active-sysadmin');
+    }
+
+    function closePortal(overlayId, btnId, type) {
+      document.getElementById(overlayId).classList.remove('slide-in');
+      document.getElementById(btnId).classList.remove('active-management', 'active-sysadmin');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+
+      if (params.get('tab') === 'staff') {
+        new bootstrap.Tab(document.getElementById('outer-staff-tab')).show();
+      }
+
+      // Restore state after a POST (e.g. failed login)
+      const userType = "{{ request.POST.user_type|default:'' }}";
+      if (userType === 'admin') {
+        new bootstrap.Tab(document.getElementById('outer-staff-tab')).show();
+        document.getElementById('management-overlay').classList.add('slide-in');
+        document.getElementById('btn-management-icon').classList.add('active-management');
+      } else if (userType === 'sysadmin') {
+        new bootstrap.Tab(document.getElementById('outer-staff-tab')).show();
+        document.getElementById('sysadmin-overlay').classList.add('slide-in');
+        document.getElementById('btn-sysadmin-icon').classList.add('active-sysadmin');
+      } else if (userType === 'staff') {
+        new bootstrap.Tab(document.getElementById('outer-staff-tab')).show();
+      }
+    });
+  </script>
+
+</body>
+
+</html>

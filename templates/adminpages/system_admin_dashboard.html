@@ -1,0 +1,588 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}TeCade | System Admin Dashboard{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+<link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
+<style>
+    .section-heading {
+        font-size: 13px;
+        font-weight: 700;
+        color: #999;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 24px 0 10px 0;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #2c3b4f;
+    }
+    .small-box .inner h4 {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+    .small-box .inner p {
+        font-size: 12px;
+        margin: 0;
+        opacity: 0.85;
+    }
+    .small-box .icon { font-size: 60px; top: 10px; }
+    .stat-card {
+        background: #fff;
+        border-radius: 4px;
+        border-left: 4px solid #ccc;
+        padding: 16px 18px;
+        margin-bottom: 20px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    .stat-card .stat-icon {
+        width: 46px; height: 46px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 20px; color: #fff; flex-shrink: 0;
+    }
+    .stat-card .stat-val { font-size: 26px; font-weight: 700; line-height: 1; color: #333; }
+    .stat-card .stat-lbl { font-size: 12px; color: #888; margin-top: 3px; }
+    .stat-card.blue  { border-left-color: #00c0ef; }
+    .stat-card.green { border-left-color: #00a65a; }
+    .stat-card.red   { border-left-color: #dd4b39; }
+    .stat-card.yellow{ border-left-color: #f39c12; }
+    .stat-card.purple{ border-left-color: #605ca8; }
+    .stat-card.teal  { border-left-color: #39cccc; }
+    .stat-card.blue  .stat-icon { background: #00c0ef; }
+    .stat-card.green .stat-icon { background: #00a65a; }
+    .stat-card.red   .stat-icon { background: #dd4b39; }
+    .stat-card.yellow .stat-icon { background: #f39c12; }
+    .stat-card.purple .stat-icon { background: #605ca8; }
+    .stat-card.teal  .stat-icon { background: #39cccc; }
+    .quick-link-box {
+        background: #fff;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+    .quick-link-box .box-header {
+        padding: 10px 16px;
+        border-bottom: 1px solid #f4f4f4;
+        font-weight: 600;
+        font-size: 14px;
+        color: #444;
+    }
+    .quick-link-box .box-header i { margin-right: 6px; }
+    .quick-link-list { list-style: none; margin: 0; padding: 0; }
+    .quick-link-list li a {
+        display: flex; align-items: center; gap: 10px;
+        padding: 10px 16px;
+        font-size: 13px; color: #444;
+        border-bottom: 1px solid #f9f9f9;
+        text-decoration: none;
+        transition: background 0.15s;
+    }
+    .quick-link-list li a:hover { background: #f4f4f4; color: #222; }
+    .quick-link-list li a i {
+        width: 22px; text-align: center;
+        font-size: 14px; color: #888;
+    }
+    .quick-link-list li a .arrow {
+        margin-left: auto; color: #bbb; font-size: 12px;
+    }
+    .badge-count {
+        margin-left: auto;
+        background: #dd4b39;
+        color: #fff;
+        border-radius: 10px;
+        padding: 2px 8px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+    .activity-item {
+        display: flex; align-items: flex-start; gap: 10px;
+        padding: 10px 16px;
+        border-bottom: 1px solid #f4f4f4;
+        font-size: 13px;
+    }
+    .activity-item .act-icon {
+        width: 30px; height: 30px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 12px; color: #fff; flex-shrink: 0; margin-top: 2px;
+    }
+    .activity-item .act-text { color: #444; line-height: 1.5; }
+    .activity-item .act-time { font-size: 11px; color: #aaa; margin-top: 2px; }
+    .info-box-sysadmin {
+        background: #fff;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        padding: 14px 16px;
+        margin-bottom: 20px;
+        font-size: 13px; color: #555;
+    }
+    .info-box-sysadmin strong { color: #333; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- ══ SIDEBAR ══ -->
+<aside class="main-sidebar">
+    <section class="sidebar">
+
+        <!-- User Panel -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="{{ request.session.profile_image_url|default:'/static/dist/img/user2-160x160.jpg' }}"
+                     class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+                <p>{{ request.session.admin_name|default:"System Admin" }}</p>
+                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <ul class="sidebar-menu">
+            <li class="header">MAIN NAVIGATION</li>
+
+            <li class="active">
+                <a href="{% url 'system_admin_dashboard' %}">
+                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                </a>
+            </li>
+
+            <!-- SITE CONTENT -->
+            <li class="header">SITE CONTENT</li>
+
+            <li>
+                <a href="{% url 'manage_main_page' %}">
+                    <i class="fa fa-globe"></i> <span>Main Page Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'admin_index' %}">
+                    <i class="fa fa-home"></i> <span>Home Page / Carousel</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'admin_about' %}">
+                    <i class="fa fa-info-circle"></i> <span>About Page</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'admin_inst_mgt' %}">
+                    <i class="fa fa-users"></i> <span>Institutional Management</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'admin_bom' %}">
+                    <i class="fa fa-sitemap"></i> <span>Board of Management</span>
+                </a>
+            </li>
+
+            <!-- DEPARTMENTS -->
+            <li class="header">DEPARTMENTS</li>
+
+            <li>
+                <a href="{% url 'admin_academic_departments' %}">
+                    <i class="fa fa-university"></i> <span>Academic Departments</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'admin_non_academic_departments' %}">
+                    <i class="fa fa-building"></i> <span>Non-Academic Departments</span>
+                </a>
+            </li>
+
+            <!-- SYSTEM -->
+            <li class="header">SYSTEM</li>
+
+            <li>
+                <a href="{% url 'all_trainees' %}">
+                    <i class="fa fa-graduation-cap"></i> <span>All Trainees</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'all_courses' %}">
+                    <i class="fa fa-book"></i> <span>All Courses</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'all_departments' %}">
+                    <i class="fa fa-th-large"></i> <span>All Departments</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'system_admin_credentials' %}">
+                    <i class="fa fa-key"></i> <span>Admin Credentials</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'create_current_session' %}">
+                    <i class="fa fa-calendar"></i> <span>Session Management</span>
+                </a>
+            </li>
+
+            <li class="header">ACCOUNT</li>
+            <li>
+                <a href="{% url 'admin_logout' %}">
+                    <i class="fa fa-sign-out"></i> <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+</aside>
+
+<!-- ══ CONTENT WRAPPER ══ -->
+<div class="content-wrapper">
+
+    <!-- Page Header -->
+    <section class="content-header">
+        <h1>
+            System Admin Dashboard
+            <small>Full system control panel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">System Admin</li>
+        </ol>
+    </section>
+
+    <section class="content">
+
+        <!-- ── WELCOME BANNER ── -->
+        <div class="info-box-sysadmin" style="border-left: 4px solid #605ca8; margin-bottom: 20px;">
+            <i class="fa fa-shield" style="color:#605ca8; margin-right:8px;"></i>
+            Welcome back, <strong>{{ request.session.admin_name|default:"System Admin" }}</strong>.
+            You have full access to all site settings, content, credentials, and records.
+        </div>
+
+        <!-- ── STAT CARDS ROW ── -->
+        <div class="row">
+            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                <div class="stat-card blue">
+                    <div class="stat-icon"><i class="fa fa-users"></i></div>
+                    <div>
+                        <div class="stat-val" id="stat-trainees">—</div>
+                        <div class="stat-lbl">Total Trainees</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                <div class="stat-card green">
+                    <div class="stat-icon"><i class="fa fa-book"></i></div>
+                    <div>
+                        <div class="stat-val" id="stat-courses">—</div>
+                        <div class="stat-lbl">Courses</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                <div class="stat-card yellow">
+                    <div class="stat-icon"><i class="fa fa-university"></i></div>
+                    <div>
+                        <div class="stat-val" id="stat-depts">—</div>
+                        <div class="stat-lbl">Departments</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                <div class="stat-card teal">
+                    <div class="stat-icon"><i class="fa fa-chalkboard-teacher"></i></div>
+                    <div>
+                        <div class="stat-val" id="stat-trainers">—</div>
+                        <div class="stat-lbl">Trainers</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                <div class="stat-card red">
+                    <div class="stat-icon"><i class="fa fa-file-text"></i></div>
+                    <div>
+                        <div class="stat-val" id="stat-apps">—</div>
+                        <div class="stat-lbl">Applications</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                <div class="stat-card purple">
+                    <div class="stat-icon"><i class="fa fa-user-secret"></i></div>
+                    <div>
+                        <div class="stat-val" id="stat-admins">—</div>
+                        <div class="stat-lbl">Admin Accounts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row stats -->
+
+        <!-- ── QUICK ACCESS SECTIONS ── -->
+        <div class="row">
+
+            <!-- SITE CONTENT quick links -->
+            <div class="col-md-4">
+                <div class="quick-link-box">
+                    <div class="box-header" style="background:#f9f9f9;">
+                        <i class="fa fa-globe text-blue"></i> Site Content
+                    </div>
+                    <ul class="quick-link-list">
+                        <li>
+                            <a href="{% url 'manage_main_page' %}">
+                                <i class="fa fa-cog"></i> Main Page Settings
+                                <span class="arrow"><i class="fa fa-chevron-right"></i></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'admin_index' %}">
+                                <i class="fa fa-picture-o"></i> Carousel / Home Page
+                                <span class="arrow"><i class="fa fa-chevron-right"></i></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'admin_about' %}">
+                                <i class="fa fa-info-circle"></i> About Page
+                                <span class="arrow"><i class="fa fa-chevron-right"></i></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'admin_inst_mgt' %}">
+                                <i class="fa fa-users"></i> Institutional Management
+                                <span class="arrow"><i class="fa fa-chevron-right"></i></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'admin_bom' %}">
+                                <i class="fa fa-sitemap"></i> Board of Management
+                                <span class="arrow"><i class="fa fa-chevron-right"></i></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- DEPARTMENTS & ACADEMICS quick links -->
+            <div class="col-md-4">
+                <div class="quick-link-box">
+                    <div class="box-header" style="background:#f9f9f9;">
+                        <i class="fa fa-university text-green"></i> Departments &amp; Academics
+                    </div>
+                    <ul class="quick-link-list">
+                        <li>
+                            <a href="{% url 'admin_academic_departments' %}">
+                                <i class="fa fa-university"></i> Academic Departments
+                                <span class="arrow"><i class="fa fa-chevron-right"></i></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'admin_non_academic_departments' %}">
+                                <i class="fa fa-building"></i> Non-Academic Departments
+                                <span class="arrow"><i class="fa fa-chevron-right"></i></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'all_courses' %}">
+                                <i class="fa fa-book"></i> All Courses
+                                <span class="arrow"><i class="fa fa-chevron-right"></i></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'all_departments' %}">
+                                <i class="fa fa-th-large"></i> All Departments
+                                <span class="arrow"><i class="fa fa-chevron-right"></i></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'all_trainees' %}">
+                                <i class="fa fa-graduation-cap"></i> All Trainees
+                                <span class="arrow"><i class="fa fa-chevron-right"></i></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SYSTEM ADMINISTRATION quick links -->
+            <div class="col-md-4">
+                <div class="quick-link-box">
+                    <div class="box-header" style="background:#f9f9f9;">
+                        <i class="fa fa-shield text-purple"></i> System Administration
+                    </div>
+                    <ul class="quick-link-list">
+                        <li>
+                            <a href="{% url 'system_admin_credentials' %}">
+                                <i class="fa fa-key"></i> Admin Credentials
+                                <span class="arrow"><i class="fa fa-chevron-right"></i></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'create_current_session' %}">
+                                <i class="fa fa-calendar"></i> Session Management
+                                <span class="arrow"><i class="fa fa-chevron-right"></i></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'trainees_in_session' %}">
+                                <i class="fa fa-list-alt"></i> Trainees in Session
+                                <span class="arrow"><i class="fa fa-chevron-right"></i></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'registrar_academics_dashboard' %}">
+                                <i class="fa fa-file-text"></i> Applications
+                                <span class="badge-count" id="badge-apps">—</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/">
+                                <i class="fa fa-terminal"></i> Django Admin Panel
+                                <span class="arrow"><i class="fa fa-chevron-right"></i></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.row quick links -->
+
+        <!-- ── RECENT TRAINEES + SYSTEM INFO ── -->
+        <div class="row">
+
+            <!-- Recent Trainees -->
+            <div class="col-md-8">
+                <div class="quick-link-box">
+                    <div class="box-header" style="background:#f9f9f9; display:flex; align-items:center; justify-content:space-between;">
+                        <span><i class="fa fa-clock-o text-blue"></i> Recently Registered Trainees</span>
+                        <a href="{% url 'all_trainees' %}" style="font-size:12px; color:#337ab7;">View All</a>
+                    </div>
+                    <div id="recent-trainees-list">
+                        <div class="activity-item">
+                            <i class="fa fa-spinner fa-spin" style="color:#aaa; margin-top:8px;"></i>
+                            <div class="act-text" style="color:#aaa;">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Info Panel -->
+            <div class="col-md-4">
+                <div class="quick-link-box">
+                    <div class="box-header" style="background:#f9f9f9;">
+                        <i class="fa fa-info-circle text-yellow"></i> System Info
+                    </div>
+                    <div style="padding: 14px 16px; font-size:13px; color:#555;">
+                        <table style="width:100%; border-collapse:collapse;">
+                            <tr style="border-bottom:1px solid #f4f4f4;">
+                                <td style="padding:7px 0; color:#888;">Designation</td>
+                                <td style="padding:7px 0; font-weight:600; color:#333; text-align:right;">
+                                    {{ request.session.designation|default:"System Admin" }}
+                                </td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #f4f4f4;">
+                                <td style="padding:7px 0; color:#888;">Logged in as</td>
+                                <td style="padding:7px 0; font-weight:600; color:#333; text-align:right;">
+                                    {{ request.session.admin_name|default:"—" }}
+                                </td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #f4f4f4;">
+                                <td style="padding:7px 0; color:#888;">Active Session</td>
+                                <td style="padding:7px 0; font-weight:600; color:#333; text-align:right;" id="sys-session">—</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #f4f4f4;">
+                                <td style="padding:7px 0; color:#888;">Trainees in Session</td>
+                                <td style="padding:7px 0; font-weight:600; color:#337ab7; text-align:right;" id="sys-session-count">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:7px 0; color:#888;">System Version</td>
+                                <td style="padding:7px 0; font-weight:600; color:#333; text-align:right;">TeCade v1.0.0</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="padding: 10px 16px; border-top:1px solid #f4f4f4;">
+                        <a href="{% url 'admin_logout' %}" class="btn btn-danger btn-sm btn-block">
+                            <i class="fa fa-sign-out"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.row bottom -->
+
+    </section>
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock content %}
+
+{% block extra_scripts %}
+<script src="{% static 'plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'dist/js/app.min.js' %}"></script>
+<script>
+$(document).ready(function () {
+
+    // ── Total Trainees ──
+    $.getJSON('/api/total-trainees/', function(data) {
+        $('#stat-trainees').text(data.total_trainees || 0);
+    }).fail(function(){ $('#stat-trainees').text('—'); });
+
+    // ── Trainees in current session ──
+    $.getJSON('/api/total-trainees-in-session/', function(data) {
+        $('#sys-session-count').text(data.total_trainees || 0);
+        if (data.message) $('#sys-session').text('None');
+    }).fail(function(){ $('#sys-session-count').text('—'); });
+
+    // ── Stats from gender/intake API ──
+    $.getJSON('/api/gender-intake-stats/', function(data) {
+        if (data.latest_intake) {
+            $('#sys-session').text(data.latest_intake);
+        }
+    });
+
+    // ── Recent Trainees ──
+    $.getJSON('/api/recent-trainees/', function(data) {
+        var html = '';
+        if (!data.length) {
+            html = '<div class="activity-item"><div class="act-text" style="color:#aaa;">No trainees registered yet.</div></div>';
+        } else {
+            $.each(data.slice(0, 8), function(i, t) {
+                html += '<div class="activity-item">' +
+                    '<div class="act-icon" style="background:#00c0ef;">' +
+                        '<i class="fa fa-user"></i>' +
+                    '</div>' +
+                    '<div>' +
+                        '<div class="act-text"><strong>' + t.name + '</strong></div>' +
+                        '<div class="act-time"><i class="fa fa-clock-o"></i> ' + t.date_label + '</div>' +
+                    '</div>' +
+                    '<div style="margin-left:auto;">' +
+                        '<a href="/trainee-profile/' + t.id + '/" class="btn btn-xs btn-default">' +
+                            '<i class="fa fa-eye"></i>' +
+                        '</a>' +
+                    '</div>' +
+                '</div>';
+            });
+        }
+        $('#recent-trainees-list').html(html);
+    }).fail(function(){
+        $('#recent-trainees-list').html(
+            '<div class="activity-item"><div class="act-text" style="color:#aaa;">Could not load trainees.</div></div>'
+        );
+    });
+
+    // ── Placeholder stats (courses, depts, trainers, admins, apps) ──
+    // These need dedicated API endpoints — showing placeholders until you add them
+    $('#stat-courses').text('{{ courses_count|default:"—" }}');
+    $('#stat-depts').text('{{ depts_count|default:"—" }}');
+    $('#stat-trainers').text('{{ trainers_count|default:"—" }}');
+    $('#stat-admins').text('{{ admins_count|default:"—" }}');
+    $('#stat-apps').text('{{ apps_count|default:"—" }}');
+    $('#badge-apps').text('{{ apps_count|default:"—" }}');
+
+});
+</script>
+{% endblock %}

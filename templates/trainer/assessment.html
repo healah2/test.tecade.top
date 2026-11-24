@@ -1,0 +1,903 @@
+{% extends 'trainer/trainer_base.html' %}
+{% load static %}
+
+{% block title %}Assessment Dashboard - Trainer{% endblock %}
+
+{% block extra_styles %}
+    <link rel="stylesheet" href="{% static 'plugins/dropzone/min/dropzone.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/iCheck/flat/blue.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/morris/morris.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/jvectormap/jquery-jvectormap-1.2.2.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/datepicker/datepicker3.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker-bs3.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css' %}">
+
+<style>
+    /* CONTENT WRAPPER */
+    .content-wrapper {
+        min-height: 100%;
+        background-color: #ecf0f5;
+        z-index: 800;
+    }
+    
+    /* Add proper wrapper for the content */
+    .assessment-content {
+        padding: 15px;
+    }
+    
+    /* Simplified color scheme */
+    .panel {
+        border-radius: 4px;
+        margin-bottom: 20px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        border: 1px solid #ddd;
+    }
+    
+    .panel-heading {
+        border-radius: 4px 4px 0 0;
+        padding: 12px 15px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #ddd;
+        color: #333;
+    }
+    
+    .panel-title {
+        font-weight: 600;
+        color: #333;
+    }
+    
+    .panel-body {
+        padding: 15px;
+    }
+    
+    /* Simplified info-box */
+    .info-box {
+        min-height: 90px;
+        margin-bottom: 15px;
+        border-radius: 4px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        border: 1px solid #ddd;
+        background: #fff;
+    }
+    
+    .info-box-icon {
+        border-radius: 4px 0 0 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        background: #f8f9fa;
+        width: 70px;
+        color: #555;
+    }
+    
+    .info-box-content {
+        padding: 12px;
+    }
+    
+    .info-box-text {
+        font-weight: 600;
+        color: #333;
+    }
+    
+    /* Simplified callouts */
+    .callout {
+        border-radius: 4px;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-left: 4px solid #6c757d;
+        background: #f8f9fa;
+    }
+    
+    /* Clean list group */
+    .list-group-item {
+        border: 1px solid #eee;
+        color: #333;
+    }
+    
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+    }
+    
+    /* Simplified buttons */
+    .btn {
+        border-radius: 3px;
+        font-weight: 500;
+    }
+    
+    .btn-default {
+        background: #fff;
+        border-color: #ddd;
+        color: #333;
+    }
+    
+    .btn-primary {
+        background: #007bff;
+        border-color: #007bff;
+    }
+    
+    /* Simplified boxes - using single color */
+    .box {
+        position: relative;
+        border-radius: 4px;
+        background: #ffffff;
+        border-top: 3px solid #3c8dbc; /* Unified blue color */
+        margin-bottom: 20px;
+        width: 100%;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    
+    /* Remove colored box variations */
+    .box.box-primary {
+        border-top-color: #3c8dbc;
+    }
+    
+    .box.box-info {
+        border-top-color: #3c8dbc; /* Changed to blue */
+    }
+    
+    .box.box-success {
+        border-top-color: #3c8dbc; /* Changed to blue */
+    }
+    
+    .box.box-warning {
+        border-top-color: #3c8dbc; /* Changed to blue */
+    }
+    
+    .box-header {
+        color: #333;
+        display: block;
+        padding: 10px;
+        position: relative;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .box-header.with-border {
+        border-bottom: 1px solid #eee;
+    }
+    
+    .box-body {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 4px;
+        border-bottom-left-radius: 4px;
+        padding: 15px;
+    }
+    
+    /* Simplified progress bars */
+    .progress-group {
+        margin-bottom: 15px;
+    }
+    
+    .progress-text {
+        color: #333;
+        font-weight: 500;
+    }
+    
+    .progress-value {
+        color: #666;
+    }
+    
+    .progress-bar {
+        background-color: #3c8dbc;
+    }
+    
+    /* Simplified table */
+    .table {
+        border: 1px solid #eee;
+    }
+    
+    .table thead {
+        background-color: #f8f9fa;
+    }
+    
+    .table th {
+        font-weight: 600;
+        color: #333;
+        border-bottom: 2px solid #eee;
+    }
+    
+    /* Simplified icons */
+    .fa {
+        color: #bebebe;
+    }
+    
+    /* Assignment cards simplified */
+    .assignment-card {
+        text-align: center;
+        padding: 20px 15px;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        background: #fff;
+        transition: all 0.2s;
+    }
+    
+    .assignment-card:hover {
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .assignment-icon {
+        font-size: 36px;
+        margin-bottom: 15px;
+        color: #3c8dbc;
+    }
+    
+    /* Simplified badges */
+    .badge {
+        background-color: #6c757d;
+        color: white;
+        font-weight: 500;
+    }
+    
+    .bg-blue {
+        background-color: #3c8dbc !important;
+    }
+    
+    .bg-green {
+        background-color: #28a745 !important;
+    }
+    
+    .bg-red {
+        background-color: #dc3545 !important;
+    }
+    
+    /* Remove colored text classes */
+    .text-primary {
+        color: #3c8dbc !important;
+    }
+    
+    .text-success {
+        color: #28a745 !important;
+    }
+    
+    .text-warning {
+        color: #ffc107 !important;
+    }
+    
+    /* Clean up small boxes */
+    .small-box {
+        border-radius: 10px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        border: 10px solid #eee;
+    }
+    
+    .small-box .inner {
+        color: #333;
+    }
+    
+    /* Clean product list */
+    .products-list .item {
+        border-bottom: 1px solid #f0f0f0;
+        padding: 10px 0;
+    }
+    
+    .product-info {
+        color: #333;
+    }
+    
+    .product-description {
+        color: #666;
+    }
+
+    /* Base compact card */
+.compact-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 140px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.compact-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+}
+
+/* Background icon */
+.has-bg-icon .bg-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 140px;
+    opacity: 0.08;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    pointer-events: none;
+}
+
+/* Zoom effect on hover */
+.has-bg-icon:hover .bg-icon {
+    transform: translate(-50%, -50%) scale(1.25);
+    opacity: 0.50;
+}
+
+/* Foreground content stays above icon */
+.compact-card .box-body {
+    position: relative;
+    z-index: 2;
+    padding: 22px 12px;
+}
+
+.compact-card h4 {
+    font-weight: 800;
+    margin-top: 10px;
+}
+
+.compact-card small {
+    display: block;
+    margin-top: 2px;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <!-- Page title moved here from page_title block -->
+        <h1>
+            <i class="fa fa-graduation-cap"></i> Assessment Dashboard
+            <small>Manage assignments, grades, and schedules</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Assessment</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content assessment-content">
+        <!-- Quick Stats Row -->
+        <div class="row">
+            <!-- Assignments -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="box box-default compact-card has-bg-icon">
+                    <div class="box-body text-center">
+                        <i class="fa fa-tasks bg-icon text-aqua"></i>
+                        <h2 class="no-margin"><strong>{{ assignments_count|default:"0" }}</strong></h2>
+                        <big class="text-muted"><strong>Assignments</strong></big>
+                        <div class="margin-top">
+                            <a href="{% url 'trainee:admin_assignments' %}" class="small">
+                               <strong> View all</strong>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Submissions -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="box box-default compact-card has-bg-icon">
+                    <div class="box-body text-center">
+                        <i class="fa fa-upload bg-icon text-green"></i>
+                        <h2 class="no-margin"><strong>{{ pending_submissions|default:"0" }}</strong></h2>
+                        <big class="text-muted"><strong>Pending Submissions</strong></big>
+                        <div class="margin-top">
+                            <a href="{% url 'trainee:admin_assignments' %}" class="small">
+                                <strong>Grade now</strong>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sessions -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="box box-default compact-card has-bg-icon">
+                    <div class="box-body text-center">
+                        <i class="fa fa-calendar bg-icon text-yellow"></i>
+                        <h2 class="no-margin"><strong>{{ upcoming_sessions|default:"0" }}</strong></h2>
+                        <big class="text-muted"><strong>Upcoming Sessions</strong></big>
+                        <div class="margin-top">
+                            <a href="{% url 'trainee:manage_timetable' %}" class="small">
+                                <strong>Manage</strong>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trainees -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="box box-default compact-card has-bg-icon">
+                    <div class="box-body text-center">
+                        <i class="fa fa-users bg-icon text-red"></i>
+                        <h2 class="no-margin"><strong>{{ total_trainees|default:"0" }}</strong></h2>
+                        <big class="text-muted"><strong>Trainees</strong></big>
+                        <div class="margin-top">
+                            <a href="{% url 'trainee:create_register' %}" class="small">
+                                <strong>Manage</strong>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Assignment Management Section -->
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-tasks"></i> Assignment Management</h3>
+                        <div class="box-tools pull-right">
+                            <span class="badge">{{ assignments_count|default:"0" }} Active</span>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <!-- Create Assignment Card -->
+                            <div class="col-md-4">
+                                <div class="assignment-card">
+                                    <div class="assignment-icon">
+                                        <i class="fa fa-plus-circle"></i>
+                                    </div>
+                                    <h4>Create Assignment</h4>
+                                    <p class="text-muted">Create new assignments and tasks for trainees</p>
+                                    <a href="{% url 'trainee:create_assignment' %}" class="btn btn-primary btn-block">
+                                        <i class="fa fa-plus"></i> Create New Assignment
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <!-- Manage Assignments Card -->
+                            <div class="col-md-4">
+                                <div class="assignment-card">
+                                    <div class="assignment-icon">
+                                        <i class="fa fa-list-alt"></i>
+                                    </div>
+                                    <h4>Manage Assignments</h4>
+                                    <p class="text-muted">View, edit, and manage all assignments</p>
+                                    <a href="{% url 'trainee:admin_assignments' %}" class="btn btn-primary btn-block">
+                                        <i class="fa fa-cog"></i> Manage Assignments
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <!-- Grade Submissions Card -->
+                            <div class="col-md-4">
+                                {% if recent_assignments %}
+                                <div class="assignment-card">
+                                    <div class="assignment-icon">
+                                        <i class="fa fa-check-square"></i>
+                                    </div>
+                                    <h4>Grade Submissions</h4>
+                                    <p class="text-muted">Review and grade trainee submissions</p>
+                                    {% with recent_assignments|first as first_assignment %}
+                                    <a href="{% url 'trainee:view_submissions' first_assignment.id %}" class="btn btn-primary btn-block">
+                                        <i class="fa fa-check"></i> Grade Submissions
+                                    </a>
+                                    {% endwith %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Assignments Table -->
+                        {% if recent_assignments %}
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="col-md-12">
+                                <h4><i class="fa fa-history"></i> Recent Assignments</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr class="bg-gray">
+                                                <th>Title</th>
+                                                <th>Course</th>
+                                                <th>Due Date</th>
+                                                <th>Submissions</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for assignment in recent_assignments|slice:":5" %}
+                                            <tr>
+                                                <td>{{ assignment.title }}</td>
+                                                <td>{{ assignment.course.name }}</td>
+                                                <td>{{ assignment.due_date|date:"d M Y" }}</td>
+                                                <td>
+                                                    <span class="badge bg-blue">{{ assignment.submission_set.count }}</span>
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'trainee:view_submissions' assignment.id %}" class="btn btn-xs btn-info">
+                                                        <i class="fa fa-eye"></i> View Submissions
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="box-footer">
+                        <a href="{% url 'trainee:admin_assignments' %}" class="btn btn-primary pull-right">
+                            <i class="fa fa-list"></i> View All Assignments
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Left Column: Schedule & Attendance -->
+            <div class="col-md-8">
+                <!-- Today's Classes Section -->
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-clock-o"></i> Today's Classes</h3>
+                        <div class="box-tools pull-right">
+                            <span class="label label-primary">Today: {% now "jS F Y" %}</span>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        {% if today_sessions %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Session</th>
+                                        <th>Course</th>
+                                        <th>Location</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for session in today_sessions %}
+                                    <tr>
+                                        <td>{{ session.start_time|time:"H:i" }} - {{ session.end_time|time:"H:i" }}</td>
+                                        <td>{{ session.title }}</td>
+                                        <td>{{ session.timetable.course.name }}</td>
+                                        <td>{{ session.location }}</td>
+                                        <td>
+                                            <a href="{% url 'trainee:edit_session' session.id %}" class="btn btn-xs btn-default">
+                                                <i class="fa fa-edit"></i> Edit
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <div class="text-center text-muted">
+                            <i class="fa fa-calendar-times-o fa-3x"></i>
+                            <h4>No classes scheduled for today</h4>
+                            <a href="{% url 'trainee:manage_timetable' %}" class="btn btn-primary">
+                                <i class="fa fa-plus"></i> Schedule Class
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Schedule Management Section -->
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-calendar"></i> Schedule Management</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <!-- Timetable Management -->
+                            <div class="col-md-6">
+                                <div class="info-box">
+                                    <span class="info-box-icon"><i class="fa fa-table"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Timetable Management</span>
+                                        <p>Create and manage training schedules</p>
+                                        <div class="btn-group">
+                                            <a href="{% url 'trainee:manage_timetable' %}" class="btn btn-default btn-sm">
+                                                <i class="fa fa-calendar"></i> Manage
+                                            </a>
+                                            <a href="{% url 'trainee:trainee_timetable' %}" class="btn btn-default btn-sm">
+                                                <i class="fa fa-eye"></i> View
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Session Management -->
+                            <div class="col-md-6">
+                                <div class="info-box">
+                                    <span class="info-box-icon"><i class="fa fa-clock-o"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Session Management</span>
+                                        <p>Edit and manage training sessions</p>
+                                        <div class="btn-group">
+                                            {% if timetables %}
+                                                {% with timetables|first as first_timetable %}
+                                                <a href="{% url 'trainee:manage_sessions' first_timetable.id %}" class="btn btn-default btn-sm">
+                                                    <i class="fa fa-edit"></i> Manage Sessions
+                                                </a>
+                                                {% endwith %}
+                                            {% else %}
+                                                <a href="{% url 'trainee:manage_timetable' %}" class="btn btn-default btn-sm">
+                                                    <i class="fa fa-plus"></i> Create Timetable First
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Attendance & Excuse Requests Section -->
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-users"></i> Attendance & Excuse Management</h3>
+                        {% if pending_excuses %}
+                        <span class="pull-right badge bg-red">{{ pending_excuses|length }} Pending</span>
+                        {% endif %}
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <!-- Attendance Register -->
+                            <div class="col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title"><i class="fa fa-clipboard"></i> Attendance Register</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <p class="text-muted">Create and manage attendance records</p>
+                                        <a href="{% url 'trainee:create_register' %}" class="btn btn-primary">
+                                            <i class="fa fa-clipboard"></i> Create Register
+                                        </a>
+                                        <!-- Note: View Registers functionality not in views -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Pending Excuse Requests -->
+                            <div class="col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title"><i class="fa fa-envelope"></i> Pending Excuse Requests</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        {% if pending_excuses %}
+                                        <div class="list-group">
+                                            {% for excuse in pending_excuses|slice:":3" %}
+                                            <a href="#" class="list-group-item">
+                                                <div class="d-flex justify-content-between">
+                                                    <span><strong>{{ excuse.trainee.first_name }} {{ excuse.trainee.last_name }}</strong></span>
+                                                    <small>{{ excuse.date|date:"M d" }}</small>
+                                                </div>
+                                                <small class="text-muted">{{ excuse.reason|truncatechars:50 }}</small>
+                                                <span class="pull-right">
+                                                    <a href="#" class="btn btn-xs btn-success">
+                                                        <i class="fa fa-check"></i> Approve
+                                                    </a>
+                                                    <a href="#" class="btn btn-xs btn-danger">
+                                                        <i class="fa fa-times"></i> Reject
+                                                    </a>
+                                                </span>
+                                            </a>
+                                            {% endfor %}
+                                        </div>
+                                        {% if pending_excuses|length > 3 %}
+                                        <div class="text-center">
+                                            <a href="#" class="btn btn-default btn-sm">
+                                                View All {{ pending_excuses|length }} Requests
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                        {% else %}
+                                        <p class="text-muted text-center">No pending excuse requests</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Quick Actions & Statistics -->
+            <div class="col-md-4 mt-n5">
+                                <!-- Quick Actions Panel -->
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-bolt"></i> Quick Actions</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="list-group">
+                            <a href="{% url 'trainee:create_assignment' %}" class="list-group-item">
+                                <i class="fa fa-plus-circle fa-fw"></i> New Assignment
+                                <span class="pull-right"><i class="fa fa-arrow-right"></i></span>
+                            </a>
+                            <a href="{% url 'trainee:create_register' %}" class="list-group-item">
+                                <i class="fa fa-clipboard fa-fw"></i> Attendance Register
+                                <span class="pull-right"><i class="fa fa-arrow-right"></i></span>
+                            </a>
+                            <a href="{% url 'trainee:manage_timetable' %}" class="list-group-item">
+                                <i class="fa fa-calendar fa-fw"></i> Manage Timetable
+                                <span class="pull-right"><i class="fa fa-arrow-right"></i></span>
+                            </a>
+                            {% if timetables %}
+                            <a href="{% url 'trainee:edit_timetable' timetables.0.id %}" class="list-group-item">
+                                <i class="fa fa-edit fa-fw"></i> Edit Timetable
+                                <span class="pull-right"><i class="fa fa-arrow-right"></i></span>
+                            </a>
+                            {% endif %}
+                            <a href="{% url 'trainee:admin_assignments' %}" class="list-group-item">
+                                <i class="fa fa-check-square fa-fw"></i> Grade Submissions
+                                <span class="badge pull-left bg-red">{{ pending_submissions|default:"0" }}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Statistics Summary -->
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-bar-chart"></i> Assessment Overview</h3>
+                    </div>
+                    <div class="box-body">
+                        <!-- Assignment Stats -->
+                        <div class="progress-group">
+                            <span class="progress-text">Assignment Completion</span>
+                            <span class="progress-number"><b>{{ completion_rate|default:"0" }}%</b></span>
+                            <div class="progress sm">
+                                <div class="progress-bar" style="width: {{ completion_rate|default:"0" }}%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-group">
+                            <span class="progress-text">Grading Progress</span>
+                            <span class="progress-number"><b>{{ grading_progress|default:"0" }}%</b></span>
+                            <div class="progress sm">
+                                <div class="progress-bar" style="width: {{ grading_progress|default:"0" }}%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-group">
+                            <span class="progress-text">Average Score</span>
+                            <span class="progress-number"><b>{{ average_score|default:"0" }}/100</b></span>
+                            <div class="progress sm">
+                                <div class="progress-bar" style="width: {{ average_score|default:"0" }}%"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quick Stats -->
+                        <div class="row text-center" style="margin-top: 20px;">
+                            <div class="col-md-6">
+                                <div class="callout">
+                                    <h4>{{ assignments_count|default:"0" }}</h4>
+                                    <small>Active Assignments</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="callout">
+                                    <h4>{{ total_trainees|default:"0" }}</h4>
+                                    <small>Total Trainees</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Activity -->
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-history"></i> Recent Submissions</h3>
+                    </div>
+                    <div class="box-body">
+                        <ul class="products-list product-list-in-box">
+                            {% for submission in recent_submissions|slice:":3" %}
+                            <li class="item">
+                                <div class="product-img">
+                                    <i class="fa fa-upload fa-2x"></i>
+                                </div>
+                                <div class="product-info">
+                                    <a href="#" class="product-title">
+                                        {{ submission.trainee.first_name }}
+                                        <span class="label label-warning pull-right">{{ submission.submitted_at|timesince }} ago</span>
+                                    </a>
+                                    <span class="product-description">
+                                        {{ submission.assignment.title }}
+                                    </span>
+                                    {% if submission.grade %}
+                                    <span class="badge bg-green pull-right">{{ submission.grade }}/100</span>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            {% empty %}
+                            <li class="item text-center text-muted">
+                                <i class="fa fa-info-circle"></i> No recent submissions
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% if recent_submissions|length > 3 %}
+                    <div class="box-footer text-center">
+                        <a href="{% url 'trainee:admin_assignments' %}" class="btn btn-default btn-sm">
+                            View All Submissions
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+{% endblock %}
+
+{% block extra_scripts %}
+<!-- jQuery 2.1.4 -->
+<script src="{% static 'plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+
+<!-- Bootstrap 3.3.5 -->
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+<!-- FastClick -->
+<script src="{% static 'plugins/fastclick/fastclick.min.js' %}"></script>
+
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/app.min.js' %}"></script>
+
+<!-- Sparkline -->
+<script src="{% static 'plugins/sparkline/jquery.sparkline.min.js' %}"></script>
+
+<!-- jvectormap -->
+<script src="{% static 'plugins/jvectormap/jquery-jvectormap-1.2.2.min.js' %}"></script>
+<script src="{% static 'plugins/jvectormap/jquery-jvectormap-world-mill-en.js' %}"></script>
+
+<!-- SlimScroll 1.3.0 -->
+<script src="{% static 'plugins/slimScroll/jquery.slimscroll.min.js' %}"></script>
+
+<!-- ChartJS 1.0.1 -->
+<script src="{% static 'plugins/chartjs/Chart.min.js' %}"></script>
+
+<!-- AdminLTE dashboard demo (dashboard2.js) -->
+<script src="{% static 'dist/js/pages/dashboard2.js' %}"></script>
+
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dist/js/demo.js' %}"></script>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Initialize tooltips
+    $('[data-toggle="tooltip"]').tooltip();
+    
+    // Panel toggle animation
+    $('.box .box-header .box-tools button').click(function() {
+        $(this).find('i').toggleClass('fa-minus fa-plus');
+    });
+    
+    // Auto-refresh stats 
+    function refreshStats() {
+        $.ajax({
+            url: '{% url "trainee:trainer_assessment_dashboard" %}',  
+            method: 'GET',
+            success: function(data) {
+                // Update stats if needed
+                console.log('Stats refreshed');
+            },
+            error: function() {
+                console.log('Stats refresh failed');
+            }
+        });
+    }
+    
+    // Refresh every 60 seconds (optional)
+    // setInterval(refreshStats, 60000);
+});
+</script>
+{% endblock %}
